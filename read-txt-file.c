@@ -10,14 +10,14 @@ int main() {
 
     // a+ Mode Means that the file is opened in the
     // append + reading mode
-    file_ptr = fopen("1.txt", "r");
+    file_ptr = fopen("1.txt", "r"); //put here the file name you need to open
 
     if (NULL == file_ptr) {
         printf("File can't be opened \n");
     }
 
       // Reading stinrg using fgets
-    printf("Content of this file are: \n");
+    printf("File open worked\n");
     while (fgets(str, 50, file_ptr) != NULL) {
         printf("%s", str);
     }
