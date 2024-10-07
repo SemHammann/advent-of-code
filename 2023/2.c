@@ -43,8 +43,7 @@ int deel1(void)
         {
             sum = sum + atoi(*(tokensg + 1));
         }
-        //printf("%d\n", sum);
-        //printf("%d", atoi(*(tokensg + 1)));
+
     }
     fclose(file_ptr);
     printf("%d\n", sum);
