@@ -6,7 +6,7 @@ int main() {
   
     // Defining file pointer and opening the file.
     FILE *file_ptr;
-    char str[50];
+    char str[500];
 
     // a+ Mode Means that the file is opened in the
     // append + reading mode
@@ -18,7 +18,7 @@ int main() {
 
       // Reading stinrg using fgets
     printf("File open worked\n");
-    while (fgets(str, 50, file_ptr) != NULL) {
+    while (fgets(str, 500, file_ptr) != NULL) {
         printf("%s", str);
     }
 
