@@ -5,38 +5,32 @@
 
 char **read(const char *files)
 {
-    // Defining file pointer and opening the file.
     FILE *file_ptr;
-    char str[4096]; // '\0''
+    char str[4096];
     int numlines = 0;
     int maxstrlength = 1;
     int i = 0;
-    
-    // a+ Mode Means that the file is opened in the
-    // append + reading mode
-    file_ptr = fopen(files, "r"); //put here the file name you need to open
-
     char ch;
 
-    while((ch = fgets(str, 4095, file_ptr) != NULL))
+    file_ptr = fopen(files, "r");
+
+    /*while((ch = fgets(str, 4095, file_ptr) != NULL))
     {
         numlines++;
         if (strlen(str) > maxstrlength)
         {
             //maxstrlength = sizeof(str); //deze klopt nog niet
         }
-    }
+    }*/
+
     rewind(file_ptr);
 
     const int size = numlines*sizeof(char*);
-    printf("Size of the array is %d x %d\n", numlines, maxstrlength);
-
     char **output = malloc(size);
     for (i = 0; i < numlines; i++)
     {
         output[i] = (char*)malloc(4096 * sizeof(char));
-        *output[i] = 0; // '\0\0'
-        //printf("%d\n", output[i]);
+        *output[i] = 0;
     }
 
     if (NULL == file_ptr) {
@@ -49,9 +43,7 @@ char **read(const char *files)
     }
 
     while (fgets(str, 4095, file_ptr) != NULL) {
-        //printf("%s", str);
         strcpy(output[i], str);
-        //printf("%s\n", output[i]);
         i++;
     }
 
@@ -59,7 +51,7 @@ char **read(const char *files)
     return output;
 }
 
-int main(void)
+/*int main(void)
 {
     int j;
     const char *filename = "1.txt";
@@ -68,4 +60,4 @@ int main(void)
     {
         printf("%s", lines[j]);
     }
-}
+}*/
