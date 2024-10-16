@@ -4,9 +4,8 @@
 #include <string.h>
 char **read(const char *files)
 {
-    // Defining file pointer and opening the file.
     FILE *file_ptr;
-    char str[4096]; // '\0''
+    char str[4096];
     int numlines = 0;
     int maxstrlength = 1;
     int i = 0;
