@@ -42,6 +42,24 @@ char **read(const char *files)
     return output;
 }
 
+int lenfile(const char *files)
+{
+    FILE *file_ptr;
+    int numlines = 0;
+    char str[4096];
+    int i = 0;
+    char ch;
+    
+    file_ptr = fopen(files, "r");
+
+    while((ch = fgets(str, 4095, file_ptr) != NULL))
+    {
+        numlines++;
+    }
+    fclose(file_ptr);
+    return numlines;
+}
+
 /*int main(void)
 {
     int j;
@@ -51,4 +69,5 @@ char **read(const char *files)
     {
         printf("%s", lines[j]);
     }
+    printf("%d", lenfile(filename));
 }*/
