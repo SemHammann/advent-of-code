@@ -1,2 +1,2 @@
-extern char **read(filename);
-extern int lenfile(filename);
+extern char **read(const char *filename);
+extern int lenfile(const char *filename);
