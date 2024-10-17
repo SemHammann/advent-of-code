@@ -1,3 +1,4 @@
 *.exe
 *.txt
 read-txt-file.c
+c_cpp_properties.json
