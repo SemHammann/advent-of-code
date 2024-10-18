@@ -7,9 +7,9 @@ char **read(const char *files)
 {
     FILE *file_ptr;
     char str[4096];
-    int numlines = 0;
+    size_t numlines = 0;
     int maxstrlength = 1;
-    int i = 0;
+    size_t i = 0;
     char ch;
     
     file_ptr = fopen(files, "r");
@@ -19,8 +19,8 @@ char **read(const char *files)
         numlines++;
     }
     rewind(file_ptr);
-    const int size = numlines*sizeof(char*);
-    printf("Size of the array is %d x %d\n", numlines, maxstrlength);
+    const size_t size = numlines*sizeof(char*);
+    printf("Size of the array is %llu x %d\n", numlines, maxstrlength);
     char **output = malloc(size);
     for (i = 0; i < numlines; i++)
     {
@@ -48,7 +48,6 @@ int lenfile(const char *files)
     FILE *file_ptr;
     int numlines = 0;
     char str[4096];
-    int i = 0;
     char ch;
     
     file_ptr = fopen(files, "r");
@@ -61,7 +60,7 @@ int lenfile(const char *files)
     return numlines;
 }
 
-int main(void)
+/*int main(void)
 {
     int j;
     const char *filename = "1.txt";
@@ -71,4 +70,4 @@ int main(void)
         printf("%s", lines[j]);
     }
     printf("%d", lenfile(filename));
-}
+}*/
