@@ -1,7 +1,8 @@
-#include "readfile.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "readfile.h"
+
 char **read(const char *files)
 {
     FILE *file_ptr;
@@ -60,7 +61,7 @@ int lenfile(const char *files)
     return numlines;
 }
 
-/*int main(void)
+int main(void)
 {
     int j;
     const char *filename = "1.txt";
@@ -70,4 +71,4 @@ int lenfile(const char *files)
         printf("%s", lines[j]);
     }
     printf("%d", lenfile(filename));
-}*/
+}
