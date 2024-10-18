@@ -1,5 +1,6 @@
 *.exe
 *.txt
 read-txt-file.c
-c_cpp_properties.json
-tasks.json
+.vscode
+build
+libraries/2.c
