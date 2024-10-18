@@ -1,2 +1,2 @@
 My solutions to advent of code 
-Make the libraries work, I still have to fix them by me
+I'm trying to make the libraries work, in the meanwhile I'm copying them in my files
