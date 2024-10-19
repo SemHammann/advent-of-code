@@ -35,8 +35,8 @@ int deel1(void)
     printf("Deel1\n");
     while (fgets(str, 500, file_ptr) != NULL) {
         r1 = r1 + read(str);
-        printf("%d\n", z);
-        printf("%s", str);
+        //printf("%d\n", z);
+        //printf("%s", str);
         z++;
         //printf("%d %d %d %s", z, r2, read(str), str;
     }
