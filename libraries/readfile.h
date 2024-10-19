@@ -7,7 +7,6 @@ struct filecontent
     size_t lengthfile;
 };
 
-extern char **read(const char *filename);
-extern int lenfile(const char *filename);
+struct filecontent read(const char *filename);
 
 #endif
