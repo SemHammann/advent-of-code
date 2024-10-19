@@ -32,7 +32,7 @@ void deel1(void)
     int sum = 0;
 
     FILE *file_ptr;
-    file_ptr = fopen("2.txt", "r"); //put here the file name you need to open
+    file_ptr = fopen("txt/2.txt", "r"); //put here the file name you need to open
     if (NULL == file_ptr) {
         printf("File can't be opened \n");
     }
@@ -67,7 +67,7 @@ void deel2(void)
     int j;
     char game[4095];
     char game2[4095];
-    const char *filename = "2.txt";
+    const char *filename = "txt/2.txt";
     char **tokens;
     char **tokensg;
     char **file = read(filename);

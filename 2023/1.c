@@ -25,7 +25,7 @@ int deel1(void)
 
     // a+ Mode Means that the file is opened in the
     // append + reading mode
-    file_ptr = fopen("1.txt", "r"); //put here the file name you need to open
+    file_ptr = fopen("txt/1.txt", "r"); //put here the file name you need to open
 
     if (NULL == file_ptr) {
         printf("File can't be opened \n");
@@ -55,7 +55,7 @@ int deel2(void)
 
     // a+ Mode Means that the file is opened in the
     // append + reading mode
-    file_ptr = fopen("1.txt", "r"); //put here the file name you need to open
+    file_ptr = fopen("txt/1.txt", "r"); //put here the file name you need to open
 
     rewind(file_ptr);
     if (NULL == file_ptr) {
