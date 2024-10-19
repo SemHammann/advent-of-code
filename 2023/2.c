@@ -38,7 +38,7 @@ void deel1(void)
     }
     else
     {
-        printf("File open worked\n");
+        printf("\n");
         while (fgets(game, 500, file_ptr) != NULL)
         {
             //printf("%s\n", game);
@@ -58,7 +58,7 @@ void deel1(void)
         }
     }
     fclose(file_ptr);
-    printf("%d\n", sum);
+    printf("Deel 1: %d\n", sum);
 }
 
 void deel2(void)
@@ -82,7 +82,7 @@ void deel2(void)
         tokens = str_split(game2, ':');
         sum = sum + possible2(*(tokens + 1));
     }
-    printf("%d", sum);
+    printf("Deel 2: %d", sum);
 }
 
 int possible(const char *vstring)
@@ -264,7 +264,7 @@ char **read(const char *files)
     }
     else
     {
-        printf("File open worked\n");
+        printf("\n");
         i = 0;
     }
     while (fgets(str, 4095, file_ptr) != NULL) {
