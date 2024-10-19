@@ -19,7 +19,7 @@ int max();
 
 int main(void)
 {
-    //deel1();
+    deel1();
     deel2();
 }
 
