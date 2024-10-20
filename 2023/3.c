@@ -125,11 +125,11 @@ struct filecontent read(const char *files)
 {
     FILE *file_ptr;
     char str[4096];
-    size_t numlines = 0;
     int maxstrlength = 1;
     size_t i = 0;
     char ch;
     struct filecontent read;
+    read.lengthfile = 0;
 
     file_ptr = fopen(files, "r");
 
