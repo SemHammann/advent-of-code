@@ -8,18 +8,23 @@ struct filecontent
     char **file;
     size_t lengthfile;
 };
+struct getalinfo
+{
+    size_t plek, grote, getal;
+};
 
 void deel1();
 void deel2();
 int leesgetal();
-int strtoint();
+struct getalinfo strtoint();
+struct getalinfo check();
 
 struct filecontent read(const char *files);
 
 int main(void)
 {
     const char *filename = "txt/3.test1.txt";
-    struct filecontent main = read(filename);
+    struct filecontent main = read(filename); //deze vindt die niet leuk, KIJK HIERNA ALS JE NIET EEN JAAR WILT WACHTEN
     deel1(main);
     //deel2((struct filecontent deel2);
 }
@@ -27,14 +32,19 @@ int main(void)
 void deel1(struct filecontent deel1)
 {
     int resultaat = 0;
+    int plekgetal;
     char game[4095];
+    struct getalinfo getalinfo1;
     
     for(int i = 0; i < deel1.lengthfile; i++)
     {
-        if(deel1.file[i] != 0)
+        strcpy(game, deel1.file[i]);
+        printf("%s", game);
+        plekgetal = leesgetal(game);
+        if(plekgetal <= 0)
         {
-            strcpy(game, deel1.file[i]);
-            printf("%s", game);
+            getalinfo1 = strtoint(game, plekgetal);
+            getalinfo1 = check(getalinfo1, deel1);
         }
     }
     printf("Deel 1: %d", resultaat);
@@ -56,33 +66,58 @@ void deel2(struct filecontent deel2)
     printf("Deel 2: %d", resultaat);
 }
 
-int leesgetal()
+int leesgetal(char game[])
 {
-
+    for(size_t i = 0; i > strlen(game); i++)
+    {
+        if(game[i] >= '0' && game[i] <= '9')
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
-int strtoint(char getal[], size_t i)
+struct getalinfo strtoint(char getal[], size_t i)
 {
-    int check = 0;
     size_t len = strlen(getal);
+    struct getalinfo strint;
+    strint.grote = 0;
+    strint.getal = 0;
 
-    while(i < len)
+    while((strint.grote + i) < len)
     {
         if(getal[i] >= '0' && getal[i] <= '9')
         {
-            check = 10 * check + (getal[i] - '0');
+            strint.getal = 10 * strint.getal + (getal[i] - '0');
         }
         else
         {
-            return check;
+            return strint;
         }
-        i++;
+        strint.grote++;
     }
-    return check;
+    strint.plek = strint.grote + i;
+    return strint;
 }
 
+struct getalinfo check(struct getalinfo checkgetal, struct filecontent checkfile)
+{
+    int possible;
+    size_t i=0, j;
+    char game[4095];
+    strcpy(game, checkfile.file[i]);
+    if(game[i] >= '!' && game[i] <= '/' && game[i] != '.')
+    {
+        possible++;
+    }
 
-
+    if(possible == 0)
+    {
+        checkgetal.getal = 0;
+    }
+    return checkgetal;
+}
 
 
 
