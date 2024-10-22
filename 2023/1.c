@@ -3,18 +3,18 @@
 #include <stdlib.h>
 
 int read();
-int deel1();
-int deel2();
+int part1();
+int part2();
 char *verv();
 char *searchAndReplace();
 
 int main (void)
 {
-    deel1();
-    deel2();
+    part1();
+    part2();
 }
 
-int deel1(void)
+int part1(void)
 {
     int r1 = 0;
     int z = 0;
@@ -32,7 +32,7 @@ int deel1(void)
     }
 
       // Reading stinrg using fgets
-    printf("Deel1\n");
+    printf("part1\n");
     while (fgets(str, 500, file_ptr) != NULL) {
         r1 = r1 + read(str);
         //printf("%d\n", z);
@@ -45,7 +45,7 @@ int deel1(void)
     printf ("%d\n", r1);
 }
 
-int deel2(void)
+int part2(void)
 {
     int r2 = 0;
     int z = 0;
@@ -63,7 +63,7 @@ int deel2(void)
     }
 
       // Reading stinrg using fgets
-    printf("Deel2\n");
+    printf("part2\n");
     while (fgets(str, 500, file_ptr) != NULL) {
         r2 = r2 + read(verv(str));
         //z++;

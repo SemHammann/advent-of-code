@@ -8,16 +8,16 @@ struct filecontent
     char **file;
     size_t lengthfile;
 };
-struct getalinfo
+struct numberinfo
 {
-    size_t plek, grote, getal;
+    size_t place, size, number;
 };
 
-void deel1();
-void deel2();
-int leesgetal();
-struct getalinfo strtoint();
-struct getalinfo check();
+void part1();
+void part2();
+int readnumber();
+struct numberinfo strtoint();
+struct numberinfo check();
 
 struct filecontent read(const char *files);
 
@@ -25,48 +25,48 @@ int main(void)
 {
     const char *filename = "txt/3.test1.txt";
     struct filecontent main = read(filename); //deze vindt die niet leuk, KIJK HIERNA ALS JE NIET EEN JAAR WILT WACHTEN
-    deel1(main);
-    //deel2((struct filecontent deel2);
+    part1(main);
+    //part2((struct filecontent part2);
 }
 
-void deel1(struct filecontent deel1)
+void part1(struct filecontent part1)
 {
-    int resultaat = 0;
-    int plekgetal;
+    int result = 0;
+    int placenumber;
     char game[4095];
-    struct getalinfo getalinfo1;
+    struct numberinfo numberinfo1;
     
-    for(int i = 0; i < deel1.lengthfile; i++)
+    for(int i = 0; i < part1.lengthfile; i++)
     {
-        strcpy(game, deel1.file[i]);
+        strcpy(game, part1.file[i]);
         printf("%s", game);
-        plekgetal = leesgetal(game);
-        if(plekgetal <= 0)
+        placenumber = readnumber(game);
+        if(placenumber <= 0)
         {
-            getalinfo1 = strtoint(game, plekgetal);
-            getalinfo1 = check(getalinfo1, deel1);
+            numberinfo1 = strtoint(game, placenumber);
+            numberinfo1 = check(numberinfo1, part1);
         }
     }
-    printf("Deel 1: %d", resultaat);
+    printf("part 1: %d", result);
 }
 
-void deel2(struct filecontent deel2)
+void part2(struct filecontent part2)
 {
-    int resultaat = 0;
+    int result = 0;
     char game[4095];
     
-    for(int i = 0; i < deel2.lengthfile; i++)
+    for(int i = 0; i < part2.lengthfile; i++)
     {
-        if(deel2.file[i] != 0)
+        if(part2.file[i] != 0)
         {
-            strcpy(game, deel2.file[i]);
+            strcpy(game, part2.file[i]);
             printf("%s", game);
         }
     }
-    printf("Deel 2: %d", resultaat);
+    printf("part 2: %d", result);
 }
 
-int leesgetal(char game[])
+int readnumber(char game[])
 {
     for(size_t i = 0; i > strlen(game); i++)
     {
@@ -78,30 +78,30 @@ int leesgetal(char game[])
     return -1;
 }
 
-struct getalinfo strtoint(char getal[], size_t i)
+struct numberinfo strtoint(char number[], size_t i)
 {
-    size_t len = strlen(getal);
-    struct getalinfo strint;
-    strint.grote = 0;
-    strint.getal = 0;
+    size_t len = strlen(number);
+    struct numberinfo strint;
+    strint.size = 0;
+    strint.number = 0;
 
-    while((strint.grote + i) < len)
+    while((strint.size + i) < len)
     {
-        if(getal[i] >= '0' && getal[i] <= '9')
+        if(number[i] >= '0' && number[i] <= '9')
         {
-            strint.getal = 10 * strint.getal + (getal[i] - '0');
+            strint.number = 10 * strint.number + (number[i] - '0');
         }
         else
         {
             return strint;
         }
-        strint.grote++;
+        strint.size++;
     }
-    strint.plek = strint.grote + i;
+    strint.place = strint.size + i;
     return strint;
 }
 
-struct getalinfo check(struct getalinfo checkgetal, struct filecontent checkfile)
+struct numberinfo check(struct numberinfo checknumber, struct filecontent checkfile)
 {
     int possible;
     size_t i=0, j;
@@ -114,9 +114,9 @@ struct getalinfo check(struct getalinfo checkgetal, struct filecontent checkfile
 
     if(possible == 0)
     {
-        checkgetal.getal = 0;
+        checknumber.number = 0;
     }
-    return checkgetal;
+    return checknumber;
 }
 
 

@@ -4,8 +4,8 @@
 #include <assert.h>
 //#include "..\libraries\readfile.h"
 
-void deel1();
-void deel2();
+void part1();
+void part2();
 int possible();
 int possible2();
 char** str_split(char* a_str, const char a_delim);
@@ -19,11 +19,11 @@ int max();
 
 int main(void)
 {
-    deel1();
-    deel2();
+    part1();
+    part2();
 }
 
-void deel1(void)
+void part1(void)
 {
     char game[500];
     char game2[500];
@@ -58,10 +58,10 @@ void deel1(void)
         }
     }
     fclose(file_ptr);
-    printf("Deel 1: %d\n", sum);
+    printf("part 1: %d\n", sum);
 }
 
-void deel2(void)
+void part2(void)
 {
     int sum = 0;
     int j;
@@ -82,7 +82,7 @@ void deel2(void)
         tokens = str_split(game2, ':');
         sum = sum + possible2(*(tokens + 1));
     }
-    printf("Deel 2: %d", sum);
+    printf("part 2: %d", sum);
 }
 
 int possible(const char *vstring)
@@ -215,16 +215,16 @@ char** str_split(char* a_str, const char a_delim)
     return result;
 }
 
-int strtoint(char getal[], size_t i)
+int strtoint(char number[], size_t i)
 {
     int check = 0;
-    size_t len = strlen(getal);
+    size_t len = strlen(number);
 
     while(i < len)
     {
-        if(getal[i] >= '0' && getal[i] <= '9')
+        if(number[i] >= '0' && number[i] <= '9')
         {
-            check = 10 * check + (getal[i] - '0');
+            check = 10 * check + (number[i] - '0');
         }
         else
         {
