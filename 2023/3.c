@@ -53,7 +53,6 @@ void part1(struct filecontent part1)
                 numberinfo1 = strtoint(numberinfo1, part1);
                 numberinfo1 = check(numberinfo1, part1);
                 numberinfo1.placex = numberinfo1.placex + numberinfo1.size;
-                printf("E");
                 //hier moet nog komen dat die zorgt dat er ook meer dan 1 getal per string kan zijn
             }
             result = result + numberinfo1.number;
