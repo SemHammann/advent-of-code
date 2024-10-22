@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <stdbool.h>
+
 
 struct filecontent
 {
@@ -10,21 +12,23 @@ struct filecontent
 };
 struct numberinfo
 {
-    size_t place, size, number;
+    size_t placex, placey, size, number;
+    bool possible;
 };
 
 void part1();
 void part2();
-int readnumber();
+struct numberinfo readnumber();
 struct numberinfo strtoint();
 struct numberinfo check();
+int min();
 
 struct filecontent read(const char *files);
 
 int main(void)
 {
     const char *filename = "txt/3.test1.txt";
-    struct filecontent main = read(filename); //deze vindt die niet leuk, KIJK HIERNA ALS JE NIET EEN JAAR WILT WACHTEN
+    struct filecontent main = read(filename);
     part1(main);
     //part2((struct filecontent part2);
 }
@@ -32,20 +36,22 @@ int main(void)
 void part1(struct filecontent part1)
 {
     int result = 0;
-    int placenumber;
     char game[4095];
     struct numberinfo numberinfo1;
     
     for(int i = 0; i < part1.lengthfile; i++)
     {
+        numberinfo1.placey = i;
         strcpy(game, part1.file[i]);
-        printf("%s", game);
-        placenumber = readnumber(game);
-        if(placenumber <= 0)
+        //printf("%s", game);
+        numberinfo1 = readnumber(numberinfo1, part1);
+        if(numberinfo1.possible == true)
         {
-            numberinfo1 = strtoint(game, placenumber);
+            numberinfo1 = strtoint(numberinfo1, part1);
             numberinfo1 = check(numberinfo1, part1);
+            //hier moet nog komen dat die zorgt dat er ook meer dan 1 getal per string kan zijn
         }
+        result = result + numberinfo1.number;
     }
     printf("part 1: %d", result);
 }
@@ -60,32 +66,41 @@ void part2(struct filecontent part2)
         if(part2.file[i] != 0)
         {
             strcpy(game, part2.file[i]);
-            printf("%s", game);
+            //printf("%s", game);
         }
     }
     printf("part 2: %d", result);
 }
 
-int readnumber(char game[])
+struct numberinfo readnumber(struct numberinfo readnumnum, struct filecontent readnumfile)
 {
-    for(size_t i = 0; i > strlen(game); i++)
+    size_t j = readnumnum.placey;
+    size_t i = readnumnum.placex;
+    char game[4095];
+    readnumnum.possible = false;
+    strcpy(game, readnumfile.file[j]);
+    for(i = 0; i < readnumfile.lengthfile; i++)
     {
         if(game[i] >= '0' && game[i] <= '9')
         {
-            return i;
+            readnumnum.possible = true;
+            readnumnum.placex = i;
+            return readnumnum;
         }
     }
-    return -1;
+    return readnumnum;
 }
 
-struct numberinfo strtoint(char number[], size_t i)
+struct numberinfo strtoint(struct numberinfo strint, struct filecontent strintfile)
 {
-    size_t len = strlen(number);
-    struct numberinfo strint;
     strint.size = 0;
     strint.number = 0;
-
-    while((strint.size + i) < len)
+    size_t j;
+    size_t i = 0;
+    j = strint.placey;
+    char number[4095];
+    strcpy(number, strintfile.file[j]);
+    while((strint.size) < 4095)
     {
         if(number[i] >= '0' && number[i] <= '9')
         {
@@ -96,20 +111,42 @@ struct numberinfo strtoint(char number[], size_t i)
             return strint;
         }
         strint.size++;
+        i++;
     }
-    strint.place = strint.size + i;
     return strint;
 }
 
 struct numberinfo check(struct numberinfo checknumber, struct filecontent checkfile)
 {
-    int possible;
-    size_t i=0, j;
+    int possible = 0;
+    size_t i, j, k;
+    if(checknumber.placex >= 1)
+        i = checknumber.placex - 1;
+    else 
+        i = checknumber.placex;
+    if(checknumber.placey >= 1)
+        j = checknumber.placey - 1;
+    else 
+        j = checknumber.placey;
     char game[4095];
-    strcpy(game, checkfile.file[i]);
-    if(game[i] >= '!' && game[i] <= '/' && game[i] != '.')
+    strcpy(game, checkfile.file[j]);    
+    while(j <= checknumber.placey + 1)
     {
-        possible++;
+        k = min(j, checkfile.lengthfile - 1);
+        strcpy(game, checkfile.file[k]);
+        while(i <= (checknumber.placex + checknumber.size))
+        {
+            if(game[i] >= '!' && game[i] <= '/' && game[i] != '.')
+            {
+                possible++;
+            }
+            i++;
+        }
+        if(checknumber.placex >= 1)
+            i = checknumber.placex - 1;
+        else 
+            i = checknumber.placex;
+        j++;
     }
 
     if(possible == 0)
@@ -117,6 +154,14 @@ struct numberinfo check(struct numberinfo checknumber, struct filecontent checkf
         checknumber.number = 0;
     }
     return checknumber;
+}
+
+int min(int a, int b)
+{
+    if(a < b)
+        return a;
+    else
+        return b;
 }
 
 
@@ -151,7 +196,7 @@ struct filecontent read(const char *files)
     }
     else
     {
-        printf("File open worked\n");
+        //printf("File open worked\n");
         i = 0;
     }
     while (fgets(str, 4095, file_ptr) != NULL) {
