@@ -30,7 +30,7 @@ int main(void)
     const char *filename = "txt/3.test1.txt";
     struct filecontent main = read(filename);
     part1(main);
-    //part2((struct filecontent part2);
+    //part2((main);
 }
 
 void part1(struct filecontent part1)
@@ -38,20 +38,26 @@ void part1(struct filecontent part1)
     int result = 0;
     char game[4095];
     struct numberinfo numberinfo1;
+    numberinfo1.possible = true;
     
     for(int i = 0; i < part1.lengthfile; i++)
     {
         numberinfo1.placey = i;
+        numberinfo1.placex = 0;
         strcpy(game, part1.file[i]);
         //printf("%s", game);
-        numberinfo1 = readnumber(numberinfo1, part1);
-        if(numberinfo1.possible == true)
-        {
-            numberinfo1 = strtoint(numberinfo1, part1);
-            numberinfo1 = check(numberinfo1, part1);
-            //hier moet nog komen dat die zorgt dat er ook meer dan 1 getal per string kan zijn
-        }
-        result = result + numberinfo1.number;
+        do{
+            numberinfo1 = readnumber(numberinfo1, part1);
+            if(numberinfo1.possible == true)
+            {
+                numberinfo1 = strtoint(numberinfo1, part1);
+                numberinfo1 = check(numberinfo1, part1);
+                numberinfo1.placex = numberinfo1.placex + numberinfo1.size;
+                printf("E");
+                //hier moet nog komen dat die zorgt dat er ook meer dan 1 getal per string kan zijn
+            }
+            result = result + numberinfo1.number;
+        }while(numberinfo1.possible == true);
     }
     printf("part 1: %d", result);
 }
@@ -79,7 +85,7 @@ struct numberinfo readnumber(struct numberinfo readnumnum, struct filecontent re
     char game[4095];
     readnumnum.possible = false;
     strcpy(game, readnumfile.file[j]);
-    for(i = 0; i < readnumfile.lengthfile; i++)
+    while(i < readnumfile.lengthfile)
     {
         if(game[i] >= '0' && game[i] <= '9')
         {
@@ -87,6 +93,7 @@ struct numberinfo readnumber(struct numberinfo readnumnum, struct filecontent re
             readnumnum.placex = i;
             return readnumnum;
         }
+        i++;
     }
     return readnumnum;
 }
@@ -95,9 +102,8 @@ struct numberinfo strtoint(struct numberinfo strint, struct filecontent strintfi
 {
     strint.size = 0;
     strint.number = 0;
-    size_t j;
-    size_t i = 0;
-    j = strint.placey;
+    size_t j = strint.placey;
+    size_t i = strint.placex;
     char number[4095];
     strcpy(number, strintfile.file[j]);
     while((strint.size) < 4095)
