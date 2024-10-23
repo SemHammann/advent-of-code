@@ -39,7 +39,6 @@ void part1(struct filecontent part1)
     int result = 0;
     char game[4095];
     struct numberinfo numberinfo1;
-    numberinfo1.possible = true;
     
     for(int i = 0; i < part1.lengthfile; i++)
     {
@@ -48,6 +47,7 @@ void part1(struct filecontent part1)
         strcpy(game, part1.file[i]);
         //printf("%s", game);
         do{
+            numberinfo1.number = 0;
             numberinfo1 = readnumber(numberinfo1, part1);
             if(numberinfo1.possible == true)
             {
@@ -56,7 +56,6 @@ void part1(struct filecontent part1)
                 numberinfo1.placex = numberinfo1.placex + numberinfo1.size;
             }
             result = result + numberinfo1.number;
-            numberinfo1.number = 0;
         }while(numberinfo1.possible == true);
     }
     printf("part 1: %d", result);
@@ -142,7 +141,7 @@ struct numberinfo check(struct numberinfo checknumber, struct filecontent checkf
         strcpy(game, checkfile.file[k]);
         while(i <= (checknumber.placex + checknumber.size))
         {
-            if(game[i] >= '!' && game[i] <= '/' && game[i] != '.')
+            if(game[i] >= '!' && game[i] <= '/' && game[i] != '.' || game[i] >= ':' && game[i] <= '@' || game[i] >= '[' && game[i] <= '`' || game[i] >= '{' && game[i] <= '~')
             {
                 possible = true;
             }
