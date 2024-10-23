@@ -13,16 +13,19 @@ struct filecontent
 };
 struct numberinfo
 {
-    size_t placex, placey, size, number;
+    size_t placex, placey, placex2, placey2, size, number;
     bool possible;
 };
 
 void part1();
 void part2();
-struct numberinfo readnumber();
+struct numberinfo readfirstnumber();
 struct numberinfo strtoint();
 struct numberinfo check();
 int min();
+struct numberinfo checkstar();
+struct numberinfo readstar();
+struct numberinfo checkstartnumber();
 
 struct filecontent read(const char *files);
 
@@ -31,7 +34,7 @@ int main(void)
     const char *filename = "txt/3.txt";
     struct filecontent main = read(filename);
     part1(main);
-    //part2((main);
+    //part2(main);
 }
 
 void part1(struct filecontent part1)
@@ -48,7 +51,7 @@ void part1(struct filecontent part1)
         //printf("%s", game);
         do{
             numberinfo1.number = 0;
-            numberinfo1 = readnumber(numberinfo1, part1);
+            numberinfo1 = readfirstnumber(numberinfo1, part1);
             if(numberinfo1.possible == true)
             {
                 numberinfo1 = strtoint(numberinfo1, part1);
@@ -65,19 +68,29 @@ void part2(struct filecontent part2)
 {
     int result = 0;
     char game[4095];
+    struct numberinfo numberinfo2;
     
     for(int i = 0; i < part2.lengthfile; i++)
     {
-        if(part2.file[i] != 0)
-        {
-            strcpy(game, part2.file[i]);
-            //printf("%s", game);
-        }
+        numberinfo2.placey = i;
+        numberinfo2.placex = 0;
+        strcpy(game, part2.file[i]);
+        //printf("%s", game);
+        do{
+            numberinfo2.number = 0;
+            numberinfo2 = readstar(numberinfo2, part2);
+            if(numberinfo2.possible == true)
+            {
+                numberinfo2 = checkstar(numberinfo2, part2);
+
+            }
+            result = result;
+        }while(numberinfo2.possible == true);
     }
     printf("part 2: %d", result);
 }
 
-struct numberinfo readnumber(struct numberinfo readnumnum, struct filecontent readnumfile)
+struct numberinfo readfirstnumber(struct numberinfo readnumnum, struct filecontent readnumfile)
 {
     size_t j = readnumnum.placey;
     size_t i = readnumnum.placex;
@@ -168,6 +181,91 @@ int min(int a, int b)
     else
         return b;
 }
+
+struct numberinfo checkstar(struct numberinfo checkstarnumber, struct filecontent checkstarfile)
+{
+    int possible = 0;
+    size_t i, j, k;
+    if(checkstarnumber.placex >= 1)
+        i = checkstarnumber.placex - 1;
+    else 
+        i = checkstarnumber.placex;
+    if(checkstarnumber.placey >= 1)
+        j = checkstarnumber.placey - 1;
+    else 
+        j = checkstarnumber.placey;
+    char game[4095];
+    strcpy(game, checkstarfile.file[j]);    
+    while(j <= checkstarnumber.placey + 1)
+    {
+        k = min(j, checkstarfile.lengthfile - 1);
+        strcpy(game, checkstarfile.file[k]);
+        while(i <= (checkstarnumber.placex + checkstarnumber.size))
+        {
+            if(game[i] >= '0' && game[i] <= '9')
+            {
+                possible++;
+            }
+            i++;
+        }
+        if(checkstarnumber.placex >= 1)
+            i = checkstarnumber.placex - 1;
+        else 
+            i = checkstarnumber.placex;
+        j++;
+    }
+
+    if(possible != 2)
+    {
+        checkstarnumber.number = 0;
+    }
+    return checkstarnumber;
+}
+
+struct numberinfo readstar(struct numberinfo readstarnum, struct filecontent readstarfile)
+{
+    size_t j = readstarnum.placey;
+    size_t i = readstarnum.placex;
+    char game[4095];
+    readstarnum.possible = false;
+    strcpy(game, readstarfile.file[j]);
+    while(i < readstarfile.lengthfile)
+    {
+        if(game[i] == '*')
+        {
+            readstarnum.possible = true;
+            readstarnum.placex = i;
+            return readstarnum;
+        }
+        i++;
+    }
+    return readstarnum;
+}
+
+struct numberinfo checkstartnumber(struct numberinfo checkstartnumber, struct filecontent checkstartfile)
+{
+    checkstartnumber.size = 0;
+    checkstartnumber.number = 0;
+    size_t j = checkstartnumber.placey;
+    size_t i = checkstartnumber.placex;
+    char number[4095];
+    strcpy(number, checkstartfile.file[j]);
+    while((checkstartnumber.size) < 4095)
+    {
+        if(number[i] >= '0' && number[i] <= '9')
+        {
+            i--;
+        }
+        else
+        {
+            checkstartnumber.placex = i;
+            return checkstartnumber;
+        }
+    }
+    checkstartnumber.placex = i;
+    return checkstartnumber;
+}
+
 
 
 
