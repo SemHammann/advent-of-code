@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <stdbool.h>
 
+//469875 to low
 
 struct filecontent
 {
@@ -27,7 +28,7 @@ struct filecontent read(const char *files);
 
 int main(void)
 {
-    const char *filename = "txt/3.test1.txt";
+    const char *filename = "txt/3.txt";
     struct filecontent main = read(filename);
     part1(main);
     //part2((main);
@@ -53,9 +54,9 @@ void part1(struct filecontent part1)
                 numberinfo1 = strtoint(numberinfo1, part1);
                 numberinfo1 = check(numberinfo1, part1);
                 numberinfo1.placex = numberinfo1.placex + numberinfo1.size;
-                //hier moet nog komen dat die zorgt dat er ook meer dan 1 getal per string kan zijn
             }
             result = result + numberinfo1.number;
+            numberinfo1.number = 0;
         }while(numberinfo1.possible == true);
     }
     printf("part 1: %d", result);
@@ -123,7 +124,7 @@ struct numberinfo strtoint(struct numberinfo strint, struct filecontent strintfi
 
 struct numberinfo check(struct numberinfo checknumber, struct filecontent checkfile)
 {
-    int possible = 0;
+    bool possible = false;
     size_t i, j, k;
     if(checknumber.placex >= 1)
         i = checknumber.placex - 1;
@@ -143,7 +144,7 @@ struct numberinfo check(struct numberinfo checknumber, struct filecontent checkf
         {
             if(game[i] >= '!' && game[i] <= '/' && game[i] != '.')
             {
-                possible++;
+                possible = true;
             }
             i++;
         }
@@ -154,7 +155,7 @@ struct numberinfo check(struct numberinfo checknumber, struct filecontent checkf
         j++;
     }
 
-    if(possible == 0)
+    if(possible == false)
     {
         checknumber.number = 0;
     }
