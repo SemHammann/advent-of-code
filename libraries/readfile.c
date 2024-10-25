@@ -29,7 +29,7 @@ struct filecontent read(const char *files)
         *output[i] = 0;
     }
     if (NULL == file_ptr) {
-        printf("File can't be opened \n");
+        //printf("File can't be opened \n");
     }
     else
     {
