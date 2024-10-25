@@ -4,8 +4,6 @@
 #include <assert.h>
 #include <stdbool.h>
 
-//469875 to low
-
 struct filecontent
 {
     char **file;
@@ -272,8 +270,8 @@ struct numberinfo checkstartnumber(struct numberinfo checkstartnumber, struct fi
 struct filecontent read(const char *files)
 {
     FILE *file_ptr;
-    char str[4096];
-    int maxstrlength = 1;
+    char str[4096] = "0";
+    size_t maxstrlength = 1;
     size_t i = 0;
     char ch;
     struct filecontent read;
@@ -302,12 +300,13 @@ struct filecontent read(const char *files)
         //printf("File open worked\n");
         i = 0;
     }
-    while (fgets(str, 4095, file_ptr) != NULL) {
+    while (fgets(str, 4095, file_ptr) != NULL)
+    {
         strcpy(output[i], str);
+        //check op "/n" als einde, haal de /n weg
         i++;
     }
     fclose(file_ptr);
     read.file = output;
     return read;
 }
-

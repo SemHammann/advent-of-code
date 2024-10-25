@@ -39,7 +39,6 @@ struct filecontent read(const char *files)
     while (fgets(str, 4095, file_ptr) != NULL) {
         strcpy(output[i], str);
         //check op "/n" als einde, haal de /n weg
-        str = "0";
         i++;
     }
     fclose(file_ptr);
