@@ -7,7 +7,7 @@ struct filecontent read(const char *files)
 {
     FILE *file_ptr;
     char str[4096];
-    int maxstrlength = 1;
+    size_t maxstrlength = 1;
     size_t i = 0;
     char ch;
     struct filecontent read;
