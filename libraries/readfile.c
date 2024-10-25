@@ -6,7 +6,7 @@
 struct filecontent read(const char *files)
 {
     FILE *file_ptr;
-    char str[4096];
+    char str[4096] = "0";
     size_t maxstrlength = 1;
     size_t i = 0;
     char ch;
@@ -38,6 +38,7 @@ struct filecontent read(const char *files)
     }
     while (fgets(str, 4095, file_ptr) != NULL) {
         strcpy(output[i], str);
+        str = "0";
         i++;
     }
     fclose(file_ptr);
