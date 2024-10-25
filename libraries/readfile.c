@@ -29,11 +29,11 @@ struct filecontent read(const char *files)
         *output[i] = 0;
     }
     if (NULL == file_ptr) {
-        //printf("File can't be opened \n");
+        printf("File can't be opened \n");
     }
     else
     {
-        printf("File open worked\n");
+        //printf("File open worked\n");
         i = 0;
     }
     while (fgets(str, 4095, file_ptr) != NULL) {
