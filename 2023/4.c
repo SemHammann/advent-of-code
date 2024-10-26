@@ -7,27 +7,65 @@
 struct filecontent
 {
     char **file;
-    size_t lengthfile;
+    size_t lengthfile, maxlengthfile;
+};
+struct numberinfo
+{
+    size_t *winningnumbersarr;
+    size_t *mynumbersarr;
+    char **card;
+    char *winningnumbers;
+    char *mynumbers;
+};
+struct number
+{
+    size_t number, size, place;
+    char str[];
 };
 
 void part1();
 void part2();
 
+size_t *strtoarray();
+struct number strtoint();
+
+char *replace(const char *vstring);
 char** str_split(char* a_str, const char a_delim);
 char *searchAndReplace(char *text, char *search, char *replace);
 struct filecontent read(const char *files);
+size_t max();
 
 int main(void)
 {
-    const char *filename = "txt/4.txt";
+    const char *filename = "txt/4.test1.txt";
     struct filecontent main = read(filename);
+    //char game[4095] = "0";
+    //strcpy(game, main.file[0]);
+    //strcpy(game, replace(game));
     part1(main);
     part2(main);
 }
 
 void part1(struct filecontent part1)
 {
-
+    char game[4095] = "0";
+    size_t result = 0;
+    struct numberinfo number1;
+    char **tokens;
+    char **tokensg;
+    for(size_t i = 0; i < part1.lengthfile; i++)
+    {
+        strcpy(game, part1.file[i]);
+        strcpy(game, replace(game));
+        tokens = str_split(game, ':');
+        tokensg = str_split(*(tokens + 1), '|');
+        number1.winningnumbers = *tokensg;
+        number1.mynumbers = *(tokensg + 1);
+        //printf("%s\n%s", number1.winningnumbers, number1.mynumbers);
+        number1.winningnumbersarr = strtoarray(number1.winningnumbers);
+        number1.mynumbersarr = strtoarray(number1.mynumbers);
+        printf("\n");
+    }
 }
 
 void part2(struct filecontent part2)
@@ -35,6 +73,54 @@ void part2(struct filecontent part2)
 
 }
 
+size_t *strtoarray(char **vstring)
+{
+    size_t *str;
+    
+    struct number strtoarray;
+    strtoarray.place = 1;
+    strtoarray = strtoint(strtoarray);
+    printf("%s\n", *str);
+    return str;
+    // CHECK DEZE ONZIN NOG GOED, WANT ER KLOPT NIKS VAN
+}
+
+struct number strtoint(struct number strint)
+{
+    size_t number = 0;
+    size_t i = strint.place;
+    char numberstr[4095];
+    strcpy(numberstr, strint.str);
+    while(true)
+    {
+        if(numberstr[i] >= '0' && numberstr[i] <= '9')
+            {
+                number = 10 * number + (numberstr[i] - '0');
+            }
+            else
+            {
+                return strint;
+            }
+        strint.size++;    
+        i++;
+    }
+    return strint;
+}
+
+
+
+
+char *replace(const char *vstring)
+{
+    char output[4095];
+    char *output_p = output;
+
+    strcpy(output, vstring);
+
+    output_p = searchAndReplace(output_p, "  ", " ");
+
+    return output_p;
+}
 
 char** str_split(char* a_str, const char a_delim)
 {
@@ -110,17 +196,18 @@ struct filecontent read(const char *files)
 {
     FILE *file_ptr;
     char str[4096] = "0";
-    size_t maxstrlength = 1;
     size_t i = 0;
     char ch;
     struct filecontent read;
     read.lengthfile = 0;
+    read.maxlengthfile = 1;
 
     file_ptr = fopen(files, "r");
 
     while((ch = fgets(str, 4095, file_ptr) != NULL))
     {
         read.lengthfile++;
+        read.maxlengthfile = max(read.maxlengthfile, strlen(str));
     }
     rewind(file_ptr);
     const size_t size = read.lengthfile*sizeof(char*);
@@ -147,4 +234,12 @@ struct filecontent read(const char *files)
     fclose(file_ptr);
     read.file = output;
     return read;
+}
+
+size_t max(size_t a, size_t b)
+{
+    if(a > b)
+        return a;
+    else
+        return b;
 }
