@@ -7,17 +7,18 @@ struct filecontent read(const char *files)
 {
     FILE *file_ptr;
     char str[4096] = "0";
-    size_t maxstrlength = 1;
     size_t i = 0;
     char ch;
     struct filecontent read;
     read.lengthfile = 0;
+    read.maxlengthfile = 1;
 
     file_ptr = fopen(files, "r");
 
     while((ch = fgets(str, 4095, file_ptr) != NULL))
     {
         read.lengthfile++;
+        read.maxlengthfile = max(read.maxlengthfile, strlen(str));
     }
     rewind(file_ptr);
     const size_t size = read.lengthfile*sizeof(char*);
@@ -44,4 +45,12 @@ struct filecontent read(const char *files)
     fclose(file_ptr);
     read.file = output;
     return read;
+}
+
+size_t max(size_t a, size_t b)
+{
+    if(a > b)
+        return a;
+    else
+        return b;
 }

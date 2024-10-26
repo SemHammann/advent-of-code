@@ -4,7 +4,7 @@
 struct filecontent
 {
     char **file;
-    size_t lengthfile;
+    size_t lengthfile, maxlengthfile;
 };
 
 struct filecontent read(const char *filename);
