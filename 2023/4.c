@@ -39,7 +39,7 @@ size_t max();
 
 int main(void)
 {
-    const char *filename = "txt/4.txt";
+    const char *filename = "txt/4.test2.txt";
     struct filecontent main = read(filename);
     //char game[4095] = "0";
     //strcpy(game, main.file[0]);
@@ -87,7 +87,29 @@ void part1(struct filecontent part1)
 
 void part2(struct filecontent part2)
 {
-
+char game[4095] = "0";
+    size_t result = 0;
+    size_t amountwin;
+    size_t answer = 0;
+    struct numberinfo number2;
+    char **tokens;
+    char **tokensg;
+    for(size_t i = 0; i < part2.lengthfile; i++)
+    {
+        strcpy(game, part2.file[i]);
+        strcpy(game, replace(game));
+        tokens = str_split(game, ':');
+        tokensg = str_split(*(tokens + 1), '|');
+        strcpy(number2.winningnumbers, *tokensg);
+        strcpy(number2.mynumbers, *(tokensg + 1));
+        //printf("%s\n%s", number1.winningnumbers, number1.mynumbers);
+        memcpy((void *)number2.winningnumbersarr, (void *)strtoarray(number2.winningnumbers), 128 * sizeof(size_t));
+        memcpy((void *)number2.mynumbersarr, (void *)strtoarray(number2.mynumbers), 128 * sizeof(size_t));
+        result = 0;
+        amountwin = amountnumberswin(number2);
+        
+    }
+    printf("part 2: %llu\n\n", answer);
 }
 
 size_t strtoarray(char *vstring)
