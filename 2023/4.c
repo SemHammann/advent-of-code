@@ -11,22 +11,23 @@ struct filecontent
 };
 struct numberinfo
 {
-    size_t *winningnumbersarr;
-    size_t *mynumbersarr;
+    size_t winningnumbersarr[128];
+    size_t mynumbersarr[128];
     char **card;
-    char *winningnumbers;
-    char *mynumbers;
+    char winningnumbers[4096];
+    char mynumbers[4096];
 };
 struct number
 {
     size_t number, size, place;
-    char str[];
+    char str[4096];
+    size_t numberstring[128];
 };
 
 void part1();
 void part2();
 
-size_t *strtoarray();
+size_t strtoarray();
 struct number strtoint();
 
 char *replace(const char *vstring);
@@ -59,11 +60,11 @@ void part1(struct filecontent part1)
         strcpy(game, replace(game));
         tokens = str_split(game, ':');
         tokensg = str_split(*(tokens + 1), '|');
-        number1.winningnumbers = *tokensg;
-        number1.mynumbers = *(tokensg + 1);
+        *number1.winningnumbers = *tokensg;
+        /*number1.mynumbers = *(tokensg + 1);
         //printf("%s\n%s", number1.winningnumbers, number1.mynumbers);
-        number1.winningnumbersarr = strtoarray(number1.winningnumbers);
-        number1.mynumbersarr = strtoarray(number1.mynumbers);
+        *number1.winningnumbersarr = strtoarray(number1.winningnumbers);
+        *number1.mynumbersarr = strtoarray(number1.mynumbers);*/
         printf("\n");
     }
 }
@@ -73,23 +74,29 @@ void part2(struct filecontent part2)
 
 }
 
-size_t *strtoarray(char **vstring)
+size_t strtoarray(char *vstring)
 {
-    size_t *str;
+    size_t str[128] = { 0 };
+    size_t *str_p;
     
+
     struct number strtoarray;
+    strcpy(strtoarray.str, vstring);
     strtoarray.place = 1;
     strtoarray = strtoint(strtoarray);
-    printf("%s\n", *str);
+    for(size_t j = 0; j < 128; j++)
+    {
+        str[j] = strtoarray.numberstring[j];
+    }
+    printf("%llu\n", str[1]);
     return str;
-    // CHECK DEZE ONZIN NOG GOED, WANT ER KLOPT NIKS VAN
 }
 
 struct number strtoint(struct number strint)
 {
     size_t number = 0;
     size_t i = strint.place;
-    char numberstr[4095];
+    char numberstr[4096];
     strcpy(numberstr, strint.str);
     while(true)
     {
