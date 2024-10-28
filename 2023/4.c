@@ -45,9 +45,6 @@ int main(void)
 {
     const char *filename = "txt/4.txt";
     struct filecontent main = read(filename);
-    //char game[4095] = "0";
-    //strcpy(game, main.file[0]);
-    //strcpy(game, replace(game));
     part1(main);
     part2(main);
 }
@@ -69,7 +66,6 @@ void part1(struct filecontent part1)
         tokensg = str_split(*(tokens + 1), '|');
         strcpy(number1.winningnumbers, *tokensg);
         strcpy(number1.mynumbers, *(tokensg + 1));
-        //printf("%s\n%s", number1.winningnumbers, number1.mynumbers);
         memcpy((void *)number1.winningnumbersarr, (void *)strtoarray(number1.winningnumbers), numlines * sizeof(size_t));
         memcpy((void *)number1.mynumbersarr, (void *)strtoarray(number1.mynumbers), numlines * sizeof(size_t));
         result = 0;
@@ -82,20 +78,17 @@ void part1(struct filecontent part1)
                 result = result * 2;
             }
         }
-        answer = answer + result;
-        //printf("%llu\n", result);
-        
+        answer = answer + result;        
     }
     printf("part 1: %llu\n\n", answer);
 }
 
 void part2(struct filecontent part2)
 {
-char game[4095] = "0";
-    size_t result = 0;
+    char game[4095] = "0";  
     size_t amountwin;
     size_t answer = 0;
-    size_t j = 0, k = 0, x = 0;
+    size_t j = 0, k = 0;
     struct numberinfo number2;
     char **tokens;
     char **tokensg;
@@ -107,10 +100,8 @@ char game[4095] = "0";
         tokensg = str_split(*(tokens + 1), '|');
         strcpy(number2.winningnumbers, *tokensg);
         strcpy(number2.mynumbers, *(tokensg + 1));
-        //printf("%s\n%s", number1.winningnumbers, number1.mynumbers);
         memcpy((void *)number2.winningnumbersarr, (void *)strtoarray(number2.winningnumbers), numlines * sizeof(size_t));
         memcpy((void *)number2.mynumbersarr, (void *)strtoarray(number2.mynumbers), numlines * sizeof(size_t));
-        result = 0;
         number2.amountwinningnumberscard[i] = amountnumberswin(number2);
         number2.amountcard[i] = 1;
     }
@@ -122,19 +113,14 @@ char game[4095] = "0";
             number2.amountcard[k] = number2.amountcard[k] + number2.amountcard[j];
             k++;
         }
+        answer = answer + number2.amountcard[j];
         j++;
-    }
-    while(number2.amountcard[x] != 0)
-    {
-        answer = answer + number2.amountcard[x];
-        x++;
     }
     printf("part 2: %llu\n\n", answer);
 }
 
 size_t strtoarray(char *vstring)
-{
-    //size_t str[numlines] = { 0 };  
+{ 
     size_t i = 0;
     struct number strtoarray;
 
@@ -147,7 +133,6 @@ size_t strtoarray(char *vstring)
         strtoarray.place = strtoarray.place + strtoarray.size + 1;
         i++;
     }
-    //strtoarray = strtoint(strtoarray);
     while(i < numlines)
     {
         strtoarray.numberstring[i] = 0;
@@ -203,11 +188,6 @@ size_t amountnumberswin(struct numberinfo amountwin)
     return win;
 }
 
-
-
-
-
-
 char *replace(const char *vstring)
 {
     char output[4095];
@@ -230,7 +210,6 @@ char** str_split(char* a_str, const char a_delim)
     delim[0] = a_delim;
     delim[1] = 0;
 
-    /* Count how many elements will be extracted. */
     while (*tmp)
     {
         if (a_delim == *tmp)
@@ -241,11 +220,8 @@ char** str_split(char* a_str, const char a_delim)
         tmp++;
     }
 
-    /* Add space for trailing token. */
     count += last_comma < (a_str + strlen(a_str) - 1);
 
-    /* Add space for terminating null string so caller
-       knows where the list of returned strings ends. */
     count++;
 
     result = malloc(sizeof(char*) * count);
@@ -267,7 +243,6 @@ char** str_split(char* a_str, const char a_delim)
 
     return result;
 }
-
 
 char *searchAndReplace(char *text, char *search, char *replace)
 {
@@ -309,7 +284,6 @@ struct filecontent read(const char *files)
     }
     rewind(file_ptr);
     const size_t size = read.lengthfile*sizeof(char*);
-    //printf("Size of the array is %llu x %d\n", numlines, maxstrlength);
     char **output = malloc(size);
     for (i = 0; i < read.lengthfile; i++)
     {
@@ -321,12 +295,10 @@ struct filecontent read(const char *files)
     }
     else
     {
-        //printf("File open worked\n");
         i = 0;
     }
     while (fgets(str, 4095, file_ptr) != NULL) {
         strcpy(output[i], str);
-        //check op "/n" als einde, haal de /n weg
         i++;
     }
     fclose(file_ptr);
