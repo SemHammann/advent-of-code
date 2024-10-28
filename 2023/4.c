@@ -4,6 +4,8 @@
 #include <assert.h>
 #include <stdbool.h>
 
+#define numlines 200
+
 struct filecontent
 {
     char **file;
@@ -11,8 +13,10 @@ struct filecontent
 };
 struct numberinfo
 {
-    size_t winningnumbersarr[128];
-    size_t mynumbersarr[128];
+    size_t winningnumbersarr[numlines];
+    size_t mynumbersarr[numlines];
+    size_t amountwinningnumberscard[numlines];
+    size_t amountcard[numlines];
     char **card;
     char winningnumbers[4096];
     char mynumbers[4096];
@@ -21,7 +25,7 @@ struct number
 {
     size_t number, size, place;
     char str[4096];
-    size_t numberstring[128];
+    size_t numberstring[numlines];
 };
 
 void part1();
@@ -39,7 +43,7 @@ size_t max();
 
 int main(void)
 {
-    const char *filename = "txt/4.test2.txt";
+    const char *filename = "txt/4.txt";
     struct filecontent main = read(filename);
     //char game[4095] = "0";
     //strcpy(game, main.file[0]);
@@ -66,8 +70,8 @@ void part1(struct filecontent part1)
         strcpy(number1.winningnumbers, *tokensg);
         strcpy(number1.mynumbers, *(tokensg + 1));
         //printf("%s\n%s", number1.winningnumbers, number1.mynumbers);
-        memcpy((void *)number1.winningnumbersarr, (void *)strtoarray(number1.winningnumbers), 128 * sizeof(size_t));
-        memcpy((void *)number1.mynumbersarr, (void *)strtoarray(number1.mynumbers), 128 * sizeof(size_t));
+        memcpy((void *)number1.winningnumbersarr, (void *)strtoarray(number1.winningnumbers), numlines * sizeof(size_t));
+        memcpy((void *)number1.mynumbersarr, (void *)strtoarray(number1.mynumbers), numlines * sizeof(size_t));
         result = 0;
         amountwin = amountnumberswin(number1);
         if(amountwin != 0)
@@ -91,6 +95,7 @@ char game[4095] = "0";
     size_t result = 0;
     size_t amountwin;
     size_t answer = 0;
+    size_t j = 0, k = 0, x = 0;
     struct numberinfo number2;
     char **tokens;
     char **tokensg;
@@ -103,18 +108,33 @@ char game[4095] = "0";
         strcpy(number2.winningnumbers, *tokensg);
         strcpy(number2.mynumbers, *(tokensg + 1));
         //printf("%s\n%s", number1.winningnumbers, number1.mynumbers);
-        memcpy((void *)number2.winningnumbersarr, (void *)strtoarray(number2.winningnumbers), 128 * sizeof(size_t));
-        memcpy((void *)number2.mynumbersarr, (void *)strtoarray(number2.mynumbers), 128 * sizeof(size_t));
+        memcpy((void *)number2.winningnumbersarr, (void *)strtoarray(number2.winningnumbers), numlines * sizeof(size_t));
+        memcpy((void *)number2.mynumbersarr, (void *)strtoarray(number2.mynumbers), numlines * sizeof(size_t));
         result = 0;
-        amountwin = amountnumberswin(number2);
-        
+        number2.amountwinningnumberscard[i] = amountnumberswin(number2);
+        number2.amountcard[i] = 1;
+    }
+    while(j < part2.lengthfile)
+    {
+        k = j + 1;
+        while(k <= j + number2.amountwinningnumberscard[j])
+        {
+            number2.amountcard[k] = number2.amountcard[k] + number2.amountcard[j];
+            k++;
+        }
+        j++;
+    }
+    while(number2.amountcard[x] != 0)
+    {
+        answer = answer + number2.amountcard[x];
+        x++;
     }
     printf("part 2: %llu\n\n", answer);
 }
 
 size_t strtoarray(char *vstring)
 {
-    //size_t str[128] = { 0 };  
+    //size_t str[numlines] = { 0 };  
     size_t i = 0;
     struct number strtoarray;
 
@@ -127,8 +147,8 @@ size_t strtoarray(char *vstring)
         strtoarray.place = strtoarray.place + strtoarray.size + 1;
         i++;
     }
-    strtoarray = strtoint(strtoarray);
-    while(i < 128)
+    //strtoarray = strtoint(strtoarray);
+    while(i < numlines)
     {
         strtoarray.numberstring[i] = 0;
         i++;
@@ -164,18 +184,18 @@ size_t amountnumberswin(struct numberinfo amountwin)
 {
     size_t i = 0;
     size_t win = 0;
-    while(amountwin.mynumbersarr[i] != 0 && i < 128)
+    while(amountwin.mynumbersarr[i] != 0 && i < numlines)
     {
-        for(size_t j = 0; j < 128; j++)
+        for(size_t j = 0; j < numlines; j++)
         {
             if(amountwin.mynumbersarr[i] == amountwin.winningnumbersarr[j])
             {
                 win++;
-                j = 128;
+                j = numlines;
             }
             else if(amountwin.winningnumbersarr[j] == 0)
             {
-                j = 128;
+                j = numlines;
             }
         }
         i++;
