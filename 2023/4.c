@@ -48,7 +48,7 @@ int main(void)
     const char *filename = "txt/4.txt";
     struct filecontent main = read(filename);
     clock_t begin1 = clock();
-    printf("\n%lfms\n\n", (double)(begin1 - begin));
+    printf("\nFile readtime: %lfms\n\n", (double)(begin1 - begin));
     part1(main);
     clock_t end1 = clock();
     printf("\n%lfms\n\n", (double)(end1 - begin1));
