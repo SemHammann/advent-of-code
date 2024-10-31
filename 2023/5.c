@@ -14,20 +14,13 @@ struct filecontent
 struct mapdata
 {
     size_t seeds[arraysize];
-    size_t seed_[arraysize];
-    size_t _soil[arraysize];
-    size_t soil_[arraysize];
-    size_t _fertilizer[arraysize];
-    size_t fertilizer_[arraysize];
-    size_t _water[arraysize];
-    size_t water_[arraysize];
-    size_t _light[arraysize];
-    size_t light_[arraysize];
-    size_t _temperature[arraysize];
-    size_t temperature_[arraysize];
-    size_t _humidity[arraysize];
-    size_t humidity_[arraysize];
-    size_t _location[arraysize];
+    size_t seed_soil[arraysize];
+    size_t soil_fertilizer[arraysize];
+    size_t fertilizer_water[arraysize];
+    size_t water_light[arraysize];
+    size_t light_temperature[arraysize];
+    size_t temperature_humidity[arraysize];
+    size_t humidity_location[arraysize];
 };
 struct number
 {
@@ -40,7 +33,8 @@ void part1();
 void part2();
 
 size_t strtoarray();
-struct number strtoint();
+size_t strtoint();
+struct number structstrtoint();
 
 char *replace(const char *vstring);
 char** str_split(char* a_str, const char a_delim);
@@ -52,8 +46,32 @@ int main(void)
 {
     const char *filename = "txt/5.test1.txt";
     struct filecontent main = read(filename);
+    struct mapdata maindata;
+    size_t amountnumbers = 1;
+    size_t i = 0;
+    char game[4096] = "0";
+    char tmp[4096] = "0";
+    char **tokens;
+    char **tokensg;
+    strcpy(game, main.file[0]);
+    tokens = str_split(game, ':');
+    strcpy(tmp, *(tokens + 1));
+    tmp[0] = '0';
+    while(tmp[i] != '\0')
+    {
+        if(tmp[i] == ' ')
+            amountnumbers++;
+        i++;
+    }
+    tokensg = str_split(tmp, ' ');
+    for(size_t j = 0; j < amountnumbers; j++)
+    {
+        strcpy(tmp, *(tokensg + j));
+        maindata.seeds[j] = strtoint(tmp);
+    }
     part1(main);
     part2(main);
+    printf("E");
 }
 
 void part1(struct filecontent part1)
@@ -75,7 +93,7 @@ size_t strtoarray(char *vstring)
     strtoarray.place = 1;
     while(strtoarray.place < strlen(strtoarray.str))
     {
-        strtoarray = strtoint(strtoarray);
+        strtoarray = structstrtoint(strtoarray);
         strtoarray.numberstring[i] = strtoarray.number;
         strtoarray.place = strtoarray.place + strtoarray.size + 1;
         i++;
@@ -88,7 +106,26 @@ size_t strtoarray(char *vstring)
     return *strtoarray.numberstring;
 }
 
-struct number strtoint(struct number strint)
+size_t strtoint(char *vstring)
+{
+    size_t i = 0, number  = 0;
+    char game[4096];
+    strcpy(game, vstring);
+    while(true)
+    {
+        if(game[i] >= '0' && game[i] <= '9')
+            {
+                number = 10 * number + (game[i] - '0');
+            }
+            else
+            {
+                return number;
+            }   
+        i++;
+    }
+}
+
+struct number structstrtoint(struct number strint)
 {
     size_t number = 0;
     size_t i = strint.place;
@@ -130,7 +167,7 @@ char *replace(const char *vstring)
     return output_p;
 }
 
-char** str_split(char* a_str, const char a_delim)
+char** str_split(char* a_str, const char a_delim) //zorg ervoor dat als de 1e in de string is waarop je splitst, die niet breekt, en dubbele enzo
 {
     char** result    = 0;
     size_t count     = 0;
@@ -206,6 +243,7 @@ struct filecontent read(const char *files)
     read.maxlengthfile = 1;
 
     file_ptr = fopen(files, "r");
+    assert(!(NULL == file_ptr) && "File can't be opened");
 
     while((ch = fgets(str, 4095, file_ptr) != NULL))
     {
@@ -215,19 +253,15 @@ struct filecontent read(const char *files)
     rewind(file_ptr);
     const size_t size = read.lengthfile*sizeof(char*);
     char **output = malloc(size);
-    for (i = 0; i < read.lengthfile; i++)
+    for(i = 0; i < read.lengthfile; i++)
     {
         output[i] = (char*)malloc(4096 * sizeof(char));
         *output[i] = 0;
     }
-    if (NULL == file_ptr) {
-        printf("File can't be opened \n");
-    }
-    else
+
+    i = 0;
+    while(fgets(str, 4095, file_ptr) != NULL)
     {
-        i = 0;
-    }
-    while (fgets(str, 4095, file_ptr) != NULL) {
         strcpy(output[i], str);
         i++;
     }
