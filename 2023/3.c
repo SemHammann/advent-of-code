@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <time.h>
 
 // 45282386 too low
 // 45057825 too low
@@ -32,10 +33,17 @@ struct filecontent read(const char *files);
 
 int main(void)
 {
+    clock_t begin = clock();
     const char *filename = "txt/3.txt";
     struct filecontent main = read(filename);
+    clock_t begin1 = clock();
+    printf("File readtime: %lfms\n\n", (double)(begin1 - begin));
     part1(main);
+    clock_t end1 = clock();
+    printf("\n%lfms\n\n", (double)(end1 - begin1));
     part2(main);
+    clock_t end2 = clock();
+    printf("\n%lfms", (double)(end2 - end1));
 }
 
 void part1(struct filecontent part1)
@@ -62,7 +70,7 @@ void part1(struct filecontent part1)
             result = result + numberinfo1.number;
         }while(numberinfo1.possible == true);
     }
-    printf("part 1: %d\n\n", result);
+    printf("part 1: %d", result);
 }
 
 void part2(struct filecontent part2)

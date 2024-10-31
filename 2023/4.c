@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <time.h>
 
 #define numlines 200
 
@@ -43,14 +44,22 @@ size_t max();
 
 int main(void)
 {
+    clock_t begin = clock();
     const char *filename = "txt/4.txt";
     struct filecontent main = read(filename);
+    clock_t begin1 = clock();
+    printf("\n%lfms\n\n", (double)(begin1 - begin));
     part1(main);
+    clock_t end1 = clock();
+    printf("\n%lfms\n\n", (double)(end1 - begin1));
     part2(main);
+    clock_t end2 = clock();
+    printf("\n%lfms", (double)(end2 - end1));
 }
 
 void part1(struct filecontent part1)
 {
+
     char game[4095] = "0";
     size_t result = 0;
     size_t amountwin;
@@ -80,7 +89,7 @@ void part1(struct filecontent part1)
         }
         answer = answer + result;        
     }
-    printf("part 1: %llu\n\n", answer);
+    printf("part 1: %llu", answer);
 }
 
 void part2(struct filecontent part2)
@@ -116,7 +125,7 @@ void part2(struct filecontent part2)
         answer = answer + number2.amountcard[j];
         j++;
     }
-    printf("part 2: %llu\n\n", answer);
+    printf("part 2: %llu", answer);
 }
 
 size_t strtoarray(char *vstring)

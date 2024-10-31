@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
+#include <stdlib.h>'
+#include <time.h>
 
 int read();
 int part1();
@@ -10,8 +11,13 @@ char *searchAndReplace();
 
 int main (void)
 {
+    clock_t begin = clock();
     part1();
+    clock_t end1 = clock();
+    printf("\n%lfms\n\n", (double)(end1 - begin));
     part2();
+    clock_t end2 = clock();
+    printf("\n%lfms", (double)(end2 - end1));
 }
 
 int part1(void)
