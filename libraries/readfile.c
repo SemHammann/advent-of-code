@@ -10,10 +10,11 @@ struct filecontent read(const char *files)
     size_t i = 0;
     char ch;
     struct filecontent read;
-    read.lengthfile = 0;
+    read.lengthfile = 0; //doe hier nog iets mee
     read.maxlengthfile = 1;
 
     file_ptr = fopen(files, "r");
+    assert(!(NULL == file_ptr) && "File can't be opened");
 
     while((ch = fgets(str, 4095, file_ptr) != NULL))
     {
@@ -22,24 +23,17 @@ struct filecontent read(const char *files)
     }
     rewind(file_ptr);
     const size_t size = read.lengthfile*sizeof(char*);
-    //printf("Size of the array is %llu x %d\n", numlines, maxstrlength);
     char **output = malloc(size);
-    for (i = 0; i < read.lengthfile; i++)
+    for(i = 0; i < read.lengthfile; i++)
     {
         output[i] = (char*)malloc(4096 * sizeof(char));
         *output[i] = 0;
     }
-    if (NULL == file_ptr) {
-        printf("File can't be opened \n");
-    }
-    else
+
+    i = 0;
+    while(fgets(str, 4095, file_ptr) != NULL)
     {
-        //printf("File open worked\n");
-        i = 0;
-    }
-    while (fgets(str, 4095, file_ptr) != NULL) {
         strcpy(output[i], str);
-        //check op "/n" als einde, haal de /n weg
         i++;
     }
     fclose(file_ptr);
