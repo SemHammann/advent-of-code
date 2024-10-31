@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <time.h>
 
 #define arraysize 128
 
@@ -45,6 +46,7 @@ size_t max();
 
 int main(void)
 {
+    clock_t begin = clock();
     const char *filename = "txt/5.test1.txt";
     struct filecontent main = read(filename);
     struct mapdata maindata;
@@ -70,8 +72,14 @@ int main(void)
         strcpy(tmp, *(tokensg + j));
         maindata.seeds[j] = strtoint(tmp);
     }
+    clock_t begin1 = clock();
+    printf("\nThings for 1 and 2: %lfms\n\n", (double)(begin1 - begin));
     part1(main);
+    clock_t end1 = clock();
+    printf("\n%lfms\n\n", (double)(end1 - begin1));
     part2(main);
+    clock_t end2 = clock();
+    printf("\n%lfms", (double)(end2 - end1));
     printf("E");
 }
 
