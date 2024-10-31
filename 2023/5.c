@@ -1,3 +1,5 @@
+//I'm going to clean up this code before really starting with the 
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -36,7 +38,6 @@ size_t strtoarray();
 size_t strtoint();
 struct number structstrtoint();
 
-char *replace(const char *vstring);
 char** str_split(char* a_str, const char a_delim);
 char *searchAndReplace(char *text, char *search, char *replace);
 struct filecontent read(const char *files);
@@ -155,20 +156,12 @@ struct number structstrtoint(struct number strint)
 
 
 
-char *replace(const char *vstring)
+
+
+char** str_split(char* a_str, const char a_delim) 
 {
-    char output[4095];
-    char *output_p = output;
+    //zorg ervoor dat als de 1e in de string is waarop je splitst, die niet breekt, en dubbele enzo
 
-    strcpy(output, vstring);
-
-    output_p = searchAndReplace(output_p, "  ", " ");
-
-    return output_p;
-}
-
-char** str_split(char* a_str, const char a_delim) //zorg ervoor dat als de 1e in de string is waarop je splitst, die niet breekt, en dubbele enzo
-{
     char** result    = 0;
     size_t count     = 0;
     char* tmp        = a_str;
@@ -176,6 +169,21 @@ char** str_split(char* a_str, const char a_delim) //zorg ervoor dat als de 1e in
     char delim[2];
     delim[0] = a_delim;
     delim[1] = 0;
+    /*char a_delim2[2] = "0";
+
+    for(size_t i = 0; i < strlen(a_str); i++)
+    {
+        if(a_str[i] == a_delim)
+        {
+            if(a_str[i] == a_delim)
+            {
+                a_delim2[0] = *a_str;
+                a_delim2[1] = *a_str;
+                searchAndReplace(a_str[i], str(*a_str, *a_str), a_str[i]);
+                i = 0;
+            }
+        }
+    }*/
 
     while (*tmp)
     {
@@ -193,7 +201,7 @@ char** str_split(char* a_str, const char a_delim) //zorg ervoor dat als de 1e in
 
     result = malloc(sizeof(char*) * count);
 
-    if (result)
+    if(result)
     {
         size_t idx  = 0;
         char* token = strtok(a_str, delim);
@@ -220,7 +228,7 @@ char *searchAndReplace(char *text, char *search, char *replace)
    buffer[0] ='\0';
    while ( ptr = strstr(text, search) )
    {
-      strncat(buffer, text, ptr-text);
+      strncat(buffer, text, ptr - text);
       strcat(buffer, replace);
 
       text = ptr + strlen(search);
