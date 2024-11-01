@@ -39,7 +39,7 @@ size_t strtoarray();
 size_t strtoint();
 struct number structstrtoint();
 
-char** str_split(char* a_str, const char a_delim);
+char** str_split(char* a_str, const char a_delim, bool doublechar);
 char *searchAndReplace(char *text, char *search, char *replace);
 struct filecontent read(const char *files);
 size_t max();
@@ -51,26 +51,21 @@ int main(void)
     struct filecontent main = read(filename);
     struct mapdata maindata;
     size_t amountnumbers = 1;
-    size_t i = 0;
+    size_t i = 0, j = 0;
     char game[4096] = "0";
     char tmp[4096] = "0";
     char **tokens;
     char **tokensg;
     strcpy(game, main.file[0]);
-    tokens = str_split(game, ':');
+    tokens = str_split(game, ':', false);
     strcpy(tmp, *(tokens + 1));
     tmp[0] = '0';
-    while(tmp[i] != '\0')
-    {
-        if(tmp[i] == ' ')
-            amountnumbers++;
-        i++;
-    }
-    tokensg = str_split(tmp, ' ');
-    for(size_t j = 0; j < amountnumbers; j++)
+    tokensg = str_split(tmp, ' ', false);
+    while(NULL != *(tokensg + j))
     {
         strcpy(tmp, *(tokensg + j));
         maindata.seeds[j] = strtoint(tmp);
+        j++;
     }
     clock_t begin1 = clock();
     printf("\nThings for 1 and 2: %lfms\n\n", (double)(begin1 - begin));
@@ -166,7 +161,7 @@ struct number structstrtoint(struct number strint)
 
 
 
-char** str_split(char* a_str, const char a_delim) 
+char** str_split(char* a_str, const char a_delim, bool doublechar) 
 {
     //zorg ervoor dat als de 1e in de string is waarop je splitst, die niet breekt, en dubbele enzo
 
@@ -177,21 +172,6 @@ char** str_split(char* a_str, const char a_delim)
     char delim[2];
     delim[0] = a_delim;
     delim[1] = 0;
-    /*char a_delim2[2] = "0";
-
-    for(size_t i = 0; i < strlen(a_str); i++)
-    {
-        if(a_str[i] == a_delim)
-        {
-            if(a_str[i] == a_delim)
-            {
-                a_delim2[0] = *a_str;
-                a_delim2[1] = *a_str;
-                searchAndReplace(a_str[i], str(*a_str, *a_str), a_str[i]);
-                i = 0;
-            }
-        }
-    }*/
 
     while (*tmp)
     {
@@ -212,15 +192,16 @@ char** str_split(char* a_str, const char a_delim)
     if(result)
     {
         size_t idx  = 0;
-        char* token = strtok(a_str, delim);
+        char *token = strtok(a_str, delim);
 
-        while (token)
+        while(token)
         {
             assert(idx < count);
             *(result + idx++) = strdup(token);
             token = strtok(0, delim);
         }
-        assert(idx == count - 1);
+        if(doublechar == true)
+            assert(idx == count - 1);
         *(result + idx) = 0;
     }
 
@@ -229,23 +210,23 @@ char** str_split(char* a_str, const char a_delim)
 
 char *searchAndReplace(char *text, char *search, char *replace)
 {
-   char buffer[1000];
-   char *ptr;
-   char *modText = NULL;
+    char buffer[1000];
+    char *ptr;
+    char *modText = NULL;
 
-   buffer[0] ='\0';
-   while ( ptr = strstr(text, search) )
-   {
-      strncat(buffer, text, ptr - text);
-      strcat(buffer, replace);
+    buffer[0] ='\0';
+    while ( ptr = strstr(text, search) )
+    {
+        strncat(buffer, text, ptr - text);
+        strcat(buffer, replace);
 
-      text = ptr + strlen(search);
-   }
-   strcat(buffer, text);
+        text = ptr + strlen(search);
+    }
+    strcat(buffer, text);
 
-   modText = malloc(strlen(buffer) + 1);
-   strcpy(modText, buffer);
-   return modText;
+    modText = malloc(strlen(buffer) + 1);
+    strcpy(modText, buffer);
+    return modText;
 }
 
 struct filecontent read(const char *files)
