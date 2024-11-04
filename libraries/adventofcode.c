@@ -74,7 +74,7 @@ char *searchAndReplace(char *text, char *search, char *replace)
 struct filecontent readfile(const char *files)
 {
     FILE *file_ptr;
-    char str[4096] = "0";
+    char str[4096+2] = "0";
     size_t i = 0;
     char ch;
     struct filecontent read;
@@ -84,17 +84,18 @@ struct filecontent readfile(const char *files)
     file_ptr = fopen(files, "r");
     assert(!(NULL == file_ptr) && "File can't be opened");
 
-    while((ch = fgets(str, 4095, file_ptr) != NULL))
+    while((ch = fgets(str, (4095+2), file_ptr) != NULL))
     {
         read.lengthfile++;
         read.maxlengthfile = max(read.maxlengthfile, strlen(str));
+        assert(read.maxlengthfile + 1 <= 4096);
     }
     rewind(file_ptr);
     const size_t size = read.lengthfile*sizeof(char*);
     char **output = malloc(size);
     for(i = 0; i < read.lengthfile; i++)
     {
-        output[i] = (char*)malloc(4096 * sizeof(char));
+        output[i] = (char*)malloc((read.maxlengthfile + 1) * sizeof(char));
         *output[i] = 0;
     }
 

@@ -1,5 +1,5 @@
-#ifndef __MYCODE_H__
-#define __MYCODE_H__
+#ifndef ADVENTOFCODE_SEM_H
+#define ADVENTOFCODE_SEM_H
 
 struct filecontent
 {
