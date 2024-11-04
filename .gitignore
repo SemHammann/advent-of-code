@@ -9,3 +9,4 @@ standard_functions
 .git
 *.so
 *.o
+test.c
