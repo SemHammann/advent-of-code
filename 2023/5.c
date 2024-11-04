@@ -6,14 +6,15 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <time.h>
+#include "..\libraries\adventofcode.c"
 
 #define arraysize 128
 
-struct filecontent
+/*struct filecontent
 {
     char **file;
     size_t lengthfile, maxlengthfile;
-};
+};*/
 struct mapdata
 {
     size_t seeds[arraysize];
@@ -39,16 +40,12 @@ size_t strtoarray();
 size_t strtoint();
 struct number structstrtoint();
 
-char** str_split(char* a_str, const char a_delim, bool doublechar);
-char *searchAndReplace(char *text, char *search, char *replace);
-struct filecontent read(const char *files);
-size_t max();
 
 int main(void)
 {
     clock_t begin = clock();
     const char *filename = "txt/5.test1.txt";
-    struct filecontent main = read(filename);
+    struct filecontent main = readfile(filename);
     struct mapdata maindata;
     size_t amountnumbers = 1;
     size_t i = 0, j = 0;
@@ -75,7 +72,7 @@ int main(void)
     part2(main);
     clock_t end2 = clock();
     printf("\n%lfms", (double)(end2 - end1));
-    printf("E");
+    printf("%d", sizeof(main));
 }
 
 void part1(struct filecontent part1)
@@ -151,126 +148,4 @@ struct number structstrtoint(struct number strint)
         i++;
     }
     return strint;
-}
-
-
-
-
-
-
-
-
-
-char** str_split(char* a_str, const char a_delim, bool doublechar) 
-{
-    //zorg ervoor dat als de 1e in de string is waarop je splitst, die niet breekt, en dubbele enzo
-
-    char** result    = 0;
-    size_t count     = 0;
-    char* tmp        = a_str;
-    char* last_comma = 0;
-    char delim[2];
-    delim[0] = a_delim;
-    delim[1] = 0;
-
-    while (*tmp)
-    {
-        if (a_delim == *tmp)
-        {
-            count++;
-            last_comma = tmp;
-        }
-        tmp++;
-    }
-
-    count += last_comma < (a_str + strlen(a_str) - 1);
-
-    count++;
-
-    result = malloc(sizeof(char*) * count);
-
-    if(result)
-    {
-        size_t idx  = 0;
-        char *token = strtok(a_str, delim);
-
-        while(token)
-        {
-            assert(idx < count);
-            *(result + idx++) = strdup(token);
-            token = strtok(0, delim);
-        }
-        if(doublechar == true)
-            assert(idx == count - 1);
-        *(result + idx) = 0;
-    }
-
-    return result;
-}
-
-char *searchAndReplace(char *text, char *search, char *replace)
-{
-    char buffer[1000];
-    char *ptr;
-    char *modText = NULL;
-
-    buffer[0] ='\0';
-    while ( ptr = strstr(text, search) )
-    {
-        strncat(buffer, text, ptr - text);
-        strcat(buffer, replace);
-
-        text = ptr + strlen(search);
-    }
-    strcat(buffer, text);
-
-    modText = malloc(strlen(buffer) + 1);
-    strcpy(modText, buffer);
-    return modText;
-}
-
-struct filecontent read(const char *files)
-{
-    FILE *file_ptr;
-    char str[4096] = "0";
-    size_t i = 0;
-    char ch;
-    struct filecontent read;
-    read.lengthfile = 0;
-    read.maxlengthfile = 1;
-
-    file_ptr = fopen(files, "r");
-    assert(!(NULL == file_ptr) && "File can't be opened");
-
-    while((ch = fgets(str, 4095, file_ptr) != NULL))
-    {
-        read.lengthfile++;
-        read.maxlengthfile = max(read.maxlengthfile, strlen(str));
-    }
-    rewind(file_ptr);
-    const size_t size = read.lengthfile*sizeof(char*);
-    char **output = malloc(size);
-    for(i = 0; i < read.lengthfile; i++)
-    {
-        output[i] = (char*)malloc(4096 * sizeof(char));
-        *output[i] = 0;
-    }
-
-    i = 0;
-    while(fgets(str, 4095, file_ptr) != NULL)
-    {
-        strcpy(output[i], str);
-        i++;
-    }
-    fclose(file_ptr);
-    read.file = output;
-    return read;
-}
-
-size_t max(size_t a, size_t b)
-{
-    if(a > b)
-        return a;
-    else
-        return b;
 }
