@@ -1,3 +1,5 @@
+//part 2 took me about 5 minutes to calculate
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -85,10 +87,6 @@ size_t answer = ULONG_LONG_MAX, i = 0, k, seed;
 		{
 			seed = data.seeds[i] + k;
 			answer = __min(answer, find_location(seed));
-			if((k % 100000000) == 0)
-			{
-				printf("%d", k / 100000000);
-			}
 		}
 		i = i + 2;
 	}
