@@ -5,6 +5,8 @@
 #include <stdbool.h>
 #include "adventofcode.h"
 
+
+
 char** str_split(char* a_str, const char a_delim, bool doublechar) 
 {
     char** result    = 0;
@@ -87,7 +89,7 @@ struct filecontent readfile(const char *files)
     while((ch = fgets(str, (4095+2), file_ptr) != NULL))
     {
         read.lengthfile++;
-        read.maxlengthfile = max(read.maxlengthfile, strlen(str));
+        read.maxlengthfile = __max(read.maxlengthfile, strlen(str));
         assert(read.maxlengthfile + 1 <= 4096);
     }
     rewind(file_ptr);
@@ -102,7 +104,8 @@ struct filecontent readfile(const char *files)
     i = 0;
     while(fgets(str, 4095, file_ptr) != NULL)
     {
-        strcpy(output[i], str);
+        //strcpy(output[i], str);
+        output[i] = searchAndReplace(str, "\n", "");
         i++;
     }
     fclose(file_ptr);
@@ -110,18 +113,3 @@ struct filecontent readfile(const char *files)
     return read;
 }
 
-size_t max(size_t a, size_t b)
-{
-    if(a > b)
-        return a;
-    else
-        return b;
-}
-
-size_t min(size_t a, size_t b)
-{
-    if(a < b)
-        return a;
-    else
-        return b;
-}
