@@ -62,7 +62,6 @@ int main(void)
 	part2();
 	clock_t end2 = clock();
 	printf("\n%lfs", (double)(end2 - end1)/CLOCKS_PER_SEC);
-	printf("E");
 }
 
 void part1()
