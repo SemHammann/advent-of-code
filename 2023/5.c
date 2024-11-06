@@ -34,7 +34,6 @@ struct mapdata data = { 0 };
 void part1();
 void part2();
 
-size_t strtoint();
 void make_file_to_string();
 size_t find_location();
 size_t change_destination();
@@ -92,25 +91,6 @@ size_t answer = ULONG_LONG_MAX, i = 0, k, seed;
 	printf("Part 2: %llu", answer);
 }
 
-
-size_t strtoint(char *vstring)
-{
-	size_t i = 0, number  = 0;
-	char game[4096];
-	strcpy(game, vstring);
-	while(true)
-	{
-		if(game[i] >= '0' && game[i] <= '9')
-			{
-				number = 10 * number + (game[i] - '0');
-			}
-			else
-			{
-				return number;
-			}   
-		i++;
-	}
-}
 
 void make_file_to_string()
 {
