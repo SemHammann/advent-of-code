@@ -1,3 +1,5 @@
+//V3.1
+
 #ifndef ADVENTOFCODE_SEM_H
 #define ADVENTOFCODE_SEM_H
 
