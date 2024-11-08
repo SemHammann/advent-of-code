@@ -23,6 +23,7 @@ struct Data
 	char deck[amountdecks][decksize];
 	size_t decktype[amountdecks];
 	size_t rank[amountdecks];
+	size_t rank2[amountdecks];
 };
 
 struct Data data;
@@ -33,6 +34,7 @@ void part2();
 
 void fill_data();
 void type_deck();
+void type_deck2();
 void highest_in_string();
 size_t win();
 
@@ -69,7 +71,7 @@ void part1()
 	size_t answer = 0, j = 1;
 
 	type_deck();
-	win();
+	bubblesort_custom2(data.decktype, data.rank, amountdecks);
 
 	for(size_t i = 0; i < amountdecks; i++)
 	{
@@ -86,9 +88,24 @@ void part1()
 
 void part2()
 {
-	size_t answer = 0;
+	size_t answer = 0, j = 1;
 
-	printf("Part 1: %llu", answer);
+	memset(data.decktype, 0, sizeof(data.decktype));
+
+	type_deck2();
+	bubblesort_custom2(data.decktype, data.rank2, amountdecks);
+
+	for(size_t i = 0; i < amountdecks; i++)
+	{
+		if(data.rank2[i] != 0)
+		{
+			answer = answer + j * data.rank2[i];
+
+			j++;
+		}
+	}
+
+	printf("Part 2: %llu", answer);
 }
 
 void fill_data()
@@ -104,6 +121,7 @@ void fill_data()
 		tokens = str_split(game, ' ', false);
 		strncpy(data.deck[j], *tokens, decksize);
 		data.rank[j] = strtoint(*(tokens+1));
+		data.rank2[j] = strtoint(*(tokens+1));
 	}
 }
 
@@ -207,15 +225,117 @@ void type_deck()
 					break;
 			}
 		}
-		printf("\n");
+	}
+}
+
+void type_deck2()
+{
+	size_t deckdata[13] = { 0 };
+	size_t str[decksize] = { 0 };
+	for(size_t i = 0; i < file.lengthfile; i ++)
+	{
+		memset(deckdata, 0, sizeof(deckdata));
+		for(size_t j = 0; j < decksize; j++)
+		{
+			switch(data.deck[i][j])
+			{
+				case 'A':
+					deckdata[0]++; break;
+				case 'K':
+					deckdata[1]++; break;
+				case 'Q':
+					deckdata[2]++; break;
+				case 'J':
+					deckdata[3]++; break;
+				case 'T':
+					deckdata[4]++; break;
+				case '9':
+					deckdata[5]++; break;
+				case '8':
+					deckdata[6]++; break;
+				case '7':
+					deckdata[7]++; break;
+				case '6':
+					deckdata[8]++; break;
+				case '5':
+					deckdata[9]++; break;
+				case '4':
+					deckdata[10]++; break;
+				case '3':
+					deckdata[11]++; break;
+				case '2':
+					deckdata[12]++; break;
+				default:
+					break;
+			}
+		}
+		size_t tmp2 = deckdata[3];
+		deckdata[3] = 0;
+		bubblesort_custom(deckdata, 13);
+		deckdata[0] = deckdata[0] + tmp2;
+		if(deckdata[0])
+		switch (deckdata[0])
+		{
+			case 5:
+				data.decktype[i] = Five_of_a_kind; break;
+			case 4:
+				data.decktype[i] = Four_of_a_kind; break;
+			case 3:
+				if(deckdata[1] == 2)
+					data.decktype[i] = Full_house;
+				else
+					data.decktype[i] = Three_of_a_kind;
+				break;
+			case 2:
+				if(deckdata[1] == 2)
+					data.decktype[i] = Two_pair;
+				else
+					data.decktype[i] = One_pair;
+				break;
+			default:
+				data.decktype[i] = High_card; break;	
+		}
+		
+		for(size_t k = 5; k > 0; k--)
+		{
+			int tmp = 5 - k;
+			switch(data.deck[i][tmp])
+			{
+				case 'A':
+					data.decktype[i] = data.decktype[i] + 13 * pow(100, k) ; break;
+				case 'K':
+					data.decktype[i] = data.decktype[i] + 12 * pow(100, k); break;
+				case 'Q':
+					data.decktype[i] = data.decktype[i] + 11 * pow(100, k); break;
+				case 'J':
+					data.decktype[i] = data.decktype[i] + 0 * pow(100, k); break;
+				case 'T':
+					data.decktype[i] = data.decktype[i] + 9 * pow(100, k); break;
+				case '9':
+					data.decktype[i] = data.decktype[i] + 8 * pow(100, k); break;
+				case '8':
+					data.decktype[i] = data.decktype[i] + 7 * pow(100, k); break;
+				case '7':
+					data.decktype[i] = data.decktype[i] + 6 * pow(100, k); break;
+				case '6':
+					data.decktype[i] = data.decktype[i] + 5 * pow(100, k); break;
+				case '5':
+					data.decktype[i] = data.decktype[i] + 4 * pow(100, k); break;
+				case '4':
+					data.decktype[i] = data.decktype[i] + 3 * pow(100, k); break;
+				case '3':
+					data.decktype[i] = data.decktype[i] + 2 * pow(100, k); break;
+				case '2':
+					data.decktype[i] = data.decktype[i] + 1 * pow(100, k); break;
+				default:
+					break;
+			}
+		}
 	}
 }
 
 
-size_t win()
-{
-	bubblesort_custom2(data.decktype, data.rank, amountdecks);
-}
+
 
 void swap(size_t *xp, size_t *yp)
 {
