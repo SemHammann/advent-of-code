@@ -38,9 +38,6 @@ size_t string_size_t2();
 void check_steps2();
 size_t amount_steps();
 
-size_t kgv();
-size_t ggd();
-
 
 int main(void)
 {
@@ -53,7 +50,7 @@ int main(void)
 
 	clock_t begin1 = clock();
 	printf("\nThings for 1 and 2: %lfms\n\n", (double)(begin1 - begin));
-	//part1();
+	part1();
 	clock_t end1 = clock();
 	printf("\n%lfms\n\n", (double)(end1 - begin1));
 	part2();
@@ -97,7 +94,6 @@ void fill_data()
 		strcpy(game, searchAndReplace(game, "(", ""));
 		strcpy(game, searchAndReplace(game, ")", ""));
 		tokens = str_split(game, '=', false);
-		//strcpy(tmp, *(tokens + 1));
 		data.start[i - 2] = string_size_t(*(tokens));
 		tokensg = str_split(*(tokens + 1), ',', false);
 		data.left[i - 2] = string_size_t(*(tokensg));
@@ -179,7 +175,6 @@ void fill_data2()
 		strcpy(game, searchAndReplace(game, "(", ""));
 		strcpy(game, searchAndReplace(game, ")", ""));
 		tokens = str_split(game, '=', false);
-		//strcpy(tmp, *(tokens + 1));
 		data2.start[i - 2] = string_size_t2(*(tokens));
 		tokensg = str_split(*(tokens + 1), ',', false);
 		data2.left[i - 2] = string_size_t(*(tokensg));
@@ -265,59 +260,6 @@ void check_steps2()
 	}
 }
 
-/*size_t check_steps2()
-{
-	size_t amount = 0, i = 0, j = 0, k = 0, amount_start = 0, new_start;
-	size_t value_start = string_size_t2("XXA");
-	size_t value_end = string_size_t2("XXZ");
-	bool all_on_end;
-	while(i < file.lengthfile - 2)
-	{
-		if(value_start == data2.start[i])
-		{
-			data2.value[amount_start] = i;
-			amount_start++;
-		}
-		i++;
-	}
-	while(true)
-	{
-		amount++;
-		all_on_end = true;
-		for(k = 0; k < amount_start; k++)
-		{
-			switch(data.steps[j])
-			{
-				case 'R':
-					data2.new_start[k] = data.right[data2.value[k]]; break;
-				case 'L':
-					data2.new_start[k] = data.left[data2.value[k]]; break;
-				default:
-					break;
-			}
-			data2.value[k] = 0;
-			while(data2.new_start[k] != data.start[data2.value[k]])
-			{
-				data2.value[k]++;
-			}
-			if(data2.start[data2.value[k]] != value_end)
-			{
-				all_on_end = false;
-			}
-		}
-
-		if(all_on_end == true)
-		{
-			return amount;
-		}
-		j++;
-		if(j >= strlen(data.steps))
-		{
-			j = 0;
-		}
-	}
-}*/
-
 size_t amount_steps()
 {
 	size_t amountsteps;
@@ -349,21 +291,4 @@ size_t amount_steps()
 		}
 	}
 	return amountsteps;
-}
-
-size_t kgv(int a, int b)
-{
-    return (a * b / ggd(a, b));
-}
-
-size_t ggd (int a, int b)
-{           
-    if(b > 0)
-    {
-        return ggd(b, a % b);
-    }
-    else
-    {
-        return a;
-    }
 }
