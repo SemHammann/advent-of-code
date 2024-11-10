@@ -9,6 +9,7 @@
 
 #define arraylength 1024
 #define stringlength 4096
+#define amount_starts 6
 
 struct Data
 {
@@ -16,8 +17,11 @@ struct Data
 	size_t start[arraylength];
 	size_t left[arraylength];
 	size_t right[arraylength];
-	size_t value[arraylength];
-	size_t new_start[arraylength];
+	size_t value[amount_starts];
+	size_t new_start[amount_starts];
+	size_t amount_loops[amount_starts];
+	size_t previous[amount_starts];
+	bool already_end[amount_starts];
 };
 
 struct Data data;
@@ -31,7 +35,11 @@ size_t string_size_t();
 size_t check_steps();
 void fill_data2();
 size_t string_size_t2();
-size_t check_steps2();
+void check_steps2();
+size_t amount_steps();
+
+size_t kgv();
+size_t ggd();
 
 
 int main(void)
@@ -45,12 +53,12 @@ int main(void)
 
 	clock_t begin1 = clock();
 	printf("\nThings for 1 and 2: %lfms\n\n", (double)(begin1 - begin));
-	part1();
+	//part1();
 	clock_t end1 = clock();
 	printf("\n%lfms\n\n", (double)(end1 - begin1));
 	part2();
 	clock_t end2 = clock();
-	printf("\n%lfms", (double)(end2 - end1));
+	printf("\n%lfs", (double)(end2 - end1)/CLOCKS_PER_SEC);
 }
 
 void part1()
@@ -66,8 +74,8 @@ void part2()
 {
 	size_t answer;
 
-	
-	answer = check_steps2();
+	check_steps2();
+	answer = amount_steps();
 
 	printf("Part 2: %llu", answer);
 }
@@ -188,7 +196,76 @@ size_t string_size_t2(char *vstring)
 	return number;  
 }
 
-size_t check_steps2()
+void check_steps2()
+{
+	size_t amount = 0, i = 0, j = 0, k = 0, amount_start = 0, new_start;
+	size_t value_start = string_size_t2("XXA");
+	size_t value_end = string_size_t2("XXZ");
+	bool all_on_end;
+	for(k = 0; k < amount_start; k++)
+	{
+		data2.already_end[k] = false;
+	}
+	while(i < file.lengthfile - 2)
+	{
+		if(value_start == data2.start[i])
+		{
+			data2.value[amount_start] = i;
+			amount_start++;
+		}
+		i++;
+	}
+	assert(amount_start == amount_starts);
+	while(all_on_end == false)
+	{
+		amount++;
+		all_on_end = true;
+		for(k = 0; k < amount_start; k++)
+		{
+			if(data2.amount_loops[k] == 0)
+			{
+				switch(data.steps[j])
+				{
+					case 'R':
+						data2.new_start[k] = data.right[data2.value[k]]; break;
+					case 'L':
+						data2.new_start[k] = data.left[data2.value[k]]; break;
+					default:
+						break;
+				}
+				data2.value[k] = 0;
+				while(data2.new_start[k] != data.start[data2.value[k]])
+				{
+					data2.value[k]++;
+				}
+				if(data2.start[data2.value[k]] != value_end)
+				{
+					all_on_end = false;
+				}
+				if(data2.start[data2.value[k]] == value_end)
+				{
+					if(data2.already_end[k] == true)
+					{
+						data2.amount_loops[k] = amount - data2.previous[k];
+					}
+					else
+					{
+						all_on_end = false;
+					}
+					data2.already_end[k] = true;
+					data2.previous[k] = amount;
+				}
+			}
+		}
+		j++;
+		if(j >= strlen(data.steps))
+		{
+			j = 0;
+		}
+	}
+}
+
+/*size_t check_steps2()
 {
 	size_t amount = 0, i = 0, j = 0, k = 0, amount_start = 0, new_start;
 	size_t value_start = string_size_t2("XXA");
@@ -239,4 +316,54 @@ size_t check_steps2()
 			j = 0;
 		}
 	}
+}*/
+
+size_t amount_steps()
+{
+	size_t amountsteps;
+	bool all_the_same = false;
+	while(all_the_same == false)
+	{
+		all_the_same = true;
+		amountsteps = 0;
+		for(size_t k = 1; k < amount_starts; k++)
+		{
+			while(data2.previous[0] < data2.previous[k])
+			{
+				data2.previous[0] = data2.previous[0] + data2.amount_loops[0];
+			}
+			while(data2.previous[0] > data2.previous[k])
+			{
+				data2.previous[k] = data2.previous[k] + data2.amount_loops[k];
+			}
+		}
+
+
+		for(size_t k = 0; k < amount_starts; k++)
+		{
+			amountsteps = data2.previous[0];
+			if(data2.previous[0] != data2.previous[k])
+			{
+				all_the_same = false;
+			}
+		}
+	}
+	return amountsteps;
+}
+
+size_t kgv(int a, int b)
+{
+    return (a * b / ggd(a, b));
+}
+
+size_t ggd (int a, int b)
+{           
+    if(b > 0)
+    {
+        return ggd(b, a % b);
+    }
+    else
+    {
+        return a;
+    }
 }
