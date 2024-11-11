@@ -197,7 +197,7 @@ void check_steps2()
 	size_t value_start = string_size_t2("XXA");
 	size_t value_end = string_size_t2("XXZ");
 	bool all_on_end;
-	for(k = 0; k < amount_start; k++)
+	for(k = 0; k < amount_starts; k++)
 	{
 		data2.already_end[k] = false;
 	}
@@ -246,9 +246,9 @@ void check_steps2()
 					else
 					{
 						all_on_end = false;
+						data2.previous[k] = amount;
 					}
 					data2.already_end[k] = true;
-					data2.previous[k] = amount;
 				}
 			}
 		}
