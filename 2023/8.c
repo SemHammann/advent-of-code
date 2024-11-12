@@ -7,6 +7,17 @@
 #include <math.h>
 #include "..\libraries\adventofcode.c"
 
+#define TEST1
+//#define TEST2
+
+#ifdef TEST1
+    #define filename "txt/8.test1.txt"
+#elif defined TEST2
+	#define filename "txt/8.txt1.txt"
+#else
+    #define filename "txt/8.txt"
+#endif
+
 #define arraylength 1024
 #define stringlength 4096
 #define amount_starts 6
@@ -42,7 +53,6 @@ size_t amount_steps();
 int main(void)
 {
 	clock_t begin = clock();
-	const char *filename = "txt/8.txt";
 	file = readfile(filename);
 
 	fill_data();
@@ -50,7 +60,9 @@ int main(void)
 
 	clock_t begin1 = clock();
 	printf("\nThings for 1 and 2: %lfms\n\n", (double)(begin1 - begin));
-	part1();
+	#ifndef TEST2
+		part1();
+	#endif
 	clock_t end1 = clock();
 	printf("\n%lfms\n\n", (double)(end1 - begin1));
 	part2();
