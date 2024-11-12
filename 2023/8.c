@@ -12,15 +12,18 @@
 
 #ifdef TEST1
     #define filename "txt/8.test1.txt"
+	#define amount_starts 2
 #elif defined TEST2
 	#define filename "txt/8.txt1.txt"
+	#define amount_starts 2
 #else
     #define filename "txt/8.txt"
+	#define amount_starts 6
 #endif
 
 #define arraylength 1024
 #define stringlength 4096
-#define amount_starts 6
+
 
 struct Data
 {
