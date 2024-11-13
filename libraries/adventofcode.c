@@ -1,4 +1,4 @@
-//V3.1
+//V3.2
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -116,9 +116,11 @@ struct filecontent readfile(const char *files)
     rewind(file_ptr);
     const size_t size = read.lengthfile*sizeof(char*);
     char **output = malloc(size);
+    assert(output != NULL);
     for(i = 0; i < read.lengthfile; i++)
     {
         output[i] = (char*)malloc((read.maxlengthfile + 1) * sizeof(char));
+        assert(output[i] != NULL);
         *output[i] = 0;
     }
 
