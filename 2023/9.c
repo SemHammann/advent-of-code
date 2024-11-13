@@ -19,7 +19,7 @@
 #ifdef TEST1
     #define filename "txt/9.test1.txt"
 #elif defined TEST2
-	#define filename "txt/9.txt1.txt"
+	#define filename "txt/9.test2.txt"
 #else
     #define filename "txt/9.txt"
 #endif
@@ -31,6 +31,7 @@ void part1();
 void part2();
 
 int difference();
+int difference2();
 int str_to_int();
 void fill_int_min();
 
@@ -63,7 +64,7 @@ void part1()
 		j = 0;
 		fill_int_min(numbers);
 		strcpy(game, file.file[i]);
-		tokens = str_split(game, ' ', true);
+		tokens = str_split(game, ' ', false);
 		while(*(tokens + j) != NULL)
 		{
 			numbers[j] = str_to_int(*(tokens + j));
@@ -78,7 +79,27 @@ void part1()
 
 void part2()
 {
-	int answer;
+	long long int answer = 0;
+	char game[stringlength];
+	char **tokens;
+	int numbers[arraylength];
+	size_t j;
+
+	for(size_t i = 0; i < file.lengthfile; i++)
+	{
+		j = 0;
+		fill_int_min(numbers);
+		strcpy(game, file.file[i]);
+		tokens = str_split(game, ' ', false);
+		while(*(tokens + j) != NULL)
+		{
+			numbers[j + 1] = str_to_int(*(tokens + j));
+			j++;
+		}
+		//;
+		answer = answer + difference2(numbers);
+	}
+
 
 	printf("Part 2: %llu", answer);
 }
@@ -112,6 +133,38 @@ int difference(int *vstring)
 		i++;
 	}
 	return vstring[i] + difference(diff);
+}
+
+int difference2(int *vstring)
+{
+	int diff[arraylength];
+	fill_int_min(diff);
+	int i = 0;
+	bool all_zero = true;
+	for(int j = 1; j < arraylength; j++)
+	{
+		if(vstring[j] == INT_MIN)
+		{
+			break;
+		}
+		if(vstring[j] != 0)
+		{
+			all_zero = false;
+			break;
+		}
+	}
+	if(all_zero == true)
+	{
+		return 0;
+	}
+	while(vstring[i + 1] != INT_MIN)
+	{
+		diff[i] = vstring[i + 1] - vstring[i];
+		i++;
+	}
+	int diffnumber = difference2(diff);
+	//ans2 = ans2 + vstring[1] - diffnumber;
+	return vstring[1] - diffnumber;
 }
 
 int str_to_int(char *vstring)
