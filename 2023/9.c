@@ -11,6 +11,7 @@
 
 //too low 1551709655
 //too low 1533864819
+//too low 1533864819
 
 //#define TEST1
 //#define TEST2
@@ -24,7 +25,7 @@
 #endif
 
 #define stringlength 4096
-#define arraylength 128
+#define arraylength 4096
 
 void part1();
 void part2();
@@ -51,7 +52,7 @@ int main(void)
 
 void part1()
 {
-	int answer = 0;
+	long long int answer = 0;
 	char game[stringlength];
 	char **tokens;
 	int numbers[arraylength];
@@ -83,7 +84,7 @@ void part2()
 }
 
 
-int difference(int vstring[])
+int difference(int *vstring)
 {
 	int diff[arraylength];
 	fill_int_min(diff);
@@ -115,19 +116,30 @@ int difference(int vstring[])
 
 int str_to_int(char *vstring)
 {
-	int i = 0, number  = 0;
+	int i = 0;
+	int number  = 0;
 	char game[4096];
+	bool negative = false;
 	strcpy(game, vstring);
 	while(true)
 	{
+		if(game[i] == '-')
+		{
+			negative = true;
+			i++;
+		}
 		if(game[i] >= '0' && game[i] <= '9')
 			{
 				number = 10 * number + (game[i] - '0');
 			}
+			else if(negative == true)
+			{
+				return (number * -1);
+			}  
 			else
 			{
 				return number;
-			}   
+			} 
 		i++;
 	}
 }
