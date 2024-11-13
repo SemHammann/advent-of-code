@@ -7,7 +7,7 @@
 #include <math.h>
 #include "..\libraries\adventofcode.c"
 
-#define TEST1
+//#define TEST1
 //#define TEST2
 
 #ifdef TEST1
