@@ -25,7 +25,7 @@
 #endif
 
 #define stringlength 4096
-#define arraylength 4096
+#define arraylength 128
 
 void part1();
 void part2();
@@ -42,13 +42,13 @@ int main(void)
 
 	
 	clock_t begin1 = clock();
-	printf("\n%s\nThings for 1 and 2: %lfms\n\n", filename, (double)(begin1 - begin));
+	printf("\n%s\nThings for 1 and 2: %.0lfms\n\n", filename, (double)(begin1 - begin));
 	part1();
 	clock_t end1 = clock();
-	printf("\n%lfms\n\n", (double)(end1 - begin1));
+	printf("\n%.0lfms\n\n", (double)(end1 - begin1));
 	part2();
 	clock_t end2 = clock();
-	printf("\n%lfms", (double)(end2 - end1));
+	printf("\n%.0lfms", (double)(end2 - end1));
 }
 
 void part1()
@@ -93,10 +93,9 @@ void part2()
 		tokens = str_split(game, ' ', false);
 		while(*(tokens + j) != NULL)
 		{
-			numbers[j + 1] = str_to_int(*(tokens + j));
+			numbers[j] = str_to_int(*(tokens + j));
 			j++;
 		}
-		//;
 		answer = answer + difference2(numbers);
 	}
 
@@ -141,7 +140,7 @@ int difference2(int *vstring)
 	fill_int_min(diff);
 	int i = 0;
 	bool all_zero = true;
-	for(int j = 1; j < arraylength; j++)
+	for(int j = 0; j < arraylength; j++)
 	{
 		if(vstring[j] == INT_MIN)
 		{
@@ -162,9 +161,7 @@ int difference2(int *vstring)
 		diff[i] = vstring[i + 1] - vstring[i];
 		i++;
 	}
-	int diffnumber = difference2(diff);
-	//ans2 = ans2 + vstring[1] - diffnumber;
-	return vstring[1] - diffnumber;
+	return vstring[0] - difference2(diff);
 }
 
 int str_to_int(char *vstring)
