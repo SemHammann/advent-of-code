@@ -10,3 +10,4 @@ standard_functions
 *.so
 *.o
 test.c
+test
