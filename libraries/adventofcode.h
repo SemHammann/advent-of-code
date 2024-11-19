@@ -11,9 +11,17 @@ struct filecontent
 
 struct filecontent file;
 
+char filename[99];
+char filenametest1[99];
+char filenametest2[99];
+char filenamemain[99];
+
+
 size_t strtoint();
 char **str_split(char* a_str, const char a_delim, bool doublechar);
 char *searchAndReplace(char *text, char *search, char *replace);
 struct filecontent readfile(const char *filename);
+void fix_file();
+void make_files();
 
-#endif
+#endif //ADVENTOFCODE_SEM_H
