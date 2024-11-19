@@ -192,5 +192,5 @@ void make_files(char file[])
 	{
 		fopen(file, "w");
 	}
-
+	fclose(file_ptr);
 }
