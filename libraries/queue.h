@@ -1,34 +1,34 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#ifndef QUEUELENGHT
-	#define QUEUELENGHT 128
+#ifndef QUEUELENGTH
+	#define QUEUELENGTH 128
 #endif
 #ifndef QUEUEHEIGHT
 	#define QUEUEHEIGHT 128	
 #endif
 
-struct Char_Queue
+typedef struct Char_Queue
 {
     long long unsigned start, end;
-    char queue[QUEUELENGHT][QUEUEHEIGHT];
-};
-struct Char_Queue char_queue;
+    char queue[QUEUELENGTH][QUEUEHEIGHT];
+}Char_Queue_t;
+//struct Char_Queue char_queue;
 
-struct long_long_Queue
+typedef struct long_long_unsigned_Queue
 {
     long long unsigned start, end;
-    int queue[QUEUELENGHT];
-};
-struct long_long_Queue long_long_queue;
+    int queue[QUEUELENGTH];
+}long_long_unsigned_Queue_t;
+//struct long_long_unsigned_Queue long_long_unsigned_queue;
 
-void init_char();
-void put_char();
-char *get_char();
+void init_char(struct Char_Queue *char_queue);
+void put_char(char vstr[], struct Char_Queue *char_queue);
+char *get_char(struct Char_Queue *char_queue);
 
-void init_long_long();
-void put_long_long();
-int get_long_long();
+void init_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue);
+void put_long_long_unsigned(size_t number, struct long_long_unsigned_Queue *long_long_unsigned_queue);
+size_t get_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue);
 
 
 #endif /* QUEUE_H */
