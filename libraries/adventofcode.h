@@ -1,4 +1,4 @@
-//V4.0
+//V4.1
 
 #ifndef ADVENTOFCODE_SEM_H
 #define ADVENTOFCODE_SEM_H
@@ -29,6 +29,6 @@ char **str_split(char* a_str, const char a_delim, bool doublechar);
 char *searchAndReplace(char *text, char *search, char *replace);
 struct filecontent readfile(const char *filename);
 void fix_file();
-void make_files();
+void make_file();
 
 #endif //ADVENTOFCODE_SEM_H

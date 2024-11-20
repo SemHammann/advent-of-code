@@ -1,4 +1,4 @@
-//V4.0
+//V4.1
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -137,60 +137,57 @@ struct filecontent readfile(const char *files)
 }
 
 void fix_file(char *argv[])
-{
+{	
+	char *argvfile[256];
+	strcpy(*argvfile, *argv);
 	char **tokens;
 	size_t j = 0;
-	//printf("%s\n", argv[0]);
-	tokens = str_split(argv[0], PATH_SEPARATOR, true);
+	tokens = str_split(argvfile[0], PATH_SEPARATOR, true);
 	while(*(tokens + j) != NULL)
 	{
 		j++;
 	}
 	j--;
-	//printf(*(tokens + j));
 	tokens = str_split(*(tokens + j), '.', true);
-	//printf(*tokens);
 
-	strcpy(filenametest1, "txt/");
-	strcpy(filenametest2, "txt/");
-	strcpy(filenamemain, "txt/");
-
-	strcat(filenametest1, *tokens);
-	strcat(filenametest2, *tokens);
-	strcat(filenamemain, *tokens);
-
-	strcat(filenametest1, ".test1");
-	strcat(filenametest2, ".test2");
-
-	strcat(filenametest1, ".txt");
-	strcat(filenametest2, ".txt");
-	strcat(filenamemain, ".txt");
-	
+	sprintf(filenametest1, "txt%c%s.test1.txt", PATH_SEPARATOR, *tokens);
+	sprintf(filenametest2, "txt%c%s.test2.txt", PATH_SEPARATOR, *tokens);
+	sprintf(filenamemain, "txt%c%s.txt", PATH_SEPARATOR, *tokens);
 
 	#if defined TEST1
 	   strcpy(filename, filenametest1);
 	#elif defined TEST
-		strcpy(filename, filenametest1);
+		strcpy(filename, filenametest2);
 	#else
 		strcpy(filename, filenamemain);
 	#endif
 	
-	make_files(filenametest1);
-	make_files(filenametest2);
-	make_files(filenamemain);
+	make_file(filenametest1);
+	make_file(filenametest2);
+	make_file(filenamemain);
 
-	printf("%s", filename);
+	printf("\n%s", filename);
 
 	file = readfile(filename);
 }
 
-void make_files(char file[])
+void make_file(char file[])
 {
 	FILE *file_ptr;
+	FILE *file_ptr2;
 	file_ptr = fopen(file, "r");
 	if(file_ptr == NULL)
 	{
-		fopen(file, "w");
+		file_ptr2 = fopen(file, "w");
+		if(file_ptr2 != NULL)
+		{
+			printf("Made file: %s\n", file);
+		}
+		else
+		{
+			printf("Can not make file: %s\n", file);
+		}
+		fclose(file_ptr2);
 	}
 	fclose(file_ptr);
 }
