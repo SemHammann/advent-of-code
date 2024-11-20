@@ -1,4 +1,4 @@
-//V3.2
+//V4.0
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -140,8 +140,8 @@ void fix_file(char *argv[])
 {
 	char **tokens;
 	size_t j = 0;
-	printf("%s\n", argv[0]);
-	tokens = str_split(argv[0], '\\', true);
+	//printf("%s\n", argv[0]);
+	tokens = str_split(argv[0], PATH_SEPARATOR, true);
 	while(*(tokens + j) != NULL)
 	{
 		j++;

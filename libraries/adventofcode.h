@@ -1,7 +1,14 @@
-//V3.1
+//V4.0
 
 #ifndef ADVENTOFCODE_SEM_H
 #define ADVENTOFCODE_SEM_H
+
+#if defined(WIN32) || defined(_WIN32) 
+    #define PATH_SEPARATOR '\\' 
+#else 
+    #define PATH_SEPARATOR '/' 
+#endif 
+
 
 struct filecontent
 {
