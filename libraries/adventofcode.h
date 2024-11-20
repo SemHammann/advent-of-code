@@ -24,9 +24,9 @@ char filenametest2[99];
 char filenamemain[99];
 
 struct filecontent readfile(const char *filename);
-void fix_file();
-void make_file();
-size_t strtoint();
+void fix_file(char *argv[]);
+void make_file(char file[]);
+size_t strtoint(char *vstring);
 char **str_split(char* a_str, const char a_delim, bool doublechar);
 char *searchAndReplace(char *text, char *search, char *replace);
 
