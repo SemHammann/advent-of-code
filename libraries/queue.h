@@ -1,4 +1,4 @@
-//V2.0
+//V3.0
 
 #ifndef QUEUE_H
 #define QUEUE_H
@@ -12,25 +12,32 @@
 
 typedef struct Char_Queue
 {
-    long long unsigned start, end;
+    long long unsigned front, back;
     char queue[QUEUELENGTH][QUEUEHEIGHT];
 }Char_Queue_t;
 //struct Char_Queue char_queue;
 
 typedef struct long_long_unsigned_Queue
 {
-    long long unsigned start, end;
+    long long unsigned front, back;
     int queue[QUEUELENGTH];
 }long_long_unsigned_Queue_t;
 //struct long_long_unsigned_Queue long_long_unsigned_queue;
 
 void init_char(struct Char_Queue *char_queue);
-void put_char(char vstr[], struct Char_Queue *char_queue);
-char *get_char(struct Char_Queue *char_queue);
+void push_front_char(char vstr[], struct Char_Queue *char_queue);
+void push_back_char(char vstr[], struct Char_Queue *char_queue);
+char *pop_front_char(struct Char_Queue *char_queue);
+char *pop_back_char(struct Char_Queue *char_queue);
+
 
 void init_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue);
-void put_long_long_unsigned(size_t number, struct long_long_unsigned_Queue *long_long_unsigned_queue);
-size_t get_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue);
+void push_front_long_long_unsigned(size_t number, struct long_long_unsigned_Queue *long_long_unsigned_queue);
+void push_back_long_long_unsigned(size_t number, struct long_long_unsigned_Queue *long_long_unsigned_queue);
+size_t pop_front_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue);
+size_t pop_back_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue);
+
+
 
 
 #endif /* QUEUE_H */

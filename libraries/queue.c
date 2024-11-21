@@ -1,6 +1,4 @@
-//V2.0
-
-//maak keer lengte goed werkend
+//V3.0
 
 #include <stdio.h>
 #include <string.h>
@@ -12,31 +10,52 @@
 
 void init_char(struct Char_Queue *char_queue)
 {
-    (*char_queue).start = 0;
-    (*char_queue).end = 0;
+    (*char_queue).front = 0;
+    (*char_queue).back = 0;
 }
 
-void put_char(char vstr[], struct Char_Queue *char_queue)
+void push_front_char(char vstr[], struct Char_Queue *char_queue)
 {
-    strcpy((*char_queue).queue[(*char_queue).end], vstr);
-    (*char_queue).end++;
-    if((*char_queue).end == QUEUELENGTH)
+    strcpy((*char_queue).queue[(*char_queue).front], vstr);
+    (*char_queue).front--;
+    if((*char_queue).front == 0)
     {
-        (*char_queue).end = 0;
+        (*char_queue).front = QUEUELENGTH;
     }
-    assert((*char_queue).end != (*char_queue).start && "char_queue full");
+    assert((*char_queue).back != (*char_queue).front && "char_queue full");
 }
 
-char *get_char(struct Char_Queue *char_queue)
+void push_back_char(char vstr[], struct Char_Queue *char_queue)
 {
-    assert((*char_queue).end != (*char_queue).start && "char_queue empty");
-    //char *str;
-    //strcpy(str, queue.queue[queue.start]);
-    size_t queuereturn = (*char_queue).start;
-    (*char_queue).start++;
-    if((*char_queue).start == QUEUELENGTH)
+    strcpy((*char_queue).queue[(*char_queue).back], vstr);
+    (*char_queue).back++;
+    if((*char_queue).back == QUEUELENGTH)
     {
-        (*char_queue).start = 0;
+        (*char_queue).back = 0;
+    }
+    assert((*char_queue).back != (*char_queue).front && "char_queue full");
+}
+
+char *pop_front_char(struct Char_Queue *char_queue)
+{
+    assert((*char_queue).back != (*char_queue).front && "char_queue empty");
+    size_t queuereturn = (*char_queue).front;
+    (*char_queue).front++;
+    if((*char_queue).front == QUEUELENGTH)
+    {
+        (*char_queue).front = 0;
+    }
+    return (*char_queue).queue[queuereturn];
+}
+
+char *pop_back_char(struct Char_Queue *char_queue)
+{
+    assert((*char_queue).back != (*char_queue).front && "char_queue empty");
+    size_t queuereturn = (*char_queue).back;
+    (*char_queue).back--;
+    if((*char_queue).back == 0)
+    {
+        (*char_queue).back = QUEUELENGTH;
     }
     return (*char_queue).queue[queuereturn];
 }
@@ -44,29 +63,52 @@ char *get_char(struct Char_Queue *char_queue)
 
 void init_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue)
 {
-    (*long_long_unsigned_queue).start = 0;
-    (*long_long_unsigned_queue).end = 0;
+    (*long_long_unsigned_queue).front = 0;
+    (*long_long_unsigned_queue).back = 0;
 }
 
-void put_long_long_unsigned(size_t number, struct long_long_unsigned_Queue *long_long_unsigned_queue)
+void push_front_long_long_unsigned(size_t number, struct long_long_unsigned_Queue *long_long_unsigned_queue)
 {
-    (*long_long_unsigned_queue).end++;
-    if((*long_long_unsigned_queue).end == QUEUELENGTH)
+    (*long_long_unsigned_queue).front--;
+    if((*long_long_unsigned_queue).front == 0)
     {
-        (*long_long_unsigned_queue).end = 0;
+        (*long_long_unsigned_queue).front = QUEUELENGTH;
     }
-    assert((*long_long_unsigned_queue).end != (*long_long_unsigned_queue).start && "long_long_unsigned_queue full");
-    (*long_long_unsigned_queue).queue[(*long_long_unsigned_queue).end] = number;
+    assert((*long_long_unsigned_queue).back != (*long_long_unsigned_queue).front && "long_long_unsigned_queue full");
+    (*long_long_unsigned_queue).queue[(*long_long_unsigned_queue).front] = number;
 }
 
-size_t get_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue)
+void push_back_long_long_unsigned(size_t number, struct long_long_unsigned_Queue *long_long_unsigned_queue)
 {
-    assert((*long_long_unsigned_queue).end + 1 != (*long_long_unsigned_queue).start && "long_long_unsigned_queue empty");
-    size_t number = (*long_long_unsigned_queue).queue[(*long_long_unsigned_queue).start];
-    (*long_long_unsigned_queue).start++;
-    if((*long_long_unsigned_queue).start == QUEUELENGTH)
+    (*long_long_unsigned_queue).back++;
+    if((*long_long_unsigned_queue).back == QUEUELENGTH)
     {
-        (*long_long_unsigned_queue).start = 0;
+        (*long_long_unsigned_queue).back = 0;
+    }
+    assert((*long_long_unsigned_queue).back != (*long_long_unsigned_queue).front && "long_long_unsigned_queue full");
+    (*long_long_unsigned_queue).queue[(*long_long_unsigned_queue).back] = number;
+}
+
+size_t pop_front_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue)
+{
+    assert((*long_long_unsigned_queue).back + 1 != (*long_long_unsigned_queue).front && "long_long_unsigned_queue empty");
+    size_t number = (*long_long_unsigned_queue).queue[(*long_long_unsigned_queue).front];
+    (*long_long_unsigned_queue).front++;
+    if((*long_long_unsigned_queue).front == QUEUELENGTH)
+    {
+        (*long_long_unsigned_queue).front = 0;
+    }
+    return number;
+}
+
+size_t pop_back_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue)
+{
+    assert((*long_long_unsigned_queue).back + 1 != (*long_long_unsigned_queue).front && "long_long_unsigned_queue empty");
+    size_t number = (*long_long_unsigned_queue).queue[(*long_long_unsigned_queue).back];
+    (*long_long_unsigned_queue).back--;
+    if((*long_long_unsigned_queue).back == 0)
+    {
+        (*long_long_unsigned_queue).back = QUEUELENGTH;
     }
     return number;
 }
