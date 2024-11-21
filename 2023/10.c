@@ -9,7 +9,7 @@
 
 #define QUEUELENGTH 4095
 
-#include "..\libraries\queue.c" //V4.0
+#include "..\libraries\queue.c" //V4.2
 
 //#define TEST2
 
