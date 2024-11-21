@@ -1,4 +1,4 @@
-//V4.2
+//V4.3
 
 #ifndef ADVENTOFCODE_SEM_H
 #define ADVENTOFCODE_SEM_H
@@ -9,6 +9,9 @@
     #define PATH_SEPARATOR '/' 
 #endif 
 
+#ifndef FIX_FILE_STR_LENGTH
+    #define FIX_FILE_STR_LENGTH 256
+#endif
 
 struct filecontent
 {

@@ -1,4 +1,4 @@
-//V4.2
+//V4.3
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -52,11 +52,14 @@ struct filecontent readfile(const char *files)
 
 void fix_file(char *argv[])
 {	
-	char *argvfile[256];
-	strcpy(*argvfile, *argv);
+	char *argvfile[FIX_FILE_STR_LENGTH];
 	char **tokens;
 	size_t j = 0;
 	tokens = str_split(argvfile[0], PATH_SEPARATOR, true);
+
+	assert(!(strlen(argv[0]) > FIX_FILE_STR_LENGTH));
+	strcpy(*argvfile, *argv);
+	
 	while(*(tokens + j) != NULL)
 	{
 		j++;
