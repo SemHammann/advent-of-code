@@ -36,6 +36,8 @@ void push_front_char(char vstr[], struct Char_Queue *char_queue);
 void push_back_char(char vstr[], struct Char_Queue *char_queue);
 char *pop_front_char(struct Char_Queue *char_queue);
 char *pop_back_char(struct Char_Queue *char_queue);
+char front_char(struct Char_Queue *char_queue);
+char back_char(struct Char_Queue *char_queue);
 
 
 void init_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue);
@@ -43,12 +45,16 @@ void push_front_long_long_unsigned(size_t number, struct long_long_unsigned_Queu
 void push_back_long_long_unsigned(size_t number, struct long_long_unsigned_Queue *long_long_unsigned_queue);
 long long unsigned pop_front_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue);
 long long unsigned pop_back_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue);
+long long unsigned front_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue);
+long long unsigned back_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue);
 
 void init_long_long(struct long_long_Queue *long_long_queue);
 void push_front_long_long(size_t number, struct long_long_Queue *long_long_queue);
 void push_back_long_long(size_t number, struct long_long_Queue *long_long_queue);
 long long pop_front_long_long(struct long_long_Queue *long_long_queue);
 long long pop_back_long_long(struct long_long_Queue *long_long_queue);
+long long front_long_long(struct long_long_Queue *long_long_queue);
+long long back_long_long(struct long_long_Queue *long_long_queue);
 
 
 

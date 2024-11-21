@@ -1,4 +1,4 @@
-//V4.0
+//V4.1
 
 #include <stdio.h>
 #include <string.h>
@@ -60,6 +60,16 @@ char *pop_back_char(struct Char_Queue *char_queue)
     return (*char_queue).queue[queuereturn];
 }
 
+char front_char(struct Char_Queue *char_queue)
+{
+    return(*char_queue).queue[(*char_queue).front];
+}
+
+char back_char(struct Char_Queue *char_queue)
+{
+    return(*char_queue).queue[(*char_queue).back];
+}
+
 
 
 void init_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue)
@@ -114,6 +124,16 @@ long long unsigned pop_back_long_long_unsigned(struct long_long_unsigned_Queue *
     return number;
 }
 
+long long unsigned front_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue)
+{
+    return (*long_long_unsigned_queue).queue[(*long_long_unsigned_queue).front];
+}
+
+long long unsigned back_long_long_unsigned(struct long_long_unsigned_Queue *long_long_unsigned_queue)
+{
+    return (*long_long_unsigned_queue).queue[(*long_long_unsigned_queue).back];
+}
+
 
 
 void init_long_long(struct long_long_Queue *long_long_queue)
@@ -166,4 +186,14 @@ long long pop_back_long_long(struct long_long_Queue *long_long_queue)
         (*long_long_queue).back = QUEUELENGTH;
     }
     return number;
+}
+
+long long front_long_long(struct long_long_Queue *long_long_queue)
+{
+    return(*long_long_queue).queue[(*long_long_queue).front];
+}
+
+long long back_long_long(struct long_long_Queue *long_long_queue)
+{
+    return(*long_long_queue).queue[(*long_long_queue).back];
 }
