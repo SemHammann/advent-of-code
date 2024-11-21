@@ -18,7 +18,9 @@ A library containing some basic functions I use to solve the advent of code prob
 ## Functions
 
 -   `readfile()`; This function reads the file you give with the function. It fills the struct with the content of the file, and also fills the `maxlenghthfile` and `lengthfile`.
--   `fix_file()`; This function read the filename from the `argv`. After this it makes two test filenames and a main testfilename. Depending if you have `TEST1` or `TEST2` defined, your main `filename` is chosen (these should be defined before the include, in any other way it defaults to the main file). After making the filenames it runs the `readfile` on the global struct `filecontent.file` with the main `filename`. After this the functions runs the `make_file` function on the two test filenames and the main testfilename.
+-   `fix_file()`; This function read the filename from the `argv`. After this it makes two test filenames and a main testfilename. Depending if you have `TEST1` or `TEST2` defined, your main `filename` is chosen. After making the filenames it runs the `readfile` on the global struct `filecontent.file` with the main `filename`. After this the functions runs the `make_file` function on the two test filenames and the main testfilename.
+    > [!WARNING]
+    > TEST1 and TEST2 should be defined before the include, in any other way it defaults to the main file
 -   `make_file()`; This function checkes if a file exists, if not it creates the file.
 -   `strtoint()`; This function reads a string, and returns a `long long unsigned`.
 -   `str_split()`; This function splits the string you give it, it splits the string on a character you chose, and returns a 2D string back.
