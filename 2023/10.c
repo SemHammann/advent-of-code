@@ -5,11 +5,11 @@
 #include <stdbool.h>
 #include <time.h>
 #include <math.h>
-#include "..\libraries\adventofcode.c" //V4.2
+#include "..\libraries\adventofcode.c" //V4.3
 
 #define QUEUELENGTH 4095
 
-#include "..\libraries\queue.c" //V2.0
+#include "..\libraries\queue.c" //V4.0
 
 //#define TEST2
 
