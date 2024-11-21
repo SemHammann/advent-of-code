@@ -1,4 +1,4 @@
-//V4.1
+//V4.2
 
 #ifndef ADVENTOFCODE_SEM_H
 #define ADVENTOFCODE_SEM_H
