@@ -389,43 +389,43 @@ void get_new_current(Position_t old)
 void fill()
 {
 	size_t x, y;
-	init_long_long_unsigned(&queue_x);
-	init_long_long_unsigned(&queue_y);
-	push_back_long_long_unsigned(0, &queue_x);
-	push_back_long_long_unsigned(0, &queue_y);
+	init_llu(&queue_x);
+	init_llu(&queue_y);
+	push_back_llu(0, &queue_x);
+	push_back_llu(0, &queue_y);
 	do
 	{
-		x = pop_front_long_long_unsigned(&queue_x);
-		y = pop_front_long_long_unsigned(&queue_y);
+		x = pop_front_llu(&queue_x);
+		y = pop_front_llu(&queue_y);
 		map[y][x] = '"';
 		if(map[__max(1, y) - 1][x] == '.')
 		{
-			push_back_long_long_unsigned(x, &queue_x);
-			push_back_long_long_unsigned(__max(1, y) - 1, &queue_y);
+			push_back_llu(x, &queue_x);
+			push_back_llu(__max(1, y) - 1, &queue_y);
 			map[__max(1, y) - 1][x] = ' ';
 		}
 		if(map[__min(mapheight - 1, y) + 1][x] == '.')
 		{
-			push_back_long_long_unsigned(x, &queue_x);
-			push_back_long_long_unsigned(__min(mapheight - 1, y) + 1, &queue_y);
+			push_back_llu(x, &queue_x);
+			push_back_llu(__min(mapheight - 1, y) + 1, &queue_y);
 			map[__min(mapheight - 1, y) + 1][x] = ' ';
 		}
 		if(map[y][__max(1, x) - 1] == '.')
 		{
-			push_back_long_long_unsigned(__max(1, x) - 1, &queue_x);
-			push_back_long_long_unsigned(y, &queue_y);
+			push_back_llu(__max(1, x) - 1, &queue_x);
+			push_back_llu(y, &queue_y);
 			map[y][__max(1, x) - 1] = ' ';
 		}
 		if(map[y][__min(maplength - 1, x) + 1] == '.')
 		{
-			push_back_long_long_unsigned(__min(maplength - 1, x) + 1, &queue_x);
-			push_back_long_long_unsigned(y, &queue_y);
+			push_back_llu(__min(maplength - 1, x) + 1, &queue_x);
+			push_back_llu(y, &queue_y);
 			map[y][__min(maplength - 1, x) + 1] = ' ';
 		}
 	}while(queue_x.front != queue_x.back);
 
-	x = pop_front_long_long_unsigned(&queue_x);
-	y = pop_front_long_long_unsigned(&queue_y);
+	x = pop_front_llu(&queue_x);
+	y = pop_front_llu(&queue_y);
 	map[y][x] = '"';
 
 	return;
