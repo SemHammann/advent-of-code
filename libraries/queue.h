@@ -36,8 +36,8 @@ void push_front_c(char vstr[], struct Char_Queue *char_queue);
 void push_back_c(char vstr[], struct Char_Queue *char_queue);
 char *pop_front_c(struct Char_Queue *char_queue);
 char *pop_back_c(struct Char_Queue *char_queue);
-char front_c(struct Char_Queue *char_queue);
-char back_c(struct Char_Queue *char_queue);
+char *front_c(struct Char_Queue *char_queue);
+char *back_c(struct Char_Queue *char_queue);
 
 
 void init_llu(struct long_long_unsigned_Queue *long_long_unsigned_queue);
