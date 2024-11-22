@@ -60,15 +60,15 @@ char *pop_back_c(struct Char_Queue *char_queue)
     return (*char_queue).queue[queuereturn];
 }
 
-char front_c(struct Char_Queue *char_queue)
+char *front_c(struct Char_Queue *char_queue)
 {
-    char ch = *(*char_queue).queue[(*char_queue).front];
+    char *ch = (*char_queue).queue[(*char_queue).front];
     return ch;
 }
 
-char back_c(struct Char_Queue *char_queue)
+char *back_c(struct Char_Queue *char_queue)
 {
-    char ch = *(*char_queue).queue[(*char_queue).back];
+    char *ch = (*char_queue).queue[(*char_queue).back];
     return ch;
 }
 
