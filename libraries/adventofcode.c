@@ -56,10 +56,11 @@ void fix_file(char *argv[])
 	char *argvfile[FIX_FILE_STR_LENGTH];
 	char **tokens;
 	long long unsigned j = 0;
+	strcpy(*argvfile, *argv);
 	tokens = str_split(argvfile[0], PATH_SEPARATOR, true);
 
 	assert(!(strlen(argv[0]) > FIX_FILE_STR_LENGTH));
-	strcpy(*argvfile, *argv);
+	
 	
 	while(*(tokens + j) != NULL)
 	{
