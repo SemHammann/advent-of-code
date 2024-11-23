@@ -30,7 +30,7 @@ struct filecontent readfile(const char *files)
 	}
 	rewind(file_ptr);
 	const long long unsigned size = read.lengthfile*sizeof(char*);
-	char **output = calloc(read.lengthfile, sizeof(char*));
+	char **output = calloc(read.lengthfile + 1, sizeof(char*));
 	assert(output != NULL);
 	for(i = 0; i < read.lengthfile; i++)
 	{
