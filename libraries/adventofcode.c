@@ -53,11 +53,12 @@ struct filecontent readfile(const char *files)
 
 void fix_file(char *argv[])
 {	
-	char *argvfile[FIX_FILE_STR_LENGTH];
+	char argvfile[FIX_FILE_STR_LENGTH];
+	//argvfile = calloc(FIX_FILE_STR_LENGTH, sizeof(char));
 	char **tokens;
 	long long unsigned j = 0;
-	strcpy(*argvfile, *argv);
-	tokens = str_split(argvfile[0], PATH_SEPARATOR, true);
+	strcpy(argvfile, argv[0]);
+	tokens = str_split(argvfile, PATH_SEPARATOR, false);
 
 	assert(!(strlen(argv[0]) > FIX_FILE_STR_LENGTH));
 	
@@ -108,7 +109,10 @@ void make_file(char file[])
 		}
 		fclose(file_ptr2);
 	}
-	fclose(file_ptr);
+	else
+	{
+		fclose(file_ptr);
+	}
 }
 
 long long unsigned strtoint(char *vstring)
