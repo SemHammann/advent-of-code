@@ -53,7 +53,20 @@ struct filecontent readfile(const char *files)
 
 void fix_file(char *argv[])
 {	
-	char argvfile[FIX_FILE_STR_LENGTH];
+	make_file_names(argv);
+	
+	make_file(filenametest1);
+	make_file(filenametest2);
+	make_file(filenamemain);
+
+	printf("\n%s\n", filename);
+
+	file = readfile(filename);
+}
+
+void make_file_names(char *argv[])
+{
+char argvfile[FIX_FILE_STR_LENGTH];
 	//argvfile = calloc(FIX_FILE_STR_LENGTH, sizeof(char));
 	char **tokens;
 	long long unsigned j = 0;
@@ -80,16 +93,10 @@ void fix_file(char *argv[])
 		strcpy(filename, filenametest2);
 	#else
 		strcpy(filename, filenamemain);
-	#endif
-	
-	make_file(filenametest1);
-	make_file(filenametest2);
-	make_file(filenamemain);
-
-	printf("\n%s\n", filename);
-
-	file = readfile(filename);
+	#endif	
 }
+
+
 
 void make_file(char file[])
 {

@@ -30,6 +30,7 @@ char filenamemain[99];
 
 struct filecontent readfile(const char *filename);
 void fix_file(char *argv[]);
+void make_file_names(char *argv[]);
 void make_file(char file[]);
 long long unsigned strtoint(char *vstring);
 char **str_split(char* a_str, const char a_delim, bool doublechar);
