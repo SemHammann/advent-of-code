@@ -86,6 +86,8 @@ char argvfile[FIX_FILE_STR_LENGTH];
 	sprintf(filenametest1, "txt%c%s.test1.txt", PATH_SEPARATOR, *tokens);
 	sprintf(filenametest2, "txt%c%s.test2.txt", PATH_SEPARATOR, *tokens);
 	sprintf(filenamemain, "txt%c%s.txt", PATH_SEPARATOR, *tokens);
+	sprintf(filename_debug, "debug_txt%c%s.txt", PATH_SEPARATOR, *tokens);
+
 
 	#if defined TEST1
 	   strcpy(filename, filenametest1);
@@ -98,21 +100,21 @@ char argvfile[FIX_FILE_STR_LENGTH];
 
 
 
-void make_file(char file[])
+void make_file(char filen[])
 {
 	FILE *file_ptr;
 	FILE *file_ptr2;
-	file_ptr = fopen(file, "r");
+	file_ptr = fopen(filen, "r");
 	if(file_ptr == NULL)
 	{
-		file_ptr2 = fopen(file, "w");
+		file_ptr2 = fopen(filen, "w");
 		if(file_ptr2 != NULL)
 		{
-			printf("Made file \"%s\"\n", file);
+			printf("Made file \"%s\"\n", filen);
 		}
 		else
 		{
-			printf("Can not make file \"%s\"\n", file);
+			printf("Can not make file \"%s\"\n", filen);
 		}
 		fclose(file_ptr2);
 	}
@@ -121,6 +123,30 @@ void make_file(char file[])
 		fclose(file_ptr);
 	}
 }
+
+void make_debug_file(char **string)
+{
+	FILE *file_ptr;
+	unsigned long long i = 0;
+	file_ptr = fopen(filename_debug, "w");
+	if(file_ptr != NULL)
+	{
+		while(*(string + i) != NULL)
+		{
+			fprintf(file_ptr, "%s\n", *(string + i));
+			i++;
+		}
+	}
+	else
+	{
+		printf("failed to make a debugfile\n");
+	}
+}
+
+
+
+
+
 
 long long unsigned strtoint(char *vstring)
 {
