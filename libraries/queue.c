@@ -39,7 +39,7 @@ void push_back_c(char vstr[], struct Char_Queue *char_queue)
 char *pop_front_c(struct Char_Queue *char_queue)
 {
     assert((*char_queue).back != (*char_queue).front && "char_queue empty");
-    size_t queuereturn = (*char_queue).front;
+    long long unsigned queuereturn = (*char_queue).front;
     (*char_queue).front++;
     if((*char_queue).front == QUEUELENGTH)
     {
@@ -51,7 +51,7 @@ char *pop_front_c(struct Char_Queue *char_queue)
 char *pop_back_c(struct Char_Queue *char_queue)
 {
     assert((*char_queue).back != (*char_queue).front && "char_queue empty");
-    size_t queuereturn = (*char_queue).back;
+    long long unsigned queuereturn = (*char_queue).back;
     (*char_queue).back--;
     if((*char_queue).back == 0)
     {
@@ -80,7 +80,7 @@ void init_llu(struct long_long_unsigned_Queue *long_long_unsigned_queue)
     (*long_long_unsigned_queue).back = 0;
 }
 
-void push_front_llu(size_t number, struct long_long_unsigned_Queue *long_long_unsigned_queue)
+void push_front_llu(long long unsigned number, struct long_long_unsigned_Queue *long_long_unsigned_queue)
 {
     (*long_long_unsigned_queue).front--;
     if((*long_long_unsigned_queue).front == 0)
@@ -91,7 +91,7 @@ void push_front_llu(size_t number, struct long_long_unsigned_Queue *long_long_un
     (*long_long_unsigned_queue).queue[(*long_long_unsigned_queue).front] = number;
 }
 
-void push_back_llu(size_t number, struct long_long_unsigned_Queue *long_long_unsigned_queue)
+void push_back_llu(long long unsigned number, struct long_long_unsigned_Queue *long_long_unsigned_queue)
 {
     (*long_long_unsigned_queue).back++;
     if((*long_long_unsigned_queue).back == QUEUELENGTH)
@@ -105,7 +105,7 @@ void push_back_llu(size_t number, struct long_long_unsigned_Queue *long_long_uns
 long long unsigned pop_front_llu(struct long_long_unsigned_Queue *long_long_unsigned_queue)
 {
     assert((*long_long_unsigned_queue).back + 1 != (*long_long_unsigned_queue).front && "long_long_unsigned_queue empty");
-    size_t number = (*long_long_unsigned_queue).queue[(*long_long_unsigned_queue).front];
+    long long unsigned number = (*long_long_unsigned_queue).queue[(*long_long_unsigned_queue).front];
     (*long_long_unsigned_queue).front++;
     if((*long_long_unsigned_queue).front == QUEUELENGTH)
     {
@@ -117,7 +117,7 @@ long long unsigned pop_front_llu(struct long_long_unsigned_Queue *long_long_unsi
 long long unsigned pop_back_llu(struct long_long_unsigned_Queue *long_long_unsigned_queue)
 {
     assert((*long_long_unsigned_queue).back + 1 != (*long_long_unsigned_queue).front && "long_long_unsigned_queue empty");
-    size_t number = (*long_long_unsigned_queue).queue[(*long_long_unsigned_queue).back];
+    long long unsigned number = (*long_long_unsigned_queue).queue[(*long_long_unsigned_queue).back];
     (*long_long_unsigned_queue).back--;
     if((*long_long_unsigned_queue).back == 0)
     {
@@ -144,7 +144,7 @@ void init_ll(struct long_long_Queue *long_long_queue)
     (*long_long_queue).back = 0;
 }
 
-void push_front_ll(size_t number, struct long_long_Queue *long_long_queue)
+void push_front_ll(long long unsigned number, struct long_long_Queue *long_long_queue)
 {
     (*long_long_queue).front--;
     if((*long_long_queue).front == 0)
@@ -155,7 +155,7 @@ void push_front_ll(size_t number, struct long_long_Queue *long_long_queue)
     (*long_long_queue).queue[(*long_long_queue).front] = number;
 }
 
-void push_back_ll(size_t number, struct long_long_Queue *long_long_queue)
+void push_back_ll(long long unsigned number, struct long_long_Queue *long_long_queue)
 {
     (*long_long_queue).back++;
     if((*long_long_queue).back == QUEUELENGTH)
@@ -169,7 +169,7 @@ void push_back_ll(size_t number, struct long_long_Queue *long_long_queue)
 long long pop_front_ll(struct long_long_Queue *long_long_queue)
 {
     assert((*long_long_queue).back + 1 != (*long_long_queue).front && "long_long_queue empty");
-    size_t number = (*long_long_queue).queue[(*long_long_queue).front];
+    long long unsigned number = (*long_long_queue).queue[(*long_long_queue).front];
     (*long_long_queue).front++;
     if((*long_long_queue).front == QUEUELENGTH)
     {

@@ -5,6 +5,7 @@
 #include <string.h>
 #include <assert.h>
 #include <stdbool.h>
+
 #include "adventofcode.h"
 
 
@@ -12,7 +13,7 @@ struct filecontent readfile(const char *files)
 {
 	FILE *file_ptr;
 	char str[4096+2] = "0";
-	size_t i = 0;
+	long long unsigned i = 0;
 	char ch;
 	struct filecontent read;
 	read.lengthfile = 0; //doe hier nog iets mee
@@ -28,7 +29,7 @@ struct filecontent readfile(const char *files)
 		assert(read.maxlengthfile + 1 <= 4096);
 	}
 	rewind(file_ptr);
-	const size_t size = read.lengthfile*sizeof(char*);
+	const long long unsigned size = read.lengthfile*sizeof(char*);
 	char **output = calloc(read.lengthfile, sizeof(char*));
 	assert(output != NULL);
 	for(i = 0; i < read.lengthfile; i++)
@@ -54,7 +55,7 @@ void fix_file(char *argv[])
 {	
 	char *argvfile[FIX_FILE_STR_LENGTH];
 	char **tokens;
-	size_t j = 0;
+	long long unsigned j = 0;
 	tokens = str_split(argvfile[0], PATH_SEPARATOR, true);
 
 	assert(!(strlen(argv[0]) > FIX_FILE_STR_LENGTH));
@@ -109,9 +110,9 @@ void make_file(char file[])
 	fclose(file_ptr);
 }
 
-size_t strtoint(char *vstring)
+long long unsigned strtoint(char *vstring)
 {
-	size_t i = 0, number  = 0;
+	long long unsigned i = 0, number  = 0;
 	char game[4096];
 	strcpy(game, vstring);
 	while(true)
@@ -131,7 +132,7 @@ size_t strtoint(char *vstring)
 char** str_split(char* a_str, const char a_delim, bool doublechar) 
 {
 	char** result    = 0;
-	size_t count     = 0;
+	long long unsigned count     = 0;
 	char* tmp        = a_str;
 	char* last_comma = 0;
 	char delim[2];
@@ -156,7 +157,7 @@ char** str_split(char* a_str, const char a_delim, bool doublechar)
 
 	if(result)
 	{
-		size_t idx  = 0;
+		long long unsigned idx  = 0;
 		char *token = strtok(a_str, delim);
 
 		while(token)

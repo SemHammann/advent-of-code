@@ -6,7 +6,9 @@
 #if defined(WIN32) || defined(_WIN32) 
     #define PATH_SEPARATOR '\\' 
 #else 
-    #define PATH_SEPARATOR '/' 
+    #define PATH_SEPARATOR '/'
+    #define __max(a,b) (((a) > (b)) ? (a) : (b))
+    #define __min(a,b) (((a) < (b)) ? (a) : (b))
 #endif 
 
 #ifndef FIX_FILE_STR_LENGTH
@@ -16,7 +18,7 @@
 struct filecontent
 {
     char **file;
-    size_t lengthfile, maxlengthfile;
+    long long unsigned lengthfile, maxlengthfile;
 };
 
 struct filecontent file;
@@ -29,7 +31,7 @@ char filenamemain[99];
 struct filecontent readfile(const char *filename);
 void fix_file(char *argv[]);
 void make_file(char file[]);
-size_t strtoint(char *vstring);
+long long unsigned strtoint(char *vstring);
 char **str_split(char* a_str, const char a_delim, bool doublechar);
 char *searchAndReplace(char *text, char *search, char *replace);
 
