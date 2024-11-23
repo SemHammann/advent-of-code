@@ -1,5 +1,7 @@
 *.exe
 *
+!*.*
+!*/
 *.txt
 .vscode
 .git
