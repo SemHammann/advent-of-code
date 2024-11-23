@@ -1,13 +1,11 @@
 *.exe
+*
 *.txt
-read-txt-file.c
 .vscode
+.git
 build
 txt
-standaardbegin.c
 standard_functions
-.git
 *.so
 *.o
-test.c
 test
