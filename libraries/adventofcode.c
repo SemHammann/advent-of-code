@@ -66,7 +66,7 @@ void fix_file(char *argv[])
 
 void make_file_names(char *argv[])
 {
-char argvfile[FIX_FILE_STR_LENGTH];
+	char argvfile[FIX_FILE_STR_LENGTH];
 	//argvfile = calloc(FIX_FILE_STR_LENGTH, sizeof(char));
 	char **tokens;
 	long long unsigned j = 0;
@@ -103,12 +103,11 @@ char argvfile[FIX_FILE_STR_LENGTH];
 void make_file(char filen[])
 {
 	FILE *file_ptr;
-	FILE *file_ptr2;
 	file_ptr = fopen(filen, "r");
 	if(file_ptr == NULL)
 	{
-		file_ptr2 = fopen(filen, "w");
-		if(file_ptr2 != NULL)
+		file_ptr = fopen(filen, "w");
+		if(file_ptr != NULL)
 		{
 			printf("Made file \"%s\"\n", filen);
 		}
@@ -116,12 +115,8 @@ void make_file(char filen[])
 		{
 			printf("Can not make file \"%s\"\n", filen);
 		}
-		fclose(file_ptr2);
 	}
-	else
-	{
-		fclose(file_ptr);
-	}
+	fclose(file_ptr);
 }
 
 void make_debug_file(char **string)
