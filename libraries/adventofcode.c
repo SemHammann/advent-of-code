@@ -86,7 +86,7 @@ void fix_file(char *argv[])
 	make_file(filenametest2);
 	make_file(filenamemain);
 
-	printf("\n%s", filename);
+	printf("\n%s\n", filename);
 
 	file = readfile(filename);
 }

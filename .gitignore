@@ -1,7 +1,7 @@
-*.exe
 *
 !*.*
 !*/
+*.exe
 *.txt
 .vscode
 .git
