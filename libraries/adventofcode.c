@@ -101,11 +101,11 @@ void make_file(char file[])
 		file_ptr2 = fopen(file, "w");
 		if(file_ptr2 != NULL)
 		{
-			printf("Made file: %s\n", file);
+			printf("Made file \"%s\"\n", file);
 		}
 		else
 		{
-			printf("Can not make file: %s\n", file);
+			printf("Can not make file \"%s\"\n", file);
 		}
 		fclose(file_ptr2);
 	}
