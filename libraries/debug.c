@@ -1,3 +1,5 @@
+//V0.1
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -83,4 +85,5 @@ int debug_print(const char *str, ...)
 		}
 	}
 	#endif
+	return 0;
 }
