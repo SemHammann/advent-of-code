@@ -56,7 +56,7 @@ struct filecontent readfile(const char *files)
 	return read;
 }
 
-void fix_file(char *argv[])
+void fix_file(char *argv[], const char *whichfile)
 {	
 	char filenametest1[99];
 	char filenametest2[99];
@@ -73,14 +73,26 @@ void fix_file(char *argv[])
 	make_file(filenametest2);
 	make_file(filenamemain);
 
-	printf("\nReading form \"%s\"\n", filename);
-
-	file = readfile(filenamemain);
+	if(whichfile == "T1")
+	{
+		printf("\nReading form \"%s\"\n", filenametest1);
+		file = readfile(filenametest1);
+	}
+	if(whichfile == "T2")
+	{
+		printf("\nReading form \"%s\"\n", filenametest2);
+		file = readfile(filenametest2);
+	}
+	if(whichfile == "M")
+	{
+		printf("\nReading form \"%s\"\n", filenamemain);
+		file = readfile(filenamemain);
+	}
 }
 
-void make_directory(const char* name)
+void make_directory(const char *name)
 {
-	int number; //zorg nog ff dat die print welke gemaakt is, en alleen als het gelukt is
+	int number;
 	#if defined(WIN32) || defined(_WIN32) 
     number = _mkdir(name);
 	#else

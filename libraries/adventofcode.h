@@ -30,7 +30,7 @@ char filenametest2[99];
 char filenamemain[99];*/
 
 struct filecontent readfile(const char *filename);
-void fix_file(char *argv[]);
+void fix_file(char *argv[], const char *whichfile);
 char *make_file_name(char *argv[]);
 void make_file(char file[]);
 void make_directory(const char* name);
