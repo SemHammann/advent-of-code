@@ -15,7 +15,7 @@
 
 
 struct filecontent readfile(const char *files)
-{
+{	
 	FILE *file_ptr;
 	char str[4096+2] = "0";
 	long long unsigned i = 0;
@@ -90,19 +90,6 @@ void fix_file(char *argv[], const char *whichfile)
 	}
 }
 
-void make_directory(const char *name)
-{
-	int number;
-	#if defined(WIN32) || defined(_WIN32) 
-    number = _mkdir(name);
-	#else
-    number = mkdir(name, 0777);
-	#endif
-	if(number == 0)
-	{
-		printf("\nMade directory \"%s\"\n", name);
-	}
-}
 
 char *make_file_name(char *argv[])
 {
@@ -180,6 +167,20 @@ void make_debug_file(char **string, char *filename)
 	else
 	{
 		printf("failed to make a debugfile\n");
+	}
+}
+
+void make_directory(const char *name)
+{
+	int number;
+	#if defined(WIN32) || defined(_WIN32) 
+    number = _mkdir(name);
+	#else
+    number = mkdir(name, 0777);
+	#endif
+	if(number == 0)
+	{
+		printf("\nMade directory \"%s\"\n", name);
 	}
 }
 

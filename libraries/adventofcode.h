@@ -33,10 +33,10 @@ struct filecontent readfile(const char *filename);
 void fix_file(char *argv[], const char *whichfile);
 char *make_file_name(char *argv[]);
 void make_file(char file[]);
-void make_directory(const char* name);
 long long unsigned strtoint(char *vstring);
 char **str_split(char* a_str, const char a_delim, bool doublechar);
 char *searchAndReplace(char *text, char *search, char *replace);
+void make_directory(const char* name);
 
 
 #endif //ADVENTOFCODE_SEM_H
