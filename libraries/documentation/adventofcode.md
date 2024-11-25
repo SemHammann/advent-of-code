@@ -14,7 +14,6 @@ For linux there are two defines more, a `__max()` and a `__min()`, these are in 
 ## Global variables
 
 -   `filecontent.file`; Global because there are some functions that fill this specific struct. In advent of code you only get one file you would use at once while running, so 1 global struct should be enough. In the event that ain't enought you can always just define another `filecontent` struct.
--   `filenames[]`; These global variables are used by the `fix_file` function. These are used to store the two testfiles, the main file, and the file you want to use in your code.
 
 ## Functions
 
@@ -22,15 +21,10 @@ For linux there are two defines more, a `__max()` and a `__min()`, these are in 
 
 -   `readfile()`; This function reads the file you give with the function. It fills the struct with the content of the file, and also fills the `maxlenghthfile` and `lengthfile`.
 -   `fix_file()`; This function runs the `make_file_names`. After this the functions runs the `make_file` function on the two test filenames and the main testfilename, these file should come in the "txt" folder. After making the filenames it runs the `readfile` on the global struct `filecontent.file` with the main `filename`.
-    > [!WARNING]
-    > Tis only works if a "txt" folder exists in the folder where the function is called at.
--   `make_file_names()`; This function read the filename from the `argv`. After this it makes two test filenames, main filename and a debug filename. Depending if you have `TEST1` or `TEST2` defined, your main `filename` is chosen.
-    > [!WARNING]
-    > TEST1 and TEST2 should be defined before the include, in any other way it defaults to the main file
+-   `make_file_names()`; This function read the filename from the `argv`. After this it makes two test filenames, main filename and a debug filename. Depending if you give `T1`, `T2` or `M` with the function, the `readfile` function is called.
 -   `make_file()`; This function checkes if a file exists, if not it creates the file.
--   `make_debug_file()`; This function makes a debug file in a folder "debug_txt". This function prints makes a .txt file from a 2D array.
-    > [!WARNING]
-    > Tis only works if a "debug_txt" folder exists in the folder where the function is called at.
+-   `make_debug_file()`; This function makes a debug file in a folder "debug". This function prints makes a .txt file from a 2D array.
+-   `make_directory()`; This function makes a directory, if it succeded it prints the directory it created.
 
 ### General functions
 
