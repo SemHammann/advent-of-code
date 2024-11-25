@@ -28,7 +28,8 @@ For linux there are two defines more, a `__max()` and a `__min()`, these are in 
 
 ### General functions
 
--   `strtoint()`; This function reads a string, and returns a `long long unsigned`.
+-   `str_to_llu()`; This function reads a string, and returns a `long long unsigned`.
+-   `str_ll()`; This function reads a string, and returns a `long long`.
 -   `str_split()`; This function splits the string you give it, it splits the string on a character you chose, and returns a 2D string back.
 
     > [!WARNING]
