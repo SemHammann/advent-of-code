@@ -25,7 +25,7 @@ struct filecontent readfile(const char *files)
 	read.maxlengthfile = 1;
 
 	file_ptr = fopen(files, "r");
-	assert(!(NULL == file_ptr) && "File can't be opened");
+	assert(!(file_ptr == NULL));
 
 	while((ch = fgets(str, (4095+2), file_ptr) != NULL))
 	{
@@ -58,16 +58,26 @@ struct filecontent readfile(const char *files)
 
 void fix_file(char *argv[], const char *whichfile)
 {	
-	char filenametest1[99];
-	char filenametest2[99];
-	char filenamemain[99];
+	char filenametest1[256];
+	char filenametest2[256];
+	char filenamemain[256];
+	char filename_with_executable[256];
 	char *filename = make_file_name(argv);
+
+	#if defined(WIN32) || defined(_WIN32)
+		sprintf(filename_with_executable, "%s%s", filename, ".exe");
+	#else
+		sprintf(filename_with_executable, "%s", filename);
+	#endif
+
+
+	char *path_until_now = searchAndReplace(*argv, filename_with_executable, "");
 
 	make_directory("txt");
 
-	sprintf(filenametest1, "txt%c%s.test1.txt", PATH_SEPARATOR, filename);
-	sprintf(filenametest2, "txt%c%s.test2.txt", PATH_SEPARATOR, filename);
-	sprintf(filenamemain, "txt%c%s.txt", PATH_SEPARATOR, filename);
+	sprintf(filenametest1, "%stxt%c%s.txt", path_until_now, PATH_SEPARATOR, filename);
+	sprintf(filenametest2, "%stxt%c%s.txt", path_until_now, PATH_SEPARATOR, filename);
+	sprintf(filenamemain, "%stxt%c%s.txt", path_until_now, PATH_SEPARATOR, filename);
 	
 	make_file(filenametest1);
 	make_file(filenametest2);
@@ -87,6 +97,10 @@ void fix_file(char *argv[], const char *whichfile)
 	{
 		printf("\nReading form \"%s\"\n", filenamemain);
 		file = readfile(filenamemain);
+	}
+	else
+	{
+		assert(true && "Not a valid input");
 	}
 }
 
