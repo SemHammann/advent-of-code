@@ -4,12 +4,12 @@ A library containing some basic functions I use to solve the advent of code prob
 
 ## Propeties/Defines
 
-`PATH_SEPARATOR`; The line seperator, should allow the code to work on both linux and mac.
+-   `PATH_SEPARATOR`; The line seperator, should allow the code to work on both linux and mac.
 For linux there are two defines more, a `__max()` and a `__min()`, these are in the `stdlib.h` of windows, but not on linux, and they're neaded for some functions.
 
 ## Structs
 
-`filecontent`; Used by the `readfile` function. It contains a 2D string to contain al the info from the file. The struct also contains 2 `long_long_unsigned` variables, one to determine the amount of lines in the file (`lengthfile`), and one to determine the length of the longest string in the file (`maxlengthfile`).
+-   `filecontent`; Used by the `readfile` function. It contains a 2D string to contain al the info from the file. The struct also contains 2 `long_long_unsigned` variables, one to determine the amount of lines in the file (`lengthfile`), and one to determine the length of the longest string in the file (`maxlengthfile`).
 
 ## Global variables
 
@@ -32,10 +32,12 @@ For linux there are two defines more, a `__max()` and a `__min()`, these are in 
 -   `str_ll()`; This function reads a string, and returns a `long long`.
 -   `str_split()`; This function splits the string you give it, it splits the string on a character you chose, and returns a 2D string back.
 
-    > [!WARNING]
-    > This function changes the original string, so if you still need the original, copy the string first
+> [!WARNING]
+> This function changes the original string, so if you still need the original, copy the string first
 
 -   `searchAndReplace()`; This function replaces part of a string with another string.
 
-    > [!WARNING]
-    > Be aware, make sure the string you return this function to is big enough for the new string
+> [!WARNING]
+> Be aware, make sure the string you return this function to is big enough for the new string
+
+<!-- thanks you "JTnadrooi" for helping revieuwing and help improve this file -->
