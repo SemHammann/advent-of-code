@@ -1,4 +1,4 @@
-//V4.4
+//V4.5
 
 #ifndef ADVENTOFCODE_SEM_H
 #define ADVENTOFCODE_SEM_H
@@ -23,11 +23,6 @@ struct filecontent
 
 struct filecontent file;
 
-/*char filename[99];
-char filename_debug[99];
-char filenametest1[99];
-char filenametest2[99];
-char filenamemain[99];*/
 
 struct filecontent readfile(const char *filename);
 void fix_file(char *argv[], const char *whichfile);
