@@ -1,4 +1,4 @@
-//V4.4
+//V4.5
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -172,7 +172,7 @@ void make_directory(const char *name)
 }
 
 
-long long unsigned strtoint(char *vstring)
+long long unsigned str_to_llu(char *vstring)
 {
 	long long unsigned i = 0, number  = 0;
 	char game[4096];
@@ -187,6 +187,36 @@ long long unsigned strtoint(char *vstring)
 			{
 				return number;
 			}   
+		i++;
+	}
+}
+
+long long str_ll(char *vstring)
+{
+	int i = 0;
+	long long number = 0;
+	char game[4096];
+	bool negative = false;
+	strcpy(game, vstring);
+	while(true)
+	{
+		if(game[i] == '-')
+		{
+			negative = true;
+			i++;
+		}
+		if(game[i] >= '0' && game[i] <= '9')
+			{
+				number = 10 * number + (game[i] - '0');
+			}
+			else if(negative == true)
+			{
+				return (number * -1);
+			}  
+			else
+			{
+				return number;
+			} 
 		i++;
 	}
 }
