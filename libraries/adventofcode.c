@@ -5,6 +5,11 @@
 #include <string.h>
 #include <assert.h>
 #include <stdbool.h>
+#if defined(WIN32) || defined(_WIN32) 
+	#include <direct.h>
+#else
+	#include <sys/stat.h>
+#endif
 
 #include "adventofcode.h"
 
@@ -16,7 +21,7 @@ struct filecontent readfile(const char *files)
 	long long unsigned i = 0;
 	char ch;
 	struct filecontent read;
-	read.lengthfile = 0; //doe hier nog iets mee
+	read.lengthfile = 0;
 	read.maxlengthfile = 1;
 
 	file_ptr = fopen(files, "r");
@@ -53,23 +58,46 @@ struct filecontent readfile(const char *files)
 
 void fix_file(char *argv[])
 {	
-	make_file_names(argv);
+	char filenametest1[99];
+	char filenametest2[99];
+	char filenamemain[99];
+	char *filename = make_file_name(argv);
+
+	make_directory("txt");
+
+	sprintf(filenametest1, "txt%c%s.test1.txt", PATH_SEPARATOR, filename);
+	sprintf(filenametest2, "txt%c%s.test2.txt", PATH_SEPARATOR, filename);
+	sprintf(filenamemain, "txt%c%s.txt", PATH_SEPARATOR, filename);
 	
 	make_file(filenametest1);
 	make_file(filenametest2);
 	make_file(filenamemain);
 
-	printf("\n%s\n", filename);
+	printf("\nReading form \"%s\"\n", filename);
 
-	file = readfile(filename);
+	file = readfile(filenamemain);
 }
 
-void make_file_names(char *argv[])
+void make_directory(const char* name)
+{
+	int number; //zorg nog ff dat die print welke gemaakt is, en alleen als het gelukt is
+	#if defined(WIN32) || defined(_WIN32) 
+    number = _mkdir(name);
+	#else
+    number = mkdir(name, 0777);
+	#endif
+	if(number == 0)
+	{
+		printf("\nMade directory \"%s\"\n", name);
+	}
+}
+
+char *make_file_name(char *argv[])
 {
 	char argvfile[FIX_FILE_STR_LENGTH];
-	//argvfile = calloc(FIX_FILE_STR_LENGTH, sizeof(char));
 	char **tokens;
 	long long unsigned j = 0;
+	
 	strcpy(argvfile, argv[0]);
 	tokens = str_split(argvfile, PATH_SEPARATOR, false);
 
@@ -83,19 +111,20 @@ void make_file_names(char *argv[])
 	j--;
 	tokens = str_split(*(tokens + j), '.', true);
 
-	sprintf(filenametest1, "txt%c%s.test1.txt", PATH_SEPARATOR, *tokens);
-	sprintf(filenametest2, "txt%c%s.test2.txt", PATH_SEPARATOR, *tokens);
-	sprintf(filenamemain, "txt%c%s.txt", PATH_SEPARATOR, *tokens);
-	sprintf(filename_debug, "debug_txt%c%s.txt", PATH_SEPARATOR, *tokens);
+	//sprintf(filenametest1, "txt%c%s.test1.txt", PATH_SEPARATOR, *tokens);
+	//sprintf(filenametest2, "txt%c%s.test2.txt", PATH_SEPARATOR, *tokens);
+	//sprintf(filenamemain, "txt%c%s.txt", PATH_SEPARATOR, *tokens);
+	//sprintf(filename_debug, "debug_txt%c%s.txt", PATH_SEPARATOR, *tokens);
 
 
-	#if defined TEST1
+	/*#if defined TEST1
 	   strcpy(filename, filenametest1);
 	#elif defined TEST
 		strcpy(filename, filenametest2);
 	#else
 		strcpy(filename, filenamemain);
-	#endif	
+	#endif	*/
+	return *tokens;
 }
 
 
@@ -119,10 +148,13 @@ void make_file(char filen[])
 	fclose(file_ptr);
 }
 
-void make_debug_file(char **string)
+void make_debug_file(char **string, char *filename)
 {
 	FILE *file_ptr;
 	unsigned long long i = 0;
+	char filename_debug[99];
+	make_directory("debug");
+	sprintf(filename_debug, "debug%c%s.txt", PATH_SEPARATOR, filename);
 	file_ptr = fopen(filename_debug, "w");
 	if(file_ptr != NULL)
 	{
@@ -131,16 +163,13 @@ void make_debug_file(char **string)
 			fprintf(file_ptr, "%s\n", *(string + i));
 			i++;
 		}
+		printf("Made debug file \"%s\"\n", filename_debug);
 	}
 	else
 	{
 		printf("failed to make a debugfile\n");
 	}
 }
-
-
-
-
 
 
 long long unsigned strtoint(char *vstring)

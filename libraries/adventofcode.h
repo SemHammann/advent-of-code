@@ -23,17 +23,17 @@ struct filecontent
 
 struct filecontent file;
 
-char filename[99];
+/*char filename[99];
 char filename_debug[99];
 char filenametest1[99];
 char filenametest2[99];
-char filenamemain[99];
+char filenamemain[99];*/
 
 struct filecontent readfile(const char *filename);
 void fix_file(char *argv[]);
-void make_file_names(char *argv[]);
+char *make_file_name(char *argv[]);
 void make_file(char file[]);
-void make_debug_file();
+void make_directory(const char* name);
 long long unsigned strtoint(char *vstring);
 char **str_split(char* a_str, const char a_delim, bool doublechar);
 char *searchAndReplace(char *text, char *search, char *replace);
