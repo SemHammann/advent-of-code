@@ -88,19 +88,19 @@ void fix_file(char *argv[], const char *whichfile)
 		printf("\nReading form \"%s\"\n", filenametest1);
 		file = readfile(filenametest1);
 	}
-	if(whichfile == "T2")
+	else if(whichfile == "T2")
 	{
 		printf("\nReading form \"%s\"\n", filenametest2);
 		file = readfile(filenametest2);
 	}
-	if(whichfile == "M")
+	else if(whichfile == "M")
 	{
 		printf("\nReading form \"%s\"\n", filenamemain);
 		file = readfile(filenamemain);
 	}
 	else
 	{
-		assert(true && "Not a valid input");
+		assert(false && "Not a valid input");
 	}
 }
 
