@@ -1,4 +1,4 @@
-//V4.3
+//V4.4
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,14 +41,14 @@ struct filecontent readfile(const char *files)
 	{
 		output[i] = (char*)calloc((read.maxlengthfile + 1), sizeof(char));
 		assert(output[i] != NULL);
-		*output[i] = 0;
+		*output[i];
 	}
 
 	i = 0;
 	while(fgets(str, 4095, file_ptr) != NULL)
 	{
-		//strcpy(output[i], str);
-		output[i] = searchAndReplace(str, "\n", "");
+		strcpy(str, searchAndReplace(str, "\n", ""));
+		strcpy(output[i], str);
 		i++;
 	}
 	fclose(file_ptr);
@@ -110,19 +110,6 @@ char *make_file_name(char *argv[])
 	j--;
 	tokens = str_split(*(tokens + j), '.', true);
 
-	//sprintf(filenametest1, "txt%c%s.test1.txt", PATH_SEPARATOR, *tokens);
-	//sprintf(filenametest2, "txt%c%s.test2.txt", PATH_SEPARATOR, *tokens);
-	//sprintf(filenamemain, "txt%c%s.txt", PATH_SEPARATOR, *tokens);
-	//sprintf(filename_debug, "debug_txt%c%s.txt", PATH_SEPARATOR, *tokens);
-
-
-	/*#if defined TEST1
-	   strcpy(filename, filenametest1);
-	#elif defined TEST
-		strcpy(filename, filenametest2);
-	#else
-		strcpy(filename, filenamemain);
-	#endif	*/
 	return *tokens;
 }
 
