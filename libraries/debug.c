@@ -15,7 +15,6 @@ int debug_print(const char *str, ...)
     va_list args;
     va_start(args, str);
 
-    // Use vfprintf to handle formatting directly
     int result = vfprintf(stdout, str, args);
 
     va_end(args);
