@@ -1,5 +1,5 @@
 # Advent of Code Sem
-These are my solution
+These are my solutions
 > I'm trying to learn C so, most code won't be very optimized or pretty
 
 ## 2023
