@@ -3,31 +3,39 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#ifndef QUEUELENGTH
+#include <stdbool.h>
+
+/*#ifndef QUEUELENGTH
 	#define QUEUELENGTH 128
 #endif
 #ifndef QUEUEHEIGHT
 	#define QUEUEHEIGHT 128	
-#endif
+#endif*/
 
 typedef struct Char_Queue
 {
     long long unsigned front, back;
-    char queue[QUEUELENGTH][QUEUEHEIGHT];
+    char **queue;
+    size_t length, height;
+    bool setup;
 }Char_Queue_t;
 //struct Char_Queue char_queue;
 
 typedef struct long_long_unsigned_Queue
 {
     long long unsigned front, back;
-    long long unsigned queue[QUEUELENGTH];
+    long long unsigned *queue;
+    size_t length;
+    bool setup;
 }long_long_unsigned_Queue_t;
 //struct long_long_unsigned_Queue long_long_unsigned_queue;
 
 typedef struct long_long_Queue
 {
     long long unsigned front, back;
-    long long queue[QUEUELENGTH];
+    size_t length;
+    long long *queue;
+    bool setup;
 }long_long_Queue_t;
 //struct long_long_Queue long_long_queue;
 
@@ -48,7 +56,7 @@ long long unsigned pop_back_llu(struct long_long_unsigned_Queue *long_long_unsig
 long long unsigned front_llu(struct long_long_unsigned_Queue *long_long_unsigned_queue);
 long long unsigned back_llu(struct long_long_unsigned_Queue *long_long_unsigned_queue);
 
-void init_ll(struct long_long_Queue *long_long_queue);
+void init_ll(struct long_long_Queue *long_long_queue, size_t length);
 void push_front_ll(long long unsigned number, struct long_long_Queue *long_long_queue);
 void push_back_ll(long long unsigned number, struct long_long_Queue *long_long_queue);
 long long pop_front_ll(struct long_long_Queue *long_long_queue);
