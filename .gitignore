@@ -11,4 +11,4 @@ standard_functions
 *.so
 *.o
 test
-debug_txt
+debug
