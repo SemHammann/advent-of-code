@@ -61,27 +61,21 @@ void fix_file(char *argv[], const char *whichfile)
 	char filenametest1[256];
 	char filenametest2[256];
 	char filenamemain[256];
-	char filename_with_executable[256];
+
+	fix_path_until_now(argv);
+
 	char *filename = make_file_name(argv);
+	char directory[256];
+	sprintf(directory, "%s%ctxt", path_until_now, PATH_SEPARATOR);
+	make_directory(directory);
 
-	#if defined(WIN32) || defined(_WIN32)
-		sprintf(filename_with_executable, "%s%s", filename, ".exe");
-	#else
-		sprintf(filename_with_executable, "%s", filename);
-	#endif
-
-
-	char *path_until_now = searchAndReplace(*argv, filename_with_executable, "");
-
-	make_directory("txt");
-
-	sprintf(filenametest1, "%stxt%c%s.txt", path_until_now, PATH_SEPARATOR, filename);
-	sprintf(filenametest2, "%stxt%c%s.txt", path_until_now, PATH_SEPARATOR, filename);
+	sprintf(filenametest1, "%stxt%c%s.test1.txt", path_until_now, PATH_SEPARATOR, filename);
+	sprintf(filenametest2, "%stxt%c%s.test2.txt", path_until_now, PATH_SEPARATOR, filename);
 	sprintf(filenamemain, "%stxt%c%s.txt", path_until_now, PATH_SEPARATOR, filename);
 	
-	make_file(filenametest1);
-	make_file(filenametest2);
-	make_file(filenamemain);
+	make_file(argv, filenametest1);
+	make_file(argv, filenametest2);
+	make_file(argv, filenamemain);
 
 	if(whichfile == "T1")
 	{
@@ -110,7 +104,6 @@ char *make_file_name(char *argv[])
 	char argvfile[FIX_FILE_STR_LENGTH];
 	char **tokens;
 	long long unsigned j = 0;
-	
 	strcpy(argvfile, argv[0]);
 	tokens = str_split(argvfile, PATH_SEPARATOR, false);
 
@@ -129,9 +122,10 @@ char *make_file_name(char *argv[])
 
 
 
-void make_file(char filen[])
+void make_file(char *argv[], char filen[])
 {
 	FILE *file_ptr;
+	
 	file_ptr = fopen(filen, "r");
 	if(file_ptr == NULL)
 	{
@@ -148,12 +142,15 @@ void make_file(char filen[])
 	fclose(file_ptr);
 }
 
-void make_debug_file(char **string, char *filename)
+void make_debug_file(char *argv[], char **string, char *filename)
 {
 	FILE *file_ptr;
 	unsigned long long i = 0;
-	char filename_debug[99];
-	make_directory("debug");
+	char filename_debug[256];
+	fix_path_until_now(argv);
+	char debug_dir[256];
+	sprintf(debug_dir, "%s%c%s", path_until_now, PATH_SEPARATOR, filename);
+	make_directory(debug_dir);
 	sprintf(filename_debug, "debug%c%s.txt", PATH_SEPARATOR, filename);
 	file_ptr = fopen(filename_debug, "w");
 	if(file_ptr != NULL)
@@ -183,6 +180,21 @@ void make_directory(const char *name)
 	{
 		printf("\nMade directory \"%s\"\n", name);
 	}
+}
+
+void fix_path_until_now(char *argv[])
+{
+	char filename_with_executable[256];
+	char *filename = make_file_name(argv);
+
+	#if defined(WIN32) || defined(_WIN32)
+		sprintf(filename_with_executable, "%s%s", filename, ".exe");
+	#else
+		sprintf(filename_with_executable, "%s", filename);
+	#endif
+
+
+	path_until_now = searchAndReplace(*argv, filename_with_executable, "");
 }
 
 
