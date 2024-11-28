@@ -4,6 +4,8 @@ These are my solutions for Advent of Code 2023-2024.
 
 _I'm trying to learn C so, most code won't be very optimized or pretty._
 
+_There is a possibility that some day's don't work anymore because I updated the libraries._
+
 ## 2023
 
 I started with the advent of code in 2023, and I started with coding in 2024. I practiced my C coding skills mostly with Advent of code.
