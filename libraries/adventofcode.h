@@ -1,10 +1,10 @@
-//V4.5
+//5.0
 
 #ifndef ADVENTOFCODE_BLOEM_H
 #define ADVENTOFCODE_BLOEM_H
 
 #ifndef __GNUC__
-	//#warning I haven't tested for this compiler
+	#warning "I haven't tested for this compiler"
 #endif /* __GNUC__ */
 
 #if defined(WIN32) || defined(_WIN32) 
