@@ -22,7 +22,8 @@
 struct filecontent
 {
     char **file;
-    long long unsigned lengthfile, maxlengthfile;
+    size_t amountlines;
+	size_t *lengthlines;
 };
 
 struct filecontent file;
