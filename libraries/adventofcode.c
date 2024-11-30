@@ -66,7 +66,7 @@ void fix_file(char *argv[], const char *whichfile)
 
 	char *filename = make_file_name(argv);
 	char directory[256];
-	sprintf(directory, "%s%ctxt", path_until_now, PATH_SEPARATOR);
+	sprintf(directory, "%stxt", path_until_now);
 	make_directory(directory);
 
 	sprintf(filenametest1, "%stxt%c%s.test1.txt", path_until_now, PATH_SEPARATOR, filename);
