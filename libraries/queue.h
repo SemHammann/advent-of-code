@@ -1,16 +1,10 @@
 //V4.2
 
-#ifndef QUEUE_H
-#define QUEUE_H
+#ifndef QUEUE_BLOEM_H
+#define QUEUE_BLOEM_H
 
 #include <stdbool.h>
 
-/*#ifndef QUEUELENGTH
-	#define QUEUELENGTH 128
-#endif
-#ifndef QUEUEHEIGHT
-	#define QUEUEHEIGHT 128	
-#endif*/
 
 typedef struct Char_Queue
 {
@@ -48,7 +42,7 @@ char *front_c(struct Char_Queue *char_queue);
 char *back_c(struct Char_Queue *char_queue);
 
 
-void init_llu(struct long_long_unsigned_Queue *long_long_unsigned_queue, size_t length);
+void init_llu(struct long_long_unsigned_Queue *long_long_unsigned_queue);
 void push_front_llu(long long unsigned number, struct long_long_unsigned_Queue *long_long_unsigned_queue);
 void push_back_llu(long long unsigned number, struct long_long_unsigned_Queue *long_long_unsigned_queue);
 long long unsigned pop_front_llu(struct long_long_unsigned_Queue *long_long_unsigned_queue);
@@ -64,7 +58,4 @@ long long pop_back_ll(struct long_long_Queue *long_long_queue);
 long long front_ll(struct long_long_Queue *long_long_queue);
 long long back_ll(struct long_long_Queue *long_long_queue);
 
-
-
-
-#endif /* QUEUE_H */
+#endif /* QUEUE_BLOEM_H */

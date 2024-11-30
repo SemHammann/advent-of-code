@@ -1,4 +1,4 @@
-//V5.0
+//V5.1
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,45 +15,69 @@
 
 
 struct filecontent readfile(const char *files)
-{	
+{
 	FILE *file_ptr;
-	char str[4096+2] = "0";
-	long long unsigned i = 0;
-	char ch;
-	struct filecontent read;
-	read.lengthfile = 0;
-	read.maxlengthfile = 1;
-
+	struct filecontent readfile;
 	file_ptr = fopen(files, "r");
 	assert(!(file_ptr == NULL));
+	char str[4096];
+	char buffer[4096];
+	char *tmp;
+	readfile.amountlines = 1;
+	size_t current_buffer_count = 0, max_buffer_count = 0;
+	size_t current_line = 0;
 
-	while((ch = fgets(str, (4095+2), file_ptr) != NULL))
+	while(true)
 	{
-		read.lengthfile++;
-		read.maxlengthfile = __max(read.maxlengthfile, strlen(str));
-		assert(read.maxlengthfile + 1 <= 4096);
+		size_t res = fread(buffer, 1, 4096, file_ptr);
+		assert(!(ferror(file_ptr)));
+		for(size_t i = 0; i < res; i++)
+			if(buffer[i] == '\n')
+				readfile.amountlines++;
+		
+		if(feof(file_ptr))
+			break;
 	}
+
 	rewind(file_ptr);
-	const long long unsigned size = read.lengthfile*sizeof(char*);
-	char **output = calloc(read.lengthfile + 1, sizeof(char*));
-	assert(output != NULL);
-	for(i = 0; i < read.lengthfile; i++)
-	{
-		output[i] = (char*)calloc((read.maxlengthfile + 1), sizeof(char));
-		assert(output[i] != NULL);
-		*output[i];
-	}
+	readfile.file = calloc(readfile.amountlines + 1, sizeof(char*));
+	readfile.lengthlines = calloc(readfile.amountlines, sizeof(size_t));
+	tmp = calloc(4096, sizeof(char));
 
-	i = 0;
-	while(fgets(str, 4095, file_ptr) != NULL)
+	assert(!(readfile.file == NULL));
+	assert(!(readfile.lengthlines == NULL));
+	assert(!(tmp == NULL));
+
+	while(fgets(str, 4096, file_ptr) != NULL)
 	{
-		strcpy(str, searchAndReplace(str, "\n", ""));
-		strcpy(output[i], str);
-		i++;
+		if((str[strlen(str) - 1]) != '\n')
+		{
+			if(current_buffer_count > max_buffer_count)
+			{
+				tmp = (char*)realloc(tmp, 4096 * (current_buffer_count + 1) * sizeof(char));
+				assert(!(tmp == NULL));
+			}
+			current_buffer_count++;
+			strcat(tmp, str);
+		}
+		else
+		{
+			str[strlen(str) - 1] = 0;
+			max_buffer_count = __max(max_buffer_count, current_buffer_count);
+			strcat(tmp, str);
+			*(readfile.file + current_line) = malloc(strlen(tmp) * sizeof(char));
+			assert(!(*(readfile.file + current_line) == NULL));
+			strcpy(*(readfile.file + current_line), tmp);
+			memset(tmp, 0, 4096 * (max_buffer_count + 1) * sizeof(char));
+			current_buffer_count = 0;
+			current_line++;
+		}	
 	}
-	fclose(file_ptr);
-	read.file = output;
-	return read;
+	*(readfile.file + current_line) = malloc(strlen(tmp) * sizeof(char));
+	assert(!(*(readfile.file + current_line) == NULL));
+	strcpy(*(readfile.file + current_line), tmp);
+
+	return readfile;
 }
 
 void fix_file(char *argv[], const char *whichfile)

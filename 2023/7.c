@@ -1,5 +1,3 @@
-//V3.2
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -7,7 +5,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include <math.h>
-#include "..\libraries\adventofcode.c"
+#include "..\libraries\adventofcode.c" //V5.0
 
 #define amountdecks 1000
 #define decksize 5
@@ -48,7 +46,7 @@ void bubblesort_custom2();
 int main(void)
 {
 	clock_t begin = clock();
-	const char *filename = "txt/7.txt";
+	const char *filename = "txt\\7.txt";
 	file = readfile(filename);
 	assert(amountdecks + 1> file.lengthfile); //if the file is longer than the string you want to put the file into
 
@@ -122,8 +120,8 @@ void fill_data()
 		strcpy(game, file.file[j]);
 		tokens = str_split(game, ' ', false);
 		strncpy(data.deck[j], *tokens, decksize);
-		data.rank[j] = strtoint(*(tokens+1));
-		data.rank2[j] = strtoint(*(tokens+1));
+		data.rank[j] = str_to_llu(*(tokens+1));
+		data.rank2[j] = str_to_llu(*(tokens+1));
 	}
 }
 

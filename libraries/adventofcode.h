@@ -1,4 +1,4 @@
-//5.0
+//5.1
 
 #ifndef ADVENTOFCODE_BLOEM_H
 #define ADVENTOFCODE_BLOEM_H
@@ -24,7 +24,8 @@
 struct filecontent
 {
     char **file;
-    long long unsigned lengthfile, maxlengthfile;
+    size_t amountlines;
+	size_t *lengthlines;
 };
 
 struct filecontent file;
@@ -32,18 +33,18 @@ struct filecontent file;
 char *path_until_now;
 
 
-struct filecontent readfile(const char *filename);
-void fix_file(char *argv[], const char *whichfile);
-char *make_file_name(char *argv[]);
-void make_file(char *argv[], char filen[]);
-void make_debug_file(char *argv[], char **string, char *filename);
-void make_directory(const char *name);
-void fix_path_until_now(char *argv[]);
+extern struct filecontent readfile(const char *filename);
+extern void fix_file(char *argv[], const char *whichfile);
+extern char *make_file_name(char *argv[]);
+extern void make_file(char *argv[], char filen[]);
+extern void make_debug_file(char *argv[], char **string, char *filename);
+extern void make_directory(const char *name);
+extern void fix_path_until_now(char *argv[]);
 
-long long unsigned str_to_llu(char *vstring);
-long long str_ll(char *vstring);
-char **str_split(char* a_str, const char a_delim, bool doublechar);
-char *searchAndReplace(char *text, char *search, char *replace);
+extern long long unsigned str_to_llu(char *vstring);
+extern long long str_ll(char *vstring);
+extern char **str_split(char* a_str, const char a_delim, bool doublechar);
+extern char *searchAndReplace(char *text, char *search, char *replace);
 
 
 #endif //ADVENTOFCODE_SEM_H
