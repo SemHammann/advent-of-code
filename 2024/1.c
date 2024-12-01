@@ -74,7 +74,18 @@ void part1()
 
 void part2()
 {
-	long long answer;
+	long long answer = 0;
+
+	for(size_t i = 0; i < file.amountlines; i++)
+	{
+		for(size_t j = 0; j < file.amountlines; j++)
+		{
+			if(left[i] == right[j])
+			{
+				answer = answer + left[i];
+			}
+		}
+	}
 
 	printf("Part 2: %lld", answer);
 }
