@@ -30,7 +30,7 @@ struct filecontent
 
 struct filecontent file;
 
-char *path_until_now;
+char path_until_now[256];
 
 
 extern struct filecontent readfile(const char *filename);
