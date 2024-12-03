@@ -30,7 +30,7 @@ struct filecontent
 
 struct filecontent file;
 
-char path_until_now[256];
+//char path_until_now[256];
 
 
 extern struct filecontent readfile(const char *filename);
@@ -39,7 +39,7 @@ extern char *make_file_name(char *argv[]);
 extern void make_file(char *argv[], char filen[]);
 extern void make_debug_file(char *argv[], char **string, char *filename);
 extern void make_directory(const char *name);
-extern void fix_path_until_now(char *argv[]);
+extern char *fix_path_until_now(char *argv[]);
 
 extern long long unsigned str_to_llu(char *vstring);
 extern long long str_ll(char *vstring);

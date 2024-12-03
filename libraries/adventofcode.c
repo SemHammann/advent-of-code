@@ -85,8 +85,9 @@ void fix_file(char *argv[], const char *whichfile)
 	char filenametest1[256];
 	char filenametest2[256];
 	char filenamemain[256];
+	char path_until_now[256];
 
-	fix_path_until_now(argv);
+	strcpy(path_until_now, fix_path_until_now(argv));
 
 	char *filename = make_file_name(argv);
 	char directory[256];
@@ -133,7 +134,6 @@ char *make_file_name(char *argv[])
 
 	assert(!(strlen(argv[0]) > FIX_FILE_STR_LENGTH));
 	
-	
 	while(*(tokens + j) != NULL)
 	{
 		j++;
@@ -171,7 +171,8 @@ void make_debug_file(char *argv[], char **string, char *filename)
 	FILE *file_ptr;
 	unsigned long long i = 0;
 	char filename_debug[256];
-	fix_path_until_now(argv);
+	char path_until_now[256];
+	strcpy(path_until_now, fix_path_until_now(argv));
 	char debug_dir[256];
 	sprintf(debug_dir, "%s%c%s", path_until_now, PATH_SEPARATOR, filename);
 	make_directory(debug_dir);
@@ -206,10 +207,12 @@ void make_directory(const char *name)
 	}
 }
 
-void fix_path_until_now(char *argv[])
+char *fix_path_until_now(char *argv[])
 {
 	char filename_with_executable[256];
 	char *filename = make_file_name(argv);
+	char *path_until_now;
+	path_until_now = calloc(256, sizeof(char));
 
 	#if defined(WIN32) || defined(_WIN32)
 		sprintf(filename_with_executable, "%s%s", filename, ".exe");
@@ -224,6 +227,7 @@ void fix_path_until_now(char *argv[])
 			last_separator = i;
 	}
 	strncpy(path_until_now, *argv, last_separator + 1);
+	return path_until_now;
 }
 
 
