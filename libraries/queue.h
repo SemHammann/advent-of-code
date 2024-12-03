@@ -42,7 +42,7 @@ char *front_c(struct Char_Queue *char_queue);
 char *back_c(struct Char_Queue *char_queue);
 
 
-void init_llu(struct long_long_unsigned_Queue *long_long_unsigned_queue);
+void init_llu(struct long_long_unsigned_Queue *long_long_unsigned_queue, size_t length);
 void push_front_llu(long long unsigned number, struct long_long_unsigned_Queue *long_long_unsigned_queue);
 void push_back_llu(long long unsigned number, struct long_long_unsigned_Queue *long_long_unsigned_queue);
 long long unsigned pop_front_llu(struct long_long_unsigned_Queue *long_long_unsigned_queue);
