@@ -318,7 +318,7 @@ char** str_split(char* a_str, const char a_delim, bool doublechar)
 
 char *searchAndReplace(char *text, char *search, char *replace)
 {
-	char buffer[1000];
+	char buffer[4095];
 	char *ptr;
 	char *modText = NULL;
 

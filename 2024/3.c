@@ -11,18 +11,22 @@
 #define _DEBUG
 #include "../libraries/debug.h" //V0.1
 
+//to high 102360389
 
 
 void part1();
 void part2();
 
 long long all_multiply();
+long long all_multiply2();
+
+bool enabled = true;
 
 int main(int argc, char *argv[])
 {
 	clock_t begin = clock();
 	
-	fix_file(argv, "T1");
+	fix_file(argv, "M");
 
 
 	clock_t begin1 = clock();
@@ -51,7 +55,7 @@ void part2()
 	long long answer = 0;
 	for(size_t i = 0; i < file.amountlines; i++)
 	{
-		answer += all_multiply(file.file[i]);
+		answer += all_multiply2(file.file[i]);
 	}
 
 	printf("Part 2: %lld", answer);
@@ -90,6 +94,62 @@ long long all_multiply(char *vstring)
 		}
 		else
 			current++;
+	}
+	return answer;
+}
+
+long long all_multiply2(char *vstring)
+{
+	
+	char *game;
+	char *current;
+	long long first, second, answer = 0;
+	game = searchAndReplace(vstring, "*", "_");
+	game = searchAndReplace(game, "mul", "*");
+	game = searchAndReplace(game, "X", "_");
+	game = searchAndReplace(game, "Y", "_");
+	game = searchAndReplace(game, "do()", "Y");
+	game = searchAndReplace(game, "don't()", "X");
+	current = game;
+	while(current <= game + strlen(game))
+	{
+		if(enabled)
+		{
+			if(*current == 'X')
+			{
+				enabled = false;
+				current++;
+			}
+			else if(*current == '*')
+			{
+				current++;
+				if(*(current++) == '(')
+				{
+					first = str_ll(current);
+					while(*(current) >= '0' && *(current) <= '9')
+						current++;
+					if(*(current++) == ',')
+					{
+						second = str_ll(current);
+						while(*(current) >= '0' && *(current) <= '9')
+						current++;
+						if(*(current++) == ')')
+						{
+							answer += first * second;
+						}
+					}
+					
+				}
+			}
+			else
+				current++;
+		}
+		else
+		{
+			if(*current == 'Y')
+				enabled = true;
+			current++;
+		}
 	}
 	return answer;
 }
