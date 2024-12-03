@@ -217,8 +217,12 @@ void fix_path_until_now(char *argv[])
 		sprintf(filename_with_executable, "%s", filename);
 	#endif
 
-
-	path_until_now = searchAndReplace(*argv, filename_with_executable, "");
+	size_t last_separator;
+	for(size_t i = 0; i < strlen(*argv); i++)
+	{
+		last_separator = i;
+	}
+	strncpy(path_until_now, *argv, last_separator);
 }
 
 
