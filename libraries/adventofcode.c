@@ -67,6 +67,7 @@ struct filecontent readfile(const char *files)
 			strcat(tmp, str);
 			*(readfile.file + current_line) = malloc(strlen(tmp) * sizeof(char));
 			assert(!(*(readfile.file + current_line) == NULL));
+			readfile.lengthlines[current_line] = strlen(tmp);
 			strcpy(*(readfile.file + current_line), tmp);
 			memset(tmp, 0, 4096 * (max_buffer_count + 1) * sizeof(char));
 			current_buffer_count = 0;
@@ -74,6 +75,7 @@ struct filecontent readfile(const char *files)
 		}	
 	}
 	*(readfile.file + current_line) = malloc(strlen(tmp) * sizeof(char));
+	readfile.lengthlines[current_line] = strlen(tmp);
 	assert(!(*(readfile.file + current_line) == NULL));
 	strcpy(*(readfile.file + current_line), tmp);
 
