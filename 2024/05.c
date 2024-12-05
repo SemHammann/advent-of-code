@@ -11,6 +11,7 @@
 #define _DEBUG
 #include "../libraries/debug.c" //V0.1
 
+
 struct Data
 {
 	long long **page_order;
@@ -21,6 +22,7 @@ struct Data
 };
 
 struct Data data;
+struct Data data2;
 
 void part1();
 void part2();
@@ -28,14 +30,16 @@ void part2();
 void fill_data();
 long long check_possible();
 long long correct_order();
+void swap();
 
 int main(int argc, char *argv[])
 {
 	clock_t begin = clock();
 	
-	fix_file(argv, "T1");
+	fix_file(argv, "M");
 
 	fill_data();
+	data2 = data;
 
 
 	clock_t begin1 = clock();
@@ -116,18 +120,15 @@ void fill_data()
 
 long long check_possible(size_t which_page)
 {
-	long long answer = 1;
-	long long test;
-	long long test2;
 	for(size_t i = 0; i < data.amount_pages_line[which_page]; i++)
 	{
 		for(size_t j = 0; j < data.start_pages - 1; j++)
 		{
-			if((test = data.pages[which_page][i]) == (test2 = data.page_order[j][1]))
+			if(data.pages[which_page][i] == data.page_order[j][1])
 			{
 				for(size_t k = i; k < data.amount_pages_line[which_page]; k++)
 				{
-					if((test = data.pages[which_page][k]) == (test2 = data.page_order[j][0]))
+					if(data.pages[which_page][k] == data.page_order[j][0])
 					{
 						return 0;
 					}
@@ -141,8 +142,33 @@ long long check_possible(size_t which_page)
 
 long long correct_order(size_t which_page)
 {
-	
+	for(size_t i = 0; i < data2.amount_pages_line[which_page]; i++)
+	{
+		for(size_t j = 0; j < data2.start_pages - 1; j++)
+		{
+			if(data2.pages[which_page][i] == data2.page_order[j][1])
+			{
+				for(size_t k = i; k < data2.amount_pages_line[which_page]; k++)
+				{
+					if(data2.pages[which_page][k] == data2.page_order[j][0])
+					{
+						swap(&(data2.pages[which_page][k]), &(data2.pages[which_page][i]));
+						i = -1;
+						j = 999;
+						k = 999;
+					}
+				}
+			}
+		}
+	}
 
 
-	return data.pages[which_page][*(data.amount_pages_line + which_page)/2];
+	return data2.pages[which_page][*(data2.amount_pages_line + which_page)/2];
+}
+
+void swap(long long* xp, long long* yp)
+{
+    long long temp = *xp;
+    *xp = *yp;
+    *yp = temp;
 }
