@@ -176,9 +176,9 @@ void make_debug_file(char *argv[], char **string, char *filename)
 	char path_until_now[256];
 	strcpy(path_until_now, fix_path_until_now(argv));
 	char debug_dir[256];
-	sprintf(debug_dir, "%s%c%s", path_until_now, PATH_SEPARATOR, filename);
+	sprintf(debug_dir, "%sdebug", path_until_now);
 	make_directory(debug_dir);
-	sprintf(filename_debug, "debug%c%s.txt", PATH_SEPARATOR, filename);
+	sprintf(filename_debug, "%s%c%s.txt", debug_dir, PATH_SEPARATOR, filename);
 	file_ptr = fopen(filename_debug, "w");
 	if(file_ptr != NULL)
 	{
@@ -187,7 +187,7 @@ void make_debug_file(char *argv[], char **string, char *filename)
 			fprintf(file_ptr, "%s\n", *(string + i));
 			i++;
 		}
-		printf("Made debug file \"%s\"\n", filename_debug);
+		printf("\nMade debug file \"%s\"\n", filename_debug);
 	}
 	else
 	{
