@@ -14,10 +14,10 @@ void init_c(struct Char_Queue *char_queue, size_t length, size_t height)
     {
         (*char_queue).front = 0;
         (*char_queue).back = 0;
-        (*char_queue).queue = calloc(height, sizeof(char));
+        (*char_queue).queue = (char**)calloc(height, sizeof(char));
         for(size_t i = 0; i < height - 1; i++)
         {
-            (*char_queue).queue[i] = calloc(length, sizeof(char));
+            (*char_queue).queue[i] = (char*)calloc(length, sizeof(char));
         }
 
         (*char_queue).setup = true;
@@ -90,7 +90,7 @@ void init_llu(struct long_long_unsigned_Queue *long_long_unsigned_queue, size_t 
     if((*long_long_unsigned_queue).setup == false)
     {
         (*long_long_unsigned_queue).length = length;
-        (*long_long_unsigned_queue).queue = calloc(length, sizeof(long long unsigned));
+        (*long_long_unsigned_queue).queue = (long long unsigned*)calloc(length, sizeof(long long unsigned));
         (*long_long_unsigned_queue).front = 0;
         (*long_long_unsigned_queue).back = 0;
 
@@ -161,7 +161,7 @@ void init_ll(struct long_long_Queue *long_long_queue, size_t length)
     if((*long_long_queue).setup == false)
     {
         (*long_long_queue).length = length;
-        (*long_long_queue).queue = calloc(length, sizeof(long long));
+        (*long_long_queue).queue = (long long*)calloc(length, sizeof(long long));
         (*long_long_queue).front = 0;
         (*long_long_queue).back = 0;
         (*long_long_queue).setup = true;
