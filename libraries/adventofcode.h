@@ -1,7 +1,7 @@
 //5.1
 
-#ifndef ADVENTOFCODE_BLOEM_H
-#define ADVENTOFCODE_BLOEM_H
+#ifndef ADVENT_OF_CODE_BLOEM_H
+#define ADVENT_OF_CODE_BLOEM_H
 
 #ifndef __GNUC__
 	#warning "I haven't tested for this compiler"
@@ -36,7 +36,7 @@ struct filecontent file;
 extern struct filecontent readfile(const char *filename);
 extern void fix_file(char *argv[], const char *whichfile);
 extern char *make_file_name(char *argv[]);
-extern void make_file(char *argv[], char filen[]);
+extern void make_file(char *argv[], char filename[]);
 extern void make_debug_file(char *argv[], char **string, char *filename);
 extern void make_directory(const char *name);
 extern char *fix_path_until_now(char *argv[]);
@@ -47,4 +47,4 @@ extern char **str_split(char* a_str, const char a_delim, bool doublechar);
 extern char *searchAndReplace(char *text, char *search, char *replace);
 
 
-#endif //ADVENTOFCODE_SEM_H
+#endif //ADVENT_OF_CODE_SEM_H

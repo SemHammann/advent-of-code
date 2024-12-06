@@ -14,11 +14,11 @@
 #include "adventofcode.h"
 
 
-struct filecontent readfile(const char *files)
+struct filecontent readfile(const char *filename)
 {
 	FILE *file_ptr;
 	struct filecontent readfile;
-	file_ptr = fopen(files, "r");
+	file_ptr = fopen(filename, "r");
 	assert(!(file_ptr == NULL));
 	char str[4096];
 	char buffer[4096];
@@ -148,21 +148,21 @@ char *make_file_name(char *argv[])
 
 
 
-void make_file(char *argv[], char filen[])
+void make_file(char *argv[], char filename[])
 {
 	FILE *file_ptr;
 	
-	file_ptr = fopen(filen, "r");
+	file_ptr = fopen(filename, "r");
 	if(file_ptr == NULL)
 	{
-		file_ptr = fopen(filen, "w");
+		file_ptr = fopen(filename, "w");
 		if(file_ptr != NULL)
 		{
-			printf("Made file \"%s\"\n", filen);
+			printf("Made file \"%s\"\n", filename);
 		}
 		else
 		{
-			printf("Can not make file \"%s\"\n", filen);
+			printf("Can not make file \"%s\"\n", filename);
 		}
 	}
 	fclose(file_ptr);
