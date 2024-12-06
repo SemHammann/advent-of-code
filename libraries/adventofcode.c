@@ -40,9 +40,9 @@ struct filecontent readfile(const char *files)
 	}
 
 	rewind(file_ptr);
-	readfile.file = calloc(readfile.amountlines + 1, sizeof(char*));
-	readfile.lengthlines = calloc(readfile.amountlines, sizeof(size_t));
-	tmp = calloc(4096, sizeof(char));
+	readfile.file = (char**)calloc(readfile.amountlines + 1, sizeof(char*));
+	readfile.lengthlines = (size_t*)calloc(readfile.amountlines, sizeof(size_t));
+	tmp = (char*)calloc(4096, sizeof(char));
 
 	assert(!(readfile.file == NULL));
 	assert(!(readfile.lengthlines == NULL));
@@ -65,7 +65,7 @@ struct filecontent readfile(const char *files)
 			str[strlen(str) - 1] = 0;
 			max_buffer_count = __max(max_buffer_count, current_buffer_count);
 			strcat(tmp, str);
-			*(readfile.file + current_line) = malloc(strlen(tmp) * sizeof(char));
+			*(readfile.file + current_line) = (char*)malloc(strlen(tmp) * sizeof(char));
 			assert(!(*(readfile.file + current_line) == NULL));
 			readfile.lengthlines[current_line] = strlen(tmp);
 			strcpy(*(readfile.file + current_line), tmp);
@@ -74,7 +74,7 @@ struct filecontent readfile(const char *files)
 			current_line++;
 		}	
 	}
-	*(readfile.file + current_line) = malloc(strlen(tmp) * sizeof(char));
+	*(readfile.file + current_line) = (char*)malloc(strlen(tmp) * sizeof(char));
 	readfile.lengthlines[current_line] = strlen(tmp);
 	assert(!(*(readfile.file + current_line) == NULL));
 	strcpy(*(readfile.file + current_line), tmp);
@@ -214,7 +214,7 @@ char *fix_path_until_now(char *argv[])
 	char filename_with_executable[256];
 	char *filename = make_file_name(argv);
 	char *path_until_now;
-	path_until_now = calloc(256, sizeof(char));
+	path_until_now = (char*)calloc(256, sizeof(char));
 
 	#if defined(WIN32) || defined(_WIN32)
 		sprintf(filename_with_executable, "%s%s", filename, ".exe");
@@ -306,7 +306,7 @@ char** str_split(char* a_str, const char a_delim, bool doublechar)
 
 	count++;
 
-	result = malloc(sizeof(char*) * count);
+	result = (char**)malloc(sizeof(char*) * count);
 
 	if(result)
 	{
@@ -343,7 +343,7 @@ char *searchAndReplace(char *text, char *search, char *replace)
 	}
 	strcat(buffer, text);
 
-	modText = malloc(strlen(buffer) + 1);
+	modText = (char*)malloc(strlen(buffer) + 1);
 	strcpy(modText, buffer);
 	return modText;
 }
