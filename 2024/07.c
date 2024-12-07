@@ -13,7 +13,6 @@
 #define _DEBUG
 #include "../libraries/debug.c" //V0.1
 
-
 struct Data
 {
 	long long *answers;
@@ -28,6 +27,7 @@ void part2();
 
 void fill_data();
 long long possible();
+long long possible2();
 
 int main(int argc, char *argv[])
 {
@@ -54,7 +54,6 @@ void part1()
 	for(size_t i = 0; i < file.amountlines; i++)
 		answer += possible(i, 0, 0);
 
-
 	printf("Part 1: %lld", answer);
 }
 
@@ -62,7 +61,8 @@ void part2()
 {
 	long long answer = 0;
 
-
+	for(size_t i = 0; i < file.amountlines; i++)
+		answer += possible2(i, 0, 0);
 
 	printf("Part 2: %lld", answer);
 }
@@ -101,10 +101,6 @@ void fill_data()
 long long possible(size_t place, size_t where, size_t current)
 {
 	long long mul, add;
-	add = current + *(*(data.input + place) + where);
-	if(current == 0 && where == 0)
-		current = 1;
-	mul = current * *(*(data.input + place) + where);
 	if(where >= *(data.amount_input + place))
 	{
 		if(current == *(data.answers + place))
@@ -112,7 +108,36 @@ long long possible(size_t place, size_t where, size_t current)
 		else
 			return 0;
 	}
-	if(possible(place, where + 1, mul) == *(data.answers + place) || possible(place, where +1, add) == *(data.answers + place))
+	add = current + *(*(data.input + place) + where);
+	if(current == 0 && where == 0)
+		current = 1;
+	mul = current * *(*(data.input + place) + where);
+	
+	if(possible(place, where + 1, mul) == *(data.answers + place) || possible(place, where + 1, add) == *(data.answers + place))
+		return *(data.answers + place);
+	else
+		return 0;
+}
+
+long long possible2(size_t place, size_t where, size_t current)
+{
+	long long mul, add, cons, fact;
+	if(where >= *(data.amount_input + place))
+	{
+		if(current == *(data.answers + place))
+			return *(data.answers + place);
+		else
+			return 0;
+	}
+	fact = (long long)pow(10, (long long)(log10(*(*(data.input + place) + where)) + 1));
+	add = current + *(*(data.input + place) + where);
+	cons = current * fact + *(*(data.input + place) + where);
+	if(current == 0 && where == 0)
+		current = 1;
+	mul = current * *(*(data.input + place) + where);
+	
+		
+	if(possible2(place, where + 1, mul) == *(data.answers + place) || possible2(place, where + 1, add) == *(data.answers + place) || possible2(place, where + 1, cons) == *(data.answers + place))
 		return *(data.answers + place);
 	else
 		return 0;
