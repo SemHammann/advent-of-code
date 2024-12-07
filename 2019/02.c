@@ -28,14 +28,13 @@ void part2();
 void setup();
 void ICadd();
 void ICmul();
+long long runIntCode();
 
 int main(int argc, char *argv[])
 {
 	clock_t begin = clock();
 	
 	fix_file(argv, "M");
-
-	
 
 	clock_t begin1 = clock();
 	printf("\nThings for 1 and 2: %.0lf ms\n\n", (double)(begin1 - begin)/CLOCKS_PER_SEC*1000);
@@ -50,40 +49,40 @@ int main(int argc, char *argv[])
 
 void part1() 
 {
-	bool end = false;
+	long long answer;
+	
 	setup();
-
 	*(IC.reg + 1) = 12;
 	*(IC.reg + 2) = 2;
-
-	while(end == false)
-	{
-		switch(*(IC.reg + IC.current))
-		{
-			case 1:
-				ICadd();
-				break;
-			case 2:
-				ICmul();
-				break;
-			case 99:
-				end = true;
-				break;
-			default:
-				IC.current++;
-				break;
-		}
-	}
-	printf("Part 1: %lld", *(IC.reg));
+	answer = runIntCode();
 	free(IC.reg);
+	
+	printf("Part 1: %lld", answer);
+	
 }
 
 void part2()
 {
-	long long answer = 0;
-
-	setup();
-
+	long long answer, tmp;
+	for(size_t noun = 0; noun < 100; noun++)
+	{
+		for(size_t verb = 0; verb < 100; verb++)
+		{
+			setup();
+			*(IC.reg + 1) = noun;
+			*(IC.reg + 2) = verb;
+			tmp = runIntCode();
+			if(tmp == 19690720)
+			{
+				answer = 100 * noun + verb;
+				break;
+			}
+			free(IC.reg);
+		}
+		if(tmp == 19690720)
+			break;
+	}
+	free(IC.reg);
 	printf("Part 2: %lld", answer);
 }
 
@@ -124,4 +123,27 @@ void ICmul()
 
 	IC.current += 4;
 	return;
+}
+
+long long runIntCode()
+{
+	int tmp;
+	while(true)
+	{
+		switch(*(IC.reg + IC.current))
+		{
+			case 1:
+				ICadd();
+				break;
+			case 2:
+				ICmul();
+				break;
+			case 99:
+				tmp = *IC.reg;
+				return tmp;;
+			default:
+				IC.current++;
+				break;
+		}
+	}
 }
