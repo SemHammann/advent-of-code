@@ -66,7 +66,7 @@ void part2()
 	for(char i = 0; i < 127; i++)
 	{
 		if(i != '.')
-			fill_antinodes(i);
+			fill_antinodes2(i);
 	}
 
 	answer = count_antinodes();
@@ -93,8 +93,8 @@ void fill_antinodes(char frequency)
 						xt = x1 - x2;
 						if(x1 + xt >= 0 && x1 + xt < file.lengthlines[0] && y1 + yt >= 0 && y1 + yt < file.amountlines)
 							antinodes[y1 + yt][x1 + xt] = '#';
-						if(x2 - xt >= 0 && x2 - xt < file.lengthlines[0] && y2 - yt >= 0 && y2 - yt < file.amountlines)
-							antinodes[y2 - yt][x2 - xt] = '#';
+						/*if(x2 - xt >= 0 && x2 - xt < file.lengthlines[0] && y2 - yt >= 0 && y2 - yt < file.amountlines)
+							antinodes[y2 - yt][x2 - xt] = '#';*/
 					}
 				}
 			}
@@ -106,6 +106,7 @@ void fill_antinodes(char frequency)
 void fill_antinodes2(char frequency)
 {
 	long long yt, xt;
+	long long count;
 	for(long long y1 = 0; y1 < file.amountlines; y1++)
 	{
 		for(long long x1 = 0; x1 < file.lengthlines[y1]; x1++)
@@ -120,10 +121,18 @@ void fill_antinodes2(char frequency)
 					{
 						yt = y1 - y2;
 						xt = x1 - x2;
-						if(x1 + xt >= 0 && x1 + xt < file.lengthlines[0] && y1 + yt >= 0 && y1 + yt < file.amountlines)
-							antinodes[y1 + yt][x1 + xt] = '#';
-						if(x2 - xt >= 0 && x2 - xt < file.lengthlines[0] && y2 - yt >= 0 && y2 - yt < file.amountlines)
-							antinodes[y2 - yt][x2 - xt] = '#';
+						count = 0;
+						while(x1 + xt * count >= 0 && x1 + xt * count < file.lengthlines[0] && y1 + yt * count >= 0 && y1 + yt * count < file.amountlines)
+						{
+							antinodes[y1 + yt * count][x1 + xt * count] = '#';
+							count++;
+						}
+						/*count = 0;
+						while(x2 - xt * count >= 0 && x2 - xt * count < file.lengthlines[0] && y2 - yt * count >= 0 && y2 - yt * count < file.amountlines)
+						{
+							antinodes[y2 - yt * count][x2 - xt * count] = '#';
+							count++;
+						}*/
 					}
 				}
 			}
