@@ -1,5 +1,8 @@
 //V1.0
 
+#ifndef ADVENT_OF_CODE_BLOEM_H
+    #define ADVENT_OF_CODE_BLOEM_H
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -21,3 +24,5 @@ extern char *searchAndReplace(char *text, char *search, char *replace);
 
 void part1();
 void part2();
+
+#endif //ADVENT_OF_CODE_BLOEM_H
