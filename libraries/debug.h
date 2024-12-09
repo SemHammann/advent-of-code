@@ -1,8 +1,8 @@
-//V0.1
+//V0.2
 
-#ifndef DEBUG_SEM_H
-#define DEBUG_SEM_H
+#ifndef DEBUG_BLOEM_H
+#define DEBUG_BLOEM_H
 
 int debug_print(bool on,const char *str, ...);
 
-#endif // DEBUG_SEM_H
+#endif // DEBUG_BLOEM_H
