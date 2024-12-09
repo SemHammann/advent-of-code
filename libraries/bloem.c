@@ -141,9 +141,9 @@ char *make_file_name(char *argv[])
 		if(argv[0][i] == PATH_SEPARATOR)
 			last_separator = i;
 	}
-	filename_ptr = argv[0][last_separator];
-	filename = malloc(strlen(filename_ptr) * sizeof(char));
-	strcpy(filename, filename_ptr);
+	filename_ptr = argv[0] + last_separator;
+	filename = calloc((strlen(filename_ptr) - 3), sizeof(char));
+	strncpy(filename, filename_ptr, strlen(filename_ptr) - 4);
 
 
 
