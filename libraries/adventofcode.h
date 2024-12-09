@@ -20,6 +20,10 @@
 #ifndef FIX_FILE_STR_LENGTH
     #define FIX_FILE_STR_LENGTH 256
 #endif
+#ifndef FILE_READ_AMOUNT
+    #define FILE_READ_AMOUNT 4096
+#endif
+
 
 struct filecontent
 {
@@ -29,8 +33,6 @@ struct filecontent
 };
 
 struct filecontent file;
-
-//char path_until_now[256];
 
 
 extern struct filecontent readfile(const char *filename);

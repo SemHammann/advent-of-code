@@ -20,8 +20,8 @@ struct filecontent readfile(const char *filename)
 	struct filecontent readfile;
 	file_ptr = fopen(filename, "r");
 	assert(!(file_ptr == NULL));
-	char str[4096];
-	char buffer[4096];
+	char str[FILE_READ_AMOUNT];
+	char buffer[FILE_READ_AMOUNT];
 	char *tmp;
 	readfile.amountlines = 1;
 	size_t current_buffer_count = 0, max_buffer_count = 0;
@@ -29,7 +29,7 @@ struct filecontent readfile(const char *filename)
 
 	while(true)
 	{
-		size_t res = fread(buffer, 1, 4096, file_ptr);
+		size_t res = fread(buffer, 1, FILE_READ_AMOUNT, file_ptr);
 		assert(!(ferror(file_ptr)));
 		for(size_t i = 0; i < res; i++)
 			if(buffer[i] == '\n')
@@ -42,19 +42,19 @@ struct filecontent readfile(const char *filename)
 	rewind(file_ptr);
 	readfile.file = (char**)calloc(readfile.amountlines + 1, sizeof(char*));
 	readfile.lengthlines = (size_t*)calloc(readfile.amountlines, sizeof(size_t));
-	tmp = (char*)calloc(4096, sizeof(char));
+	tmp = (char*)calloc(FILE_READ_AMOUNT, sizeof(char));
 
 	assert(!(readfile.file == NULL));
 	assert(!(readfile.lengthlines == NULL));
 	assert(!(tmp == NULL));
 
-	while(fgets(str, 4096, file_ptr) != NULL)
+	while(fgets(str, FILE_READ_AMOUNT, file_ptr) != NULL)
 	{
 		if((str[strlen(str) - 1]) != '\n')
 		{
 			if(current_buffer_count > max_buffer_count)
 			{
-				tmp = (char*)realloc(tmp, 4096 * (current_buffer_count + 1) * sizeof(char));
+				tmp = (char*)realloc(tmp, FILE_READ_AMOUNT * (current_buffer_count + 1) * sizeof(char));
 				assert(!(tmp == NULL));
 			}
 			current_buffer_count++;
@@ -69,7 +69,7 @@ struct filecontent readfile(const char *filename)
 			assert(!(*(readfile.file + current_line) == NULL));
 			readfile.lengthlines[current_line] = strlen(tmp);
 			strcpy(*(readfile.file + current_line), tmp);
-			memset(tmp, 0, 4096 * (max_buffer_count + 1) * sizeof(char));
+			memset(tmp, 0, FILE_READ_AMOUNT * (max_buffer_count + 1) * sizeof(char));
 			current_buffer_count = 0;
 			current_line++;
 		}	
@@ -329,7 +329,7 @@ char** str_split(char* a_str, const char a_delim, bool doublechar)
 
 char *searchAndReplace(char *text, char *search, char *replace)
 {
-	char buffer[4095];
+	char buffer[4096];
 	char *ptr;
 	char *modText = NULL;
 
