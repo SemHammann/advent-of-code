@@ -84,15 +84,15 @@ struct filecontent readfile(const char *filename)
 
 void fix_file(char *argv[], const char *whichfile)
 {	
-	char filenametest1[256];
-	char filenametest2[256];
-	char filenamemain[256];
-	char path_until_now[256];
+	char filenametest1[FIX_FILE_STR_LENGTH];
+	char filenametest2[FIX_FILE_STR_LENGTH];
+	char filenamemain[FIX_FILE_STR_LENGTH];
+	char path_until_now[FIX_FILE_STR_LENGTH];
 
 	strcpy(path_until_now, fix_path_until_now(argv));
 
 	char *filename = make_file_name(argv);
-	char directory[256];
+	char directory[FIX_FILE_STR_LENGTH];
 	sprintf(directory, "%stxt", path_until_now);
 	make_directory(directory);
 
@@ -131,10 +131,11 @@ char *make_file_name(char *argv[])
 	char argvfile[FIX_FILE_STR_LENGTH];
 	char **tokens;
 	long long unsigned j = 0;
-	strcpy(argvfile, argv[0]);
-	tokens = str_split(argvfile, PATH_SEPARATOR, false);
 
 	assert(!(strlen(argv[0]) > FIX_FILE_STR_LENGTH));
+
+	strcpy(argvfile, argv[0]);
+	tokens = str_split(argvfile, PATH_SEPARATOR, false);
 	
 	while(*(tokens + j) != NULL)
 	{
@@ -172,10 +173,10 @@ void make_debug_file(char *argv[], char **string, char *filename)
 {
 	FILE *file_ptr;
 	unsigned long long i = 0;
-	char filename_debug[256];
-	char path_until_now[256];
+	char filename_debug[FIX_FILE_STR_LENGTH];
+	char path_until_now[FIX_FILE_STR_LENGTH];
 	strcpy(path_until_now, fix_path_until_now(argv));
-	char debug_dir[256];
+	char debug_dir[FIX_FILE_STR_LENGTH];
 	sprintf(debug_dir, "%sdebug", path_until_now);
 	make_directory(debug_dir);
 	sprintf(filename_debug, "%s%c%s.txt", debug_dir, PATH_SEPARATOR, filename);
@@ -211,10 +212,10 @@ void make_directory(const char *name)
 
 char *fix_path_until_now(char *argv[])
 {
-	char filename_with_executable[256];
+	char filename_with_executable[FIX_FILE_STR_LENGTH];
 	char *filename = make_file_name(argv);
 	char *path_until_now;
-	path_until_now = (char*)calloc(256, sizeof(char));
+	path_until_now = (char*)calloc(FIX_FILE_STR_LENGTH, sizeof(char));
 
 	#if defined(WIN32) || defined(_WIN32)
 		sprintf(filename_with_executable, "%s%s", filename, ".exe");
