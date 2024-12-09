@@ -1,6 +1,6 @@
 # Bloem
 
-A library containing some basic file functions. This library should work on both windows and linux.
+A library containing some basic file functions. This library was specifically made for advent of code, but can be used for other purposes. This library should work on both windows and linux.
 
 ## Propeties/Defines
 
@@ -22,7 +22,7 @@ For linux there are two defines more, a `__max()` and a `__min()`, these are in 
 ### File functions
 
 -   `readfile()`; This function reads the file you give with the function. It fills the struct with the content of the file, and also fills the `amountlines` and `lengthlines`.
--   `fix_file()`; This function runs the `make_file_names`. After this the functions runs the `make_file` function on the two test filenames and the main testfilename, these file should come in the "txt" folder. After making the filenames it runs the `readfile` on the global struct `filecontent.file`, depending if you give `T1`, `T2` or `M` with the function, the filename it uses is different.
+-   `fix_file()`; This function runs the `make_file_names`. After this the functions runs the `make_file` function on the two test filenames and the main testfilename, these file should come in the "txt" folder. After making the filenames it runs the `readfile` on the global struct `filecontent.file`, depending if you give `T1`, `T2` or `M` with the function, the filename it uses is different. This function was specificly made for advent of code but can be modified to be used for anything.
 -   `make_file_name()`; This function read the filename from the `argv`, and returns the filename.
 -   `make_file()`; This function checkes if a file exists, if not it creates the file.
 -   `make_debug_file()`; This function makes a debug file in a folder "debug". This function prints makes a .txt file from a 2D array.
