@@ -17,6 +17,7 @@ struct Data
 {
 	int *data;
 	size_t length;
+	int last;
 };
 struct Data data;
 
@@ -32,7 +33,7 @@ int main(int argc, char *argv[])
 {
 	clock_t begin = clock();
 	
-	fix_file(argv, "T1");
+	fix_file(argv, "M");
 
 
 	clock_t begin1 = clock();
@@ -65,8 +66,8 @@ void part2()
 	compress2();
 	answer = count();
 
-	free(data.data);
 	printf("Part 2: %lld", answer);
+	free(data.data);
 }
 
 void setup()
@@ -96,6 +97,7 @@ void setup()
 			j++;
 		}
 	}
+	data.last = k - 1;
 	return;
 }
 
@@ -118,6 +120,55 @@ void compress()
 	}
 }
 
+void compress2()
+{
+	int first_free= 0, end = data.length;
+	int free_count, end_count;
+	bool free_already;
+	while(data.last >= 0)
+	{
+		end_count = 0;
+		free_count = 0;
+		first_free = 0;
+		while(data.data[end] != data.last)
+			end--;
+		while(data.data[end - end_count] == data.last)
+			end_count++;
+
+		data.last--;
+
+		while(free_count < end_count)
+		{
+			free_count = 0;
+			if(!free_already)
+				first_free++;
+			free_already = false;
+			
+			while(data.data[first_free] != -1)
+			{
+				first_free++;
+				free_already = true;
+				if(first_free >= data.length)
+					break;
+			}
+			if(first_free >= data.length)
+					break;
+			while(data.data[first_free + free_count] == -1)
+				free_count++;
+		}
+
+		
+		if(free_count >= end_count && end > first_free)
+		{
+			for(size_t i = 0; i < end_count; i++)
+			{
+				data.data[first_free + i] = data.data[end - i];
+				data.data[end - i] = -1;
+			}
+		}
+	}
+}
+
 long long count()
 {
 	long long answer = 0;
@@ -126,8 +177,8 @@ long long count()
 	{
 		if(data.data[i] != -1)
 			answer += i * data.data[i];
-		//printf("%d", data.data[i]);
-		//i++;
+
+		// printf("%d, ", data.data[i]);
 	}
 	return answer;
 }
