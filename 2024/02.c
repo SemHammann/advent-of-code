@@ -37,10 +37,10 @@ int main(int argc, char *argv[])
 {
 	clock_t begin = clock();
 
+	fix_file(argv, "M");
+
 	data.numbers = calloc(file.amountlines + 1, sizeof(long long*));
 	data.possible = calloc(file.amountlines + 1, sizeof(bool));
-	
-	fix_file(argv, "M");
 
 	fill_data();
 
