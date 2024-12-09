@@ -142,8 +142,13 @@ char *make_file_name(char *argv[])
 			last_separator = i;
 	}
 	filename_ptr = argv[0] + last_separator;
+	#if defined(WIN32) || defined(_WIN32) 
 	filename = calloc((strlen(filename_ptr) - 3), sizeof(char));
 	strncpy(filename, filename_ptr, strlen(filename_ptr) - 4);
+	#else
+	filename = calloc((strlen(filename_ptr) +1), sizeof(char));
+	strncpy(filename, filename_ptr, strlen(filename_ptr));
+	#endif
 
 
 
