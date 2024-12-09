@@ -6,6 +6,8 @@ A library containing some basic functions I use to solve the advent of code prob
 
 -   `PATH_SEPARATOR`; The line seperator, should allow the code to work on both linux and mac.
 For linux there are two defines more, a `__max()` and a `__min()`, these are in the `stdlib.h` of windows, but not on linux, and they're neaded for some functions.
+-   `FIX_FILE_STR_LENGTH`; If argv is bigger than 256 this should be changed to a bigger number, so the functions will still work.
+-    `FILE_READ_AMOUNT`; The readfile function reads this amount in one time, if you want to read really big files with long lines, this one should be made bigger so the function is faster..
 
 ## Structs
 
