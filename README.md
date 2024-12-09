@@ -32,7 +32,7 @@ Contains standard functions used for Advent of code.
 
 ### Debug (`debug`)
 
-In here there are some default functions I that only do something while `DEBUG` or `_DEBUG` is defined
+In here there are some default functions, that all have an on\of switch.
 
 ### Queue (`queue`)
 
