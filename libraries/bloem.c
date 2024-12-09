@@ -129,22 +129,25 @@ void fix_file(char *argv[], const char *whichfile)
 char *make_file_name(char *argv[])
 {
 	char argvfile[FIX_FILE_STR_LENGTH];
-	char **tokens;
-	long long unsigned j = 0;
+	char *filename_ptr;
+	char *filename;
+	size_t last_separator;
 
 	assert(!(strlen(argv[0]) > FIX_FILE_STR_LENGTH));
 
 	strcpy(argvfile, argv[0]);
-	tokens = str_split(argvfile, PATH_SEPARATOR, false);
-	
-	while(*(tokens + j) != NULL)
+	for(size_t i = 0; i < strlen(*argv); i++)
 	{
-		j++;
+		if(argv[0][i] == PATH_SEPARATOR)
+			last_separator = i;
 	}
-	j--;
-	tokens = str_split(*(tokens + j), '.', true);
+	filename_ptr = argv[0][last_separator];
+	filename = malloc(strlen(filename_ptr) * sizeof(char));
+	strcpy(filename, filename_ptr);
 
-	return *tokens;
+
+
+	return filename;
 }
 
 
