@@ -9,17 +9,18 @@
 
 #include "../libraries/debug.h"
 
-int debug_print(const char *str, ...)
+int debug_print(bool on,const char *str, ...)
 {
-	#if defined(DEBUG) || defined(_DEBUG)
-    va_list args;
-    va_start(args, str);
+	if(on)
+    {
+        va_list args;
+        va_start(args, str);
 
-    int result = vfprintf(stdout, str, args);
+        int result = vfprintf(stdout, str, args);
 
-    va_end(args);
-    return result;
-	#else
-	return 0;
-	#endif
+        va_end(args);
+        return result;
+    }
+    else
+	    return 0;
 }
