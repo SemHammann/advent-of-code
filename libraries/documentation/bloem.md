@@ -1,6 +1,6 @@
-# Advent of code library
+# Bloem
 
-A library containing some basic functions I use to solve the advent of code problems. This library should work on both windows and linux.
+A library containing some basic file functions. This library should work on both windows and linux.
 
 ## Propeties/Defines
 
@@ -28,16 +28,6 @@ For linux there are two defines more, a `__max()` and a `__min()`, these are in 
 -   `make_debug_file()`; This function makes a debug file in a folder "debug". This function prints makes a .txt file from a 2D array.
 -   `make_directory()`; This function makes a directory, if it succeded it prints the directory it created.
 
-### General functions
 
--   `str_to_llu()`; This function reads a string, and returns a `long long unsigned`.
--   `str_ll()`; This function reads a string, and returns a `long long`.
--   `str_split()`; This function splits the string you give it, it splits the string on a character you chose, and returns a 2D string back.
-> [!WARNING]
-> This function changes the original string, so if you still need the original, copy the string first
-
--   `searchAndReplace()`; This function replaces part of a string with another string.
-> [!WARNING]
-> Be aware, make sure the string you return this function to is big enough for the new string
 
 <!-- Thanks you "JTnadrooi". For your help with reviewing and improving this file -->
