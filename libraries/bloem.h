@@ -1,4 +1,4 @@
-//5.1
+//6.0
 
 #ifndef BLOEM_H
 #define BLOEM_H
@@ -43,10 +43,7 @@ extern void make_debug_file(char *argv[], char **string, char *filename);
 extern void make_directory(const char *name);
 extern char *fix_path_until_now(char *argv[]);
 
-extern long long unsigned str_to_llu(char *vstring);
-extern long long str_ll(char *vstring);
-extern char **str_split(char* a_str, const char a_delim, bool doublechar);
-extern char *searchAndReplace(char *text, char *search, char *replace);
+
 
 
 #endif //BLOEM_H
