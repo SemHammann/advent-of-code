@@ -49,9 +49,9 @@ long long search_trailheads(long long y, long long x, int part)
 	else
 	{
 		for(size_t i = 0; i < 4; i++)
-			if(x + directons[1][i] >= 0 && x + directons[1][i] < file.lengthlines[0] && y + directons[0][i] >= 0 && y + directons[0][i] < file.amountlines)
-				if(file.file[y + directons[0][i]][x + directons[1][i]] == file.file[y][x] + 1)
-					answer += search_trailheads(y + directons[0][i], x + directons[1][i], part);
+			if(x + directions[1][i] >= 0 && x + directions[1][i] < file.lengthlines[0] && y + directions[0][i] >= 0 && y + directions[0][i] < file.amountlines)
+				if(file.file[y + directions[0][i]][x + directions[1][i]] == file.file[y][x] + 1)
+					answer += search_trailheads(y + directions[0][i], x + directions[1][i], part);
 	}
 	return answer;
 }

@@ -17,7 +17,7 @@
 #include "queue.h"
 #include "debug.h"
 
-int directons[2][8] = {{1, -1, 0, 0, 1, 1, -1, -1}, {0, 0, 1, -1, 1, -1, 1, -1}};
+int directions[2][8] = {{1, -1, 0, 0, 1, 1, -1, -1}, {0, 0, 1, -1, 1, -1, 1, -1}};
 
 extern void run_parts(clock_t begin);
 extern long long unsigned str_to_llu(char *vstring);

@@ -33,7 +33,7 @@ long long check()
 		for(size_t x = 0; x < file.lengthlines[0]; x++)
 			if(file.file[y][x] == 'X')
 				for(size_t i = 0; i < 8; i++)
-					answer += check_xmas(y, x, directons[0][i], directons[1][i]);
+					answer += check_xmas(y, x, directions[0][i], directions[1][i]);
 	return answer;
 }
 
@@ -57,7 +57,7 @@ long long check2()
 			if(file.file[y][x] == 'A')
 			{
 				for(size_t i = 4; i < 8; i++)
-					possible += check_mas(y, x, directons[0][i], directons[1][i]);
+					possible += check_mas(y, x, directions[0][i], directions[1][i]);
 				if(possible == 2)
 					answer++;
 			}
