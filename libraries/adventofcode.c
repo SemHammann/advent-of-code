@@ -15,6 +15,17 @@
 #include "debug.c"
 #include "bloem.c"
 
+void print_binary(void *n, size_t size, bool with_zero)
+{
+	size = size * 8 - 1;
+	printf("0b");
+	if(!with_zero)
+		while(((*(long long unsigned*)n & ((long long unsigned)1 << size)) == 0) && (size > 0))
+			size--;
+	while(size + 1 >= 1)
+		printf("%u", (*(long long unsigned*)n & (long long unsigned)1 << size) >> size--);
+}
+
 void run_parts(clock_t begin)
 {
     clock_t begin1 = clock();
