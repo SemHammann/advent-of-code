@@ -1,7 +1,7 @@
 //V1.0
 
 #ifndef ADVENT_OF_CODE_BLOEM_H
-    #define ADVENT_OF_CODE_BLOEM_H
+#define ADVENT_OF_CODE_BLOEM_H
 
 #include <stdio.h>
 #include <string.h>
@@ -16,6 +16,8 @@
 #include "bloem.h"
 #include "queue.h"
 #include "debug.h"
+
+int directons[2][8] = {{1, 0, -1, 0, 1, 1, -1, -1}, {0, 1, 0, -1, 1, -1, 1, -1}};
 
 extern long long unsigned str_to_llu(char *vstring);
 extern long long str_ll(char *vstring);
