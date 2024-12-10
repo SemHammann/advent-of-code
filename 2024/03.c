@@ -27,41 +27,6 @@ void part2()
 	printf("Part 2: %lld", answer);
 }
 
-/*long long all_multiply(char *vstring)
-{
-	char *game;
-	char *current;
-	long long first, second, answer = 0;
-	game = searchAndReplace(vstring, "*", "_");
-	game = searchAndReplace(game, "mul", "*");
-	current = game;
-	while(current <= game + strlen(game))
-	{
-		if(*current == '*')
-		{
-			current++;
-			if(*(current++) == '(')
-			{
-				first = str_ll(current);
-				while(*(current) >= '0' && *(current) <= '9')
-					current++;
-				if(*(current++) == ',')
-				{
-					second = str_ll(current);
-					while(*(current) >= '0' && *(current) <= '9')
-					current++;
-					if(*(current++) == ')')
-						answer += first * second;
-				}
-				
-			}
-		}
-		else
-			current++;
-	}
-	return answer;
-}*/
-
 long long all_multiply(char *vstring, int part)
 {
 	char *game;
