@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
 	clock_t begin = clock();
 	fix_file(argv, "M");
-	run_parts(begin)
+	run_parts(begin);
 }
 
 void part1() 
@@ -23,11 +23,11 @@ void part2()
 {
 	long long answer = 0;
 	for(size_t i = 0; i < file.amountlines; i++)
-		answer += all_multiply(file.file, 2);
+		answer += all_multiply(file.file[i], 2);
 	printf("Part 2: %lld", answer);
 }
 
-long long all_multiply(char *vstring)
+/*long long all_multiply(char *vstring)
 {
 	char *game;
 	char *current;
@@ -60,7 +60,7 @@ long long all_multiply(char *vstring)
 			current++;
 	}
 	return answer;
-}
+}*/
 
 long long all_multiply(char *vstring, int part)
 {
@@ -69,10 +69,13 @@ long long all_multiply(char *vstring, int part)
 	long long first, second, answer = 0;
 	game = searchAndReplace(vstring, "*", "_");
 	game = searchAndReplace(game, "mul", "*");
-	game = searchAndReplace(game, "X", "_");
-	game = searchAndReplace(game, "Y", "_");
-	game = searchAndReplace(game, "do()", "Y");
-	game = searchAndReplace(game, "don't()", "X");
+	if(part == 2)
+	{
+		game = searchAndReplace(game, "X", "_");
+		game = searchAndReplace(game, "Y", "_");
+		game = searchAndReplace(game, "do()", "Y");
+		game = searchAndReplace(game, "don't()", "X");
+	}
 	current = game;
 	while(current <= game + strlen(game))
 	{
