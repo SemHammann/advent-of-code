@@ -1,17 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <stdbool.h>
-#include <time.h>
-#include <math.h>
-#include <limits.h>
-#include <inttypes.h>
-
 #include "../libraries/adventofcode.c" //V5.1
-#include "../libraries/queue.c" //V4.2
-#define _DEBUG
-#include "../libraries/debug.c" //V0.1
 
 struct Data
 {
@@ -21,9 +8,6 @@ struct Data
 	char direction;
 };
 struct Data data;
-
-void part1();
-void part2();
 
 void search_start();
 bool walk();
@@ -46,26 +30,14 @@ int main(int argc, char *argv[])
 	data.vertical[2] = 0;
 	data.vertical[3] = -1;
 	
-
-
-	clock_t begin1 = clock();
-	printf("\nThings for 1 and 2: %.0lfms\n\n", (double)(begin1 - begin)/CLOCKS_PER_SEC*1000);
-	part1();
-	clock_t end1 = clock();
-	printf("\n%.0lfms\n\n", (double)(end1 - begin1)/CLOCKS_PER_SEC*1000);
-	part2();
-	clock_t end2 = clock();
-	printf("\n%.0lfms", (double)(end2 - end1)/CLOCKS_PER_SEC*1000);
+	run_parts(begin);
 }
 
 void part1() 
 {
 	long long answer = 0;
-
 	walk(file.file);
-
 	answer = check_amount_walked(file.file);
-
 	printf("Part 1: %lld", answer);
 }
 
@@ -76,7 +48,6 @@ void part2()
 	char *tmp;
 	board_row = calloc(file.lengthlines[0], sizeof(char));
 	for(size_t i = 0; i < file.amountlines; i++)
-	{
 		for(size_t j = 0; j < file.lengthlines[i]; j++)
 		{
 			strcpy(board_row, file.file[i]);
@@ -89,10 +60,6 @@ void part2()
 
 			file.file[i] = tmp;
 		}
-	}
-
-	
-
 	printf("Part 2: %lld", answer);
 }
 
