@@ -1,17 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <stdbool.h>
-#include <time.h>
-#include <math.h>
-#include <limits.h>
-#include <inttypes.h>
-
 #include "../libraries/adventofcode.c" //V5.1
-#include "../libraries/queue.c" //V4.2
-#define _DEBUG
-#include "../libraries/debug.c" //V0.1
 
 struct Data
 {
@@ -21,9 +8,6 @@ struct Data
 };
 struct Data data;
 
-void part1();
-void part2();
-
 void setup();
 void compress();
 void compress2();
@@ -32,28 +16,16 @@ long long count();
 int main(int argc, char *argv[])
 {
 	clock_t begin = clock();
-	
 	fix_file(argv, "M");
-
-
-	clock_t begin1 = clock();
-	printf("\nThings for 1 and 2: %.0lfms\n\n", (double)(begin1 - begin)/CLOCKS_PER_SEC*1000);
-	part1();
-	clock_t end1 = clock();
-	printf("\n%.0lfms\n\n", (double)(end1 - begin1)/CLOCKS_PER_SEC*1000);
-	part2();
-	clock_t end2 = clock();
-	printf("\n%.0lfms", (double)(end2 - end1)/CLOCKS_PER_SEC*1000);
+	run_parts(begin);
 }
 
 void part1() 
 {
 	long long answer = 0;
 	setup();
-
 	compress();
 	answer = count();
-
 	free(data.data);
 	printf("Part 1: %lld", answer);
 }
@@ -62,10 +34,8 @@ void part2()
 {
 	long long answer = 0;
 	setup();
-
 	compress2();
 	answer = count();
-
 	printf("Part 2: %lld", answer);
 	free(data.data);
 }
@@ -159,13 +129,11 @@ void compress2()
 
 		
 		if(free_count >= end_count && end > first_free)
-		{
 			for(size_t i = 0; i < end_count; i++)
 			{
 				data.data[first_free + i] = data.data[end - i];
 				data.data[end - i] = -1;
 			}
-		}
 	}
 }
 
@@ -174,11 +142,7 @@ long long count()
 	long long answer = 0;
 	size_t i = 0;
 	for(i = 0; i < data.length; i++)
-	{
 		if(data.data[i] != -1)
 			answer += i * data.data[i];
-
-		// printf("%d, ", data.data[i]);
-	}
 	return answer;
 }
