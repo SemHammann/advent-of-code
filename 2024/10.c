@@ -12,20 +12,12 @@ int main(int argc, char *argv[])
 
 void part1()
 {
-	long long answer = 0;
-
-	answer = search_starts(1);
-
-	printf("Part 1: %lld", answer);
+	printf("Part 1: %lld", search_starts(1));
 }
 
 void part2()
 {
-	long long answer = 0;
-
-	answer = search_starts(2);
-
-	printf("Part 2: %lld", answer);
+	printf("Part 2: %lld", search_starts(2));
 }
 
 long long search_starts(int part)
@@ -56,19 +48,10 @@ long long search_trailheads(long long y, long long x, int part)
 	}
 	else
 	{
-		if(y + 1 < file.amountlines)
-			if(file.file[y + 1][x] == file.file[y][x] + 1)
-				answer += search_trailheads(y + 1, x, part);
-		if(x + 1 < file.lengthlines[0])
-			if(file.file[y][x + 1] == file.file[y][x] + 1)
-				answer += search_trailheads(y, x + 1, part);
-		if(y - 1 >= 0)
-			if(file.file[y - 1][x] == file.file[y][x] + 1)
-				answer += search_trailheads(y - 1, x,  part);
-		if(x - 1 >= 0)
-			if(file.file[y][x - 1] == file.file[y][x] + 1)
-				answer += search_trailheads(y, x - 1, part);
-		
+		for(size_t i = 0; i < 4; i++)
+			if(x + directons[1][i] >= 0 && x + directons[1][i] < file.lengthlines[0] && y + directons[0][i] >= 0 && y + directons[0][i] < file.amountlines)
+				if(file.file[y + directons[0][i]][x + directons[1][i]] == file.file[y][x] + 1)
+					answer += search_trailheads(y + directons[0][i], x + directons[1][i], part);
 	}
 	return answer;
 }
