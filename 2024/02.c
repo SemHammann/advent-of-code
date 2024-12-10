@@ -44,11 +44,8 @@ void part2()
 	long long answer;
 
 	for(size_t i = 0; i < file.amountlines; i++)
-	{
 		if(is_safe2(i) == 0)
 			answer++;
-	}
-
 	printf("Part 2: %lld", answer);
 }
 
@@ -90,21 +87,13 @@ long long is_safe(long long numbers[])
 		if(numbers[j + 1] == LONG_LONG_MIN)
 			break;
 		if(numbers[j] - numbers[j + 1] < -3 || numbers[j] - numbers[j + 1] > 3 || numbers[j] - numbers[j + 1] == 0)
-		{
 			return 1;
-		}
 		if(numbers[j] - numbers[j + 1] < 0)
-		{
 			decreasing++;
-		}
 		if(numbers[j] - numbers[j + 1] > 0)
-		{
 			increasing++;
-		}
 		if(increasing > 0 && decreasing > 0)
-		{
 			return 1;
-		}
 	}
 	return 0;
 }
@@ -113,10 +102,8 @@ long long is_safe2(size_t place)
 {
 	if(data.possible[place] == true)
 		return 0;
-	
 	long long game[10];
 	int k;
-
 	for(size_t i = 0; i < 10; i++)
 	{
 		for(size_t j = 0; j < 10; j++)
@@ -129,6 +116,5 @@ long long is_safe2(size_t place)
 			return 0;
 		k = 0;
 	}
-
 	return 1;
 }
