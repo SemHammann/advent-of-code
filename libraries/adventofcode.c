@@ -15,16 +15,6 @@
 #include "debug.c"
 #include "bloem.c"
 
-void print_binary(void *n, size_t size, bool with_zero)
-{
-	size = size * 8 - 1;
-	printf("0b");
-	if(!with_zero)
-		while(((*(long long unsigned*)n & ((long long unsigned)1 << size)) == 0) && (size > 0))
-			size--;
-	while(size + 1 >= 1)
-		printf("%u", (*(long long unsigned*)n & (long long unsigned)1 << size) >> size--);
-}
 
 void run_parts(clock_t begin)
 {
@@ -36,6 +26,17 @@ void run_parts(clock_t begin)
 	part2();
 	clock_t end2 = clock();
 	printf("\n%.0lfms", (double)(end2 - end1)/CLOCKS_PER_SEC*1000);
+}
+
+void print_binary(void *n, size_t size, bool with_zero)
+{
+	size = size * 8 - 1;
+	printf("0b");
+	if(!with_zero)
+		while(((*(long long unsigned*)n & ((long long unsigned)1 << size)) == 0) && (size > 0))
+			size--;
+	while(size + 1 >= 1)
+		printf("%u", (*(long long unsigned*)n & (long long unsigned)1 << size) >> size--);
 }
 
 long long unsigned str_to_llu(char *vstring)

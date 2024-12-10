@@ -20,6 +20,7 @@
 int directions[2][8] = {{1, -1, 0, 0, 1, 1, -1, -1}, {0, 0, 1, -1, 1, -1, 1, -1}};
 
 extern void run_parts(clock_t begin);
+void print_binary(void *n, size_t size, bool with_zero);
 extern long long unsigned str_to_llu(char *vstring);
 extern long long str_ll(char *vstring);
 extern char **str_split(char* a_str, const char a_delim, bool doublechar);
