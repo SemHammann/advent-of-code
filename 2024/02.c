@@ -1,21 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <stdbool.h>
-#include <time.h>
-#include <math.h>
-
-#include "..\libraries\adventofcode.c" //V5.1
-#include "..\libraries\queue.h" //V4.2
-#define _DEBUG
-#include "..\libraries\debug.h" //V0.1
-
-//to high 731
-//to high 340
-//wrong 325
-//wrong 332
-//goede 337
+#include "..\libraries\adventofcode.c" //V1.0
 
 struct Data
 {
@@ -23,12 +6,7 @@ struct Data
 	bool *possible;
 	bool saved;
 };
-
 struct Data data;
-
-void part1();
-void part2();
-
 void fill_data();
 long long is_safe();
 long long is_safe2();
@@ -36,24 +14,11 @@ long long is_safe2();
 int main(int argc, char *argv[])
 {
 	clock_t begin = clock();
-
 	fix_file(argv, "M");
-
 	data.numbers = calloc(file.amountlines + 1, sizeof(long long*));
 	data.possible = calloc(file.amountlines + 1, sizeof(bool));
-
 	fill_data();
-
-	clock_t begin1 = clock();
-	printf("\nThings for 1 and 2: %.0lfms\n\n", (double)(begin1 - begin)/CLOCKS_PER_SEC*1000);
-	part1();
-	clock_t end1 = clock();
-	printf("\n%.0lfms\n\n", (double)(end1 - begin1)/CLOCKS_PER_SEC*1000);
-	part2();
-	clock_t end2 = clock();
-	printf("\n%.0lfms", (double)(end2 - end1)/CLOCKS_PER_SEC*1000);
-
-	return 0;
+	run_parts(begin);
 }
 
 void part1() 
