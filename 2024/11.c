@@ -48,7 +48,7 @@ void part2()
 long long check_stones(int amount_blinks, long long stone)
 {
 	long long stone2;
-	long long result, result2;
+	long long result, result2, tmp;
 	int fact = (int)log10((double)stone) + 1;
 	if(amount_blinks == 0)
 		return 1;
@@ -72,17 +72,17 @@ long long check_stones(int amount_blinks, long long stone)
 	}
 	else if(stone > 9 && fact % 2 == 0)
 	{
+		tmp = stone;
+
 		stone2 = stone % (long long)pow(10.0, (double)(fact/2));
 		stone = stone / (long long)pow(10.0, (double)(fact/2));
 		result =  check_stones(amount_blinks - 1, stone);
 		result2 = check_stones(amount_blinks - 1, stone2);
-		*(cache.stone + cache.place) = stone;
-		*(cache.result + cache.place) = result;
-		*(cache.amount_blinks + cache.place) = amount_blinks - 1;
-		cache.place++;
-		*(cache.stone + cache.place) = stone;
-		*(cache.result + cache.place) = result2;
-		*(cache.amount_blinks + cache.place) = amount_blinks - 1;
+
+		*(cache.stone + cache.place) = tmp;
+		*(cache.amount_blinks + cache.place) = amount_blinks;
+		*(cache.result + cache.place) = result + result2;
+
 		cache.place++;
 		return result + result2;
 	}
