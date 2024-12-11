@@ -24,6 +24,7 @@ void fill_data();
 int main(int argc, char *argv[])
 {
 	clock_t begin = clock();
+	hash_fix_dummy_item();
 	fix_file(argv, "M");
 	fill_data();
 	run_parts(begin);
@@ -50,24 +51,20 @@ long long check_stones(int amount_blinks, long long stone)
 	long long stone2;
 	long long result, result2, tmp;
 	int fact = (int)log10((double)stone) + 1;
+
 	if(amount_blinks == 0)
 		return 1;
-	if(cache.place >= CACHE_SIZE)
-	{
-		printf("Cache is full");
-		getchar();	
-	}
-	for(size_t i = 0; i < cache.place; i++)
-		if(stone == *(cache.stone + i) && amount_blinks == *(cache.amount_blinks + i))
-			return *(cache.result + i);
+	if(100 * stone + amount_blinks < HASH_SIZE)
+		if((item = hash_search((100 * stone) + amount_blinks)) != NULL)
+			return item->data;
+	
 	if(stone == 0)
 	{
+		tmp = stone;
 		stone = 1;
 		result = (check_stones(amount_blinks - 1, stone));
-		*(cache.stone + cache.place) = stone;
-		*(cache.result + cache.place) = result;
-		*(cache.amount_blinks + cache.place) = amount_blinks - 1;
-		cache.place++;
+		if(tmp < 100000)
+			hash_insert((100 * tmp) + amount_blinks, result);
 		return result;
 	}
 	else if(stone > 9 && fact % 2 == 0)
@@ -79,21 +76,19 @@ long long check_stones(int amount_blinks, long long stone)
 		result =  check_stones(amount_blinks - 1, stone);
 		result2 = check_stones(amount_blinks - 1, stone2);
 
-		*(cache.stone + cache.place) = tmp;
-		*(cache.amount_blinks + cache.place) = amount_blinks;
-		*(cache.result + cache.place) = result + result2;
+		if(tmp < 100000)
+			hash_insert((100 * tmp) + amount_blinks, result + result2);
 
 		cache.place++;
 		return result + result2;
 	}
 	else
 	{
+		tmp = stone;
 		stone *= 2024;
 		result = (check_stones(amount_blinks - 1, stone));
-		*(cache.stone + cache.place) = stone;
-		*(cache.result + cache.place) = result;
-		*(cache.amount_blinks + cache.place) = amount_blinks - 1;
-		cache.place++;
+		if(tmp < 100000)
+			hash_insert((100 * tmp) + amount_blinks, result);
 		return result;
 	}
 	
