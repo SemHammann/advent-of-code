@@ -5,14 +5,14 @@
 
 #include "hash.h"
 
-int hash_code(int key)
+long long hash_code(long long key)
 {
-	return key % SIZE;
+	return key % HASH_SIZE;
 }
 
-struct Data_Item *hash_search(int key)
+struct Data_Item *hash_search(long long key)
 {
-	int hash_index = hash_code(key);
+	long long hash_index = hash_code(key);
 
 	while(hash_array[hash_index] != NULL)
 	{
@@ -21,24 +21,24 @@ struct Data_Item *hash_search(int key)
 
 		hash_index++;
 
-		hash_index %= SIZE;
+		hash_index %= HASH_SIZE;
 	}
 
 	return NULL;
 }
 
-void hash_insert(int key, int data)
+void hash_insert(long long key, long long data)
 {
 	struct Data_Item *item = (struct Data_Item*) malloc(sizeof(struct Data_Item));
 	item->data = data;
 	item->key = key;
 
-	int hash_index = hash_code(key);
+	long long hash_index = hash_code(key);
 
 	while(hash_array[hash_index] != NULL && hash_array[hash_index]->key != -1)
 	{
 		hash_index++;
-		hash_index %= SIZE;
+		hash_index %= HASH_SIZE;
 	}
 
 	hash_array[hash_index] = item;
@@ -46,9 +46,9 @@ void hash_insert(int key, int data)
 
 struct Data_Item *hash_delete(struct Data_Item *item)
 {
-	int key = item->key;
+	long long key = item->key;
 
-	int hash_index = hash_code(key);
+	long long hash_index = hash_code(key);
 
 	while(hash_array[hash_index] != NULL)
 	{
@@ -60,16 +60,16 @@ struct Data_Item *hash_delete(struct Data_Item *item)
 		}
 		hash_index++;
 
-		hash_index %= SIZE;
+		hash_index %= HASH_SIZE;
 	}
 	return NULL;
 }
 
 void hash_display()
 {
-	int i ;
+	long long i ;
 
-	for(i = 0; i < SIZE; i++)
+	for(i = 0; i < HASH_SIZE; i++)
 	{
 		if(hash_array[i] != NULL)
 			printf(" (%d, %d)", hash_array[i]->key, hash_array[i]->data);

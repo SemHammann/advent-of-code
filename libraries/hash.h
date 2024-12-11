@@ -3,21 +3,23 @@
 #ifndef HASH_BLOEM_H
 #define HASH_BLOEM_H
 
-#define SIZE 100000
+#ifndef HASH_SIZE
+	#define HASH_SIZE 100000000
+#endif
 
 struct Data_Item
 {
-	int data;
-	int key;
+	long long data;
+	long long key;
 };
 
-struct Data_Item *hash_array[SIZE];
+struct Data_Item *hash_array[HASH_SIZE];
 struct Data_Item *dummy_item;
 struct Data_Item *item;
 
-int hash_code(int key);
-struct Data_Item *hash_search(int key);
-void hash_insert(int key, int data);
+long long hash_code(long long key);
+struct Data_Item *hash_search(long long key);
+void hash_insert(long long key, long long data);
 struct Data_Item *hash_delete(struct Data_Item *item);
 void hash_display();
 void hash_fix_dummy_item();
