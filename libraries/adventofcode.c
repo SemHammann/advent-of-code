@@ -14,6 +14,7 @@
 #include "queue.c"
 #include "debug.c"
 #include "bloem.c"
+#include "hash.c"
 
 
 void run_parts(clock_t begin)

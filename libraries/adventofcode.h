@@ -16,6 +16,7 @@
 #include "bloem.h"
 #include "queue.h"
 #include "debug.h"
+#include "hash.h"
 
 int directions[2][8] = {{1, -1, 0, 0, 1, 1, -1, -1}, {0, 0, 1, -1, 1, -1, 1, -1}};
 
