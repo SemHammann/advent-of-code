@@ -51,7 +51,7 @@ void fill_data(int part)
 {
 	char game[4096];
 	char **tokens;
-	while(strcmp(file.file[data.current_line], "") == 0)
+	while(file.lengthlines[data.current_line] == 0)
 		data.current_line++;
 	if(data.current_line >= file.amountlines)
 		return;
