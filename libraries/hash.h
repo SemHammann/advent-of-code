@@ -4,7 +4,7 @@
 #define HASH_BLOEM_H
 
 #ifndef HASH_SIZE
-	#define HASH_SIZE 100000000
+	#define HASH_SIZE 100
 #endif
 
 struct Data_Item
