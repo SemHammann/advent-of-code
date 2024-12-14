@@ -19,6 +19,7 @@ struct Data
 	long long RU, RD, LU, LD;
 	char **map;
 	bool possible;
+	bool more_than_1_part_2;
 };
 struct Data data;
 
@@ -48,6 +49,7 @@ void part(char **argv)
 
 	char filename[99];
 	data.possible = false;
+	data.more_than_1_part_2 = false;
 	
 	for(size_t i = 0; i < MAP_SIZE_X * MAP_SIZE_Y; i++)
 	{
@@ -57,6 +59,9 @@ void part(char **argv)
 		if(data.possible)
 		{
 			answer2 = i;
+			if(data.more_than_1_part_2)
+				printf("\nCheck the debug files for the right answer\n");
+			data.more_than_1_part_2 = true;
 			sprintf(filename, "14_%llu", i);
 			make_debug_file(argv, data.map, filename);
 		}
