@@ -1,3 +1,5 @@
+#define HASH_SIZE 1000000
+
 #include "../libraries/adventofcode.c" //V1.0
 
 #define CACHE_SIZE (size_t)4096*32*32
