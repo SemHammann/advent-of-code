@@ -11,15 +11,12 @@ struct Data
 };
 struct Data data;
 
-void fill_data();
+
 bool test_boxes();
 void run();
 long long sum_coordinates();
-
+void fill_data();
 void fill_data2();
-bool test_boxes2();
-void run2();
-long long sum_coordinates2();
 
 int main(int argc, char *argv[])
 {
@@ -35,7 +32,7 @@ void part1()
 	long long answer = 0;
 
 	fill_data();
-	run();
+	run(1);
 	answer = sum_coordinates();
 	free(data.map);
 
@@ -47,12 +44,112 @@ void part2()
 	long long answer = 0;
 
 	fill_data2();
-	run2();
-	answer = sum_coordinates2();
+	run(2);
+	answer = sum_coordinates();
 	free(data.map);
 	free(data.map2);
 
 	printf("Part 2: %lld", answer);
+}
+
+void run(int part)
+{
+	int tmp;
+	size_t j;
+	for(size_t i = 0; i < data.amount_instructions; i++)
+	{
+		tmp = data.direction[i];
+		if(part == 2)
+			for(j = 0; j < data.map_y; j++)
+				strcpy(data.map2[j], data.map[j]);
+		if(test_boxes(data.y, data.x, directions[0][tmp], directions[1][tmp]))
+		{
+			data.y += directions[0][tmp];
+			data.x += directions[1][tmp];
+		}
+		else if(part == 2)
+			for(j = 0; j < data.map_y; j++)
+				strcpy(data.map[j], data.map2[j]);
+	}
+}
+
+bool test_boxes(size_t y, size_t x, int dif_y, int dif_x)
+{
+	switch(data.map[y + dif_y][x + dif_x])
+	{
+		case 'O':
+			if(test_boxes(y + dif_y, x + dif_x, dif_y, dif_x))
+			{
+				data.map[y + dif_y][x + dif_x] = data.map[y][x];
+				data.map[y][x] = '.';
+				return true;
+			}
+			else
+				return false;
+		case '.':
+			data.map[y + dif_y][x + dif_x] = data.map[y][x];
+			data.map[y][x] = '.';
+			return true;
+		case '#':
+			return false;
+		case '[':
+			if(dif_y == 0)
+			{
+				if(test_boxes(y + dif_y, x + dif_x, dif_y, dif_x))
+				{
+					data.map[y + dif_y][x + dif_x] = data.map[y][x];
+					data.map[y][x] = '.';
+					return true;
+				}
+				else
+					return false;
+			}
+			else
+			{
+				if(test_boxes(y + dif_y, x + dif_x, dif_y, dif_x) && test_boxes(y + dif_y, x + dif_x + 1, dif_y, dif_x))
+				{
+					data.map[y + dif_y][x + dif_x] = data.map[y][x];
+					data.map[y][x] = '.';
+					return true;
+				}
+				else
+					return false;
+			}
+		case ']':
+			if(dif_y == 0)
+			{
+				if(test_boxes(y + dif_y, x + dif_x, dif_y, dif_x))
+				{
+					data.map[y + dif_y][x + dif_x] = data.map[y][x];
+					data.map[y][x] = '.';
+					return true;
+				}
+				else
+					return false;
+			}
+			else
+			{
+				if(test_boxes(y + dif_y, x + dif_x, dif_y, dif_x) && test_boxes(y + dif_y, x + dif_x - 1, dif_y, dif_x))
+					{
+						data.map[y + dif_y][x + dif_x] = data.map[y][x];
+						data.map[y][x] = '.';
+						return true;
+					}
+					else
+						return false;
+			}
+	}
+}
+
+long long sum_coordinates()
+{
+	long long answer = 0;
+	for(size_t y = 0; y < data.map_y; y++)
+		for(size_t x = 0; x < data.map_x; x++)
+			if(data.map[y][x] == 'O' || data.map[y][x] == '[')
+				answer += 100 * y + x;
+
+	return answer;
 }
 
 void fill_data()
@@ -119,53 +216,6 @@ void fill_data()
 	data.amount_instructions = file.lengthlines[file.amountlines - 1] * (y - start_directions);
 }
 
-void run()
-{
-	int tmp;
-	for(size_t i = 0; i < data.amount_instructions; i++)
-	{
-		tmp = data.direction[i];
-		if(test_boxes(data.y, data.x, directions[0][tmp], directions[1][tmp]))
-		{
-			data.y += directions[0][tmp];
-			data.x += directions[1][tmp];
-		}
-	}
-}
-
-bool test_boxes(size_t y, size_t x, int dif_y, int dif_x)
-{
-	switch(data.map[y + dif_y][x + dif_x])
-	{
-		case 'O':
-			if(test_boxes(y + dif_y, x + dif_x, dif_y, dif_x))
-			{
-				data.map[y + dif_y][x + dif_x] = data.map[y][x];
-				data.map[y][x] = '.';
-				return true;
-			}
-			else
-				return false;
-		case '.':
-			data.map[y + dif_y][x + dif_x] = data.map[y][x];
-			data.map[y][x] = '.';
-			return true;
-		case '#':
-			return false;
-	}
-}
-
-long long sum_coordinates()
-{
-	long long answer = 0;
-	for(size_t y = 0; y < data.map_y; y++)
-		for(size_t x = 0; x < data.map_x; x++)
-			if(data.map[y][x] == 'O')
-				answer += 100 * y + x;
-
-	return answer;
-}
-
 void fill_data2()
 {
 	size_t y = 0, start_directions, tmp;
@@ -203,6 +253,7 @@ void fill_data2()
 					data.map[y][2 * x] = '#';
 					data.map[y][(2 * x) + 1] = '#';
 					break;
+				
 			}
 		}
 		y++;
@@ -244,97 +295,5 @@ void fill_data2()
 			}
 		}
 		y++;
-	}
-	
-}
-
-void run2()
-{
-	int tmp;
-	size_t j;
-	for(size_t i = 0; i < data.amount_instructions; i++)
-	{
-		tmp = data.direction[i];
-		for(j = 0; j < data.map_y; j++)
-			strcpy(data.map2[j], data.map[j]);
-		if(test_boxes2(data.y, data.x, directions[0][tmp], directions[1][tmp]))
-		{
-			data.y += directions[0][tmp];
-			data.x += directions[1][tmp];
-		}
-		else
-			for(j = 0; j < data.map_y; j++)
-				strcpy(data.map[j], data.map2[j]);
-	}
-}
-
-bool test_boxes2(size_t y, size_t x, int dif_y, int dif_x)
-{
-	switch(data.map[y + dif_y][x + dif_x])
-	{
-		case '[':
-			if(dif_y == 0)
-			{
-				if(test_boxes2(y + dif_y, x + dif_x, dif_y, dif_x))
-				{
-					data.map[y + dif_y][x + dif_x] = data.map[y][x];
-					data.map[y][x] = '.';
-					return true;
-				}
-				else
-					return false;
-			}
-			else
-			{
-				if(test_boxes2(y + dif_y, x + dif_x, dif_y, dif_x) && test_boxes2(y + dif_y, x + dif_x + 1, dif_y, dif_x))
-				{
-					data.map[y + dif_y][x + dif_x] = data.map[y][x];
-					data.map[y][x] = '.';
-					return true;
-				}
-				else
-					return false;
-			}
-		case ']':
-			if(dif_y == 0)
-			{
-				if(test_boxes2(y + dif_y, x + dif_x, dif_y, dif_x))
-				{
-					data.map[y + dif_y][x + dif_x] = data.map[y][x];
-					data.map[y][x] = '.';
-					return true;
-				}
-				else
-					return false;
-			}
-			else
-			{
-				if(test_boxes2(y + dif_y, x + dif_x, dif_y, dif_x) && test_boxes2(y + dif_y, x + dif_x - 1, dif_y, dif_x))
-					{
-						data.map[y + dif_y][x + dif_x] = data.map[y][x];
-						data.map[y][x] = '.';
-						return true;
-					}
-					else
-						return false;
-			}
-		case '.':
-			data.map[y + dif_y][x + dif_x] = data.map[y][x];
-			data.map[y][x] = '.';
-			return true;
-		case '#':
-			return false;
-	}
-}
-
-long long sum_coordinates2()
-{
-	long long answer = 0;
-	long long tmp;
-	for(size_t y = 0; y < data.map_y; y++)
-		for(size_t x = 0; x < data.map_x; x++)
-			if(data.map[y][x] == '[')
-				answer += 100 * y + x;
-
-	return answer;
+	}	
 }
