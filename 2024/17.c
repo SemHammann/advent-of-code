@@ -1,24 +1,27 @@
 #include "../libraries/adventofcode.c" //V1.0
 
-#define OUTPUT_LENGTH 500
+#define OUTPUT_LENGTH 10
 
 struct IntCode
 {
 	long long *reg;
 	size_t current;
 	size_t length;
-	long long A, B, C;
+	long long A, A2, B, C;
 	long long *output;
 	size_t place_output;
 };
 struct IntCode IC;
+struct IntCode ICbackup;
 
 
 void part1();
 void part2();
 
 void setup();
+void reset();
 long long run();
+bool test_output();
 
 long long operand();
 void adv();
@@ -26,7 +29,7 @@ void bxl();
 void bst();
 void jnz();
 void bxc();
-void out();
+int out();
 void bdv();
 void cdv();
 void print_output();
@@ -39,6 +42,10 @@ int main(int argc, char *argv[])
 	
 	fix_file(argv, "M");
 
+	setup(&IC);
+	setup(&ICbackup);
+	IC.A2 = IC.A;
+
 	run_parts(begin);
 }
 
@@ -46,7 +53,6 @@ void part1()
 {
 	long long answer = 0;
 
-	setup();
 	run();
 
 	printf("Part 1: ");
@@ -56,48 +62,83 @@ void part1()
 void part2()
 {
 	long long answer = 0;
+	long long rep_A = 0;
+	long long tmp;
+	bool possible;
+	long_long_Queue_t queue;
+	init_ll(&queue, INT_MAX);
+	for(size_t i = 0; i < 8; i++)
+	{
+		push_back_ll(i, &queue);
+	}
+	
+	while(true)
+	{
+		reset();
+		rep_A = pop_front_ll(&queue);
+		IC.A = rep_A;
+		run();
+		if(test_output())
+			for(size_t i = 0; i < 8; i++)
+				push_back_ll(i + rep_A * 8, &queue);
+
+		if(!memcmp(IC.reg, IC.output, sizeof(long long) * IC.length) != 0)
+		{
+			answer = rep_A;
+			break;
+		}
+	}
 
 	printf("Part 2: %lld", answer);
 }
 
 
-void setup()
+void setup(struct IntCode *IntC)
 {
-	char *game;
+	char game[4096];
 	char **tokens;
+	char **tokensg;
 	size_t i = 0;
-	IC.output = calloc(OUTPUT_LENGTH, sizeof(long long));
-	game = calloc(file.lengthlines[4], sizeof(char));
+	IntC->output = calloc(OUTPUT_LENGTH, sizeof(long long));
 	strcpy(game, file.file[4]);
-	IC.current = 0;
-	IC.place_output = 0;
+	IntC->current = 0;
+	IntC->place_output = 0;
 
 	tokens = str_split(game, ' ', false);
+	tokensg = tokens;
 	tokens = str_split(*(tokens + 1), ',', false);
 	while(*(tokens + i) != NULL)
 	{
 		i++;
 	}
-	IC.reg = calloc(i, sizeof(long long));
-	IC.length = i;
+	IntC->reg = calloc(i, sizeof(long long));
+	IntC->length = i;
 	for(size_t j = 0; j < i; j++)
 	{
-		*(IC.reg + j) = str_ll(*(tokens + j));
+		*(IntC->reg + j) = str_ll(*(tokens + j));
 	}
 
 	strcpy(game, file.file[0]);
 	tokens = str_split(game, ':', false);
-	IC.A = str_ll(*(tokens + 1) + 1);
+	IntC->A = str_ll(*(tokens + 1) + 1);
 
 	strcpy(game, file.file[1]);
 	tokens = str_split(game, ':', false);
-	IC.B = str_ll(*(tokens + 1) + 1);
+	IntC->B = str_ll(*(tokens + 1) + 1);
 
 	strcpy(game, file.file[2]);
 	tokens = str_split(game, ':', false);
-	IC.C = str_ll(*(tokens + 1) + 1);
+	IntC->C = str_ll(*(tokens + 1) + 1);
 
 	return;
+}
+
+void reset()
+{
+	memcpy(IC.reg, ICbackup.reg, IC.length);
+	memcpy(IC.output, ICbackup.output, OUTPUT_LENGTH);
+	IC.current = 0;
+	IC.place_output = 0;
 }
 
 long long run()
@@ -131,11 +172,22 @@ long long run()
 				cdv();
 				break;
 			default:
-				printf("ERROR");
-				exit(-1);
-				break;
+				return 0;
 		}
 	}
+	return 1;
+}
+
+bool test_output()
+{
+	size_t j = 0;
+	for(size_t i = IC.length - IC.place_output; i < IC.length; i++)
+	{
+		if(IC.output[j] != ICbackup.reg[i])
+			return false;
+		j++;
+	}
+	return true;
 }
 
 long long operand(long long number)
@@ -173,7 +225,7 @@ void bxl()
 
 void bst()
 {
-	IC.B = IC.B = operand(*(IC.reg + IC.current + 1)) % 8;
+	IC.B = IC.B = (operand(*(IC.reg + IC.current + 1)) & 0b111);
 	IC.current += 2;
 }
 
@@ -193,19 +245,12 @@ void bxc()
 	IC.current += 2;
 }
 
-void out()
+int out()
 {
-	if(IC.place_output > OUTPUT_LENGTH)
-	{
-		printf("ERROR OUTPUT FULL");
-		exit(5);
-	}
-	else
-	{
-		IC.output[IC.place_output] = operand(*(IC.reg + IC.current + 1)) % 8;
-		IC.place_output++;
-		IC.current += 2;
-	}
+	IC.output[IC.place_output] = (operand(*(IC.reg + IC.current + 1)) & 0b111);
+	IC.place_output++;
+	IC.current += 2;
+	return 0;
 }
 void bdv()
 {
