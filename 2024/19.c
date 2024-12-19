@@ -14,8 +14,7 @@ struct Data
 struct Data data;
 
 void fill_data();
-long long designs_possible();
-unsigned long long designs_possible2();
+unsigned long long designs_possible();
 
 int main(int argc, char **argv)
 {
@@ -36,7 +35,7 @@ void part1()
 	for(size_t i = 0; i < data.amount_designs; i++)
 	{
 		memset(data.cache, 0b11111111, (data.max_design_length + 1) * sizeof(unsigned long long));
-		if(designs_possible(data.designs[i]))
+		if(designs_possible(1, data.designs[i]))
 		{
 			answer++;
 		}
@@ -52,7 +51,7 @@ void part2()
 	for(size_t i = 0; i < data.amount_designs; i++)
 	{
 		memset(data.cache, 0b11111111, (data.max_design_length + 1) * sizeof(unsigned long long));
-		answer += designs_possible2(data.designs[i]);
+		answer += designs_possible(2, data.designs[i]);
 	}
 
 	printf("Part 2: %llu", answer);
@@ -85,28 +84,7 @@ void fill_data()
 		data.max_design_length = __max(data.designs_length[i], data.max_design_length);
 }
 
-long long designs_possible(char *remaining_towel)
-{
-	size_t len = strlen(remaining_towel);
-	if(len == 0)
-		return 1;
-	if(data.cache[len] != ULLONG_MAX)
-		return data.cache[len];
-	for(size_t i = 0; i < data.amount_towels; i++)
-	{
-		if(memcmp(remaining_towel, data.towels[i], data.towels_length[i]) == 0)
-			if(designs_possible(remaining_towel + data.towels_length[i]))
-			{
-				data.cache[len] = 1;
-				return 1;
-			}
-		
-	}
-	data.cache[len] = 0;
-	return 0;
-}
-
-unsigned long long designs_possible2(char *remaining_towel)
+unsigned long long designs_possible(int part, char *remaining_towel)
 {
 	unsigned long long count = 0;
 	size_t len = strlen(remaining_towel);
@@ -117,8 +95,20 @@ unsigned long long designs_possible2(char *remaining_towel)
 	for(size_t i = 0; i < data.amount_towels; i++)
 	{
 		if(memcmp(remaining_towel, data.towels[i], data.towels_length[i]) == 0)
-			count += designs_possible2(remaining_towel + data.towels_length[i]);
+		{
+			count += designs_possible(part, remaining_towel + data.towels_length[i]);
+			if(part == 1 & count != 0)
+			{
+				data.cache[len] = 1;
+				return 1;
+			}
+		}
 	}
 	data.cache[len] = count;
+	if(part == 1)
+	{
+		data.cache[len] = 0;
+		return 0;
+	}
 	return data.cache[len]; 
 }
