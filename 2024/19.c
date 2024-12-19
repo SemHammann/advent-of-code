@@ -9,14 +9,13 @@ struct Data
 	size_t *designs_length;
 	size_t amount_designs;
 	size_t max_design_length;
-	char *cache;
+	unsigned long long *cache;
 };
 struct Data data;
 
-
-
 void fill_data();
 long long designs_possible();
+unsigned long long designs_possible2();
 
 int main(int argc, char **argv)
 {
@@ -32,18 +31,15 @@ void part1()
 	long long answer = 0;
 
 	fill_data();
-	data.cache = calloc(data.max_design_length + 2, sizeof(size_t));
+	data.cache = calloc(data.max_design_length + 2, sizeof(unsigned long long));
 
 	for(size_t i = 0; i < data.amount_designs; i++)
 	{
-		memset(data.cache, 2, data.max_design_length + 1);
+		memset(data.cache, 0b11111111, (data.max_design_length + 1) * sizeof(unsigned long long));
 		if(designs_possible(data.designs[i]))
 		{
 			answer++;
-			// printf("%s\n", data.designs[i]);
 		}
-		
-			
 	}
 
 	printf("Part 1: %lld", answer);
@@ -51,9 +47,15 @@ void part1()
 
 void part2()
 {
-	long long answer = 0;
+	unsigned long long answer = 0;
 
-	printf("Part 2: %lld", answer);
+	for(size_t i = 0; i < data.amount_designs; i++)
+	{
+		memset(data.cache, 0b11111111, (data.max_design_length + 1) * sizeof(unsigned long long));
+		answer += designs_possible2(data.designs[i]);
+	}
+
+	printf("Part 2: %llu", answer);
 }
 
 void fill_data()
@@ -88,7 +90,7 @@ long long designs_possible(char *remaining_towel)
 	size_t len = strlen(remaining_towel);
 	if(len == 0)
 		return 1;
-	if(data.cache[len] != 2)
+	if(data.cache[len] != ULLONG_MAX)
 		return data.cache[len];
 	for(size_t i = 0; i < data.amount_towels; i++)
 	{
@@ -102,4 +104,21 @@ long long designs_possible(char *remaining_towel)
 	}
 	data.cache[len] = 0;
 	return 0;
+}
+
+unsigned long long designs_possible2(char *remaining_towel)
+{
+	unsigned long long count = 0;
+	size_t len = strlen(remaining_towel);
+	if(len == 0)
+		return 1;
+	if(data.cache[len] != ULLONG_MAX)
+		return data.cache[len];
+	for(size_t i = 0; i < data.amount_towels; i++)
+	{
+		if(memcmp(remaining_towel, data.towels[i], data.towels_length[i]) == 0)
+			count += designs_possible2(remaining_towel + data.towels_length[i]);
+	}
+	data.cache[len] = count;
+	return data.cache[len]; 
 }
